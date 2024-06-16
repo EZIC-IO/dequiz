@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
+import { TanstackProvider } from '@/providers/tanstck-query-provider';
+import { TOASTER_CONFIG } from '@/config/toaster';
 import { cn } from '@/lib/utils';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 
 const fontSans = FontSans({
@@ -36,7 +40,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <TanstackProvider>
+              <ToastContainer {...TOASTER_CONFIG} />
+
+              {children}
+            </TanstackProvider>
           </ThemeProvider>
         </body>
       </html>
