@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
+import { ThirdwebProvider } from 'thirdweb/react';
 import { ToastContainer } from 'react-toastify';
 
 import { ThemeProvider } from '@/providers/theme-provider';
@@ -40,11 +41,13 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <TanstackProvider>
-              <ToastContainer {...TOASTER_CONFIG} />
+            <ThirdwebProvider>
+              <TanstackProvider>
+                <ToastContainer {...TOASTER_CONFIG} />
 
-              {children}
-            </TanstackProvider>
+                {children}
+              </TanstackProvider>
+            </ThirdwebProvider>
           </ThemeProvider>
         </body>
       </html>
