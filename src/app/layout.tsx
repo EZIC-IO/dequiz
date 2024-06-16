@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { ThemeProvider } from '@/providers/theme-provider';
 import { TanstackProvider } from '@/providers/tanstck-query-provider';
+import AppLayout from '@/components/layout/app-layout';
 import { TOASTER_CONFIG } from '@/config/toaster';
 import { cn } from '@/lib/utils';
 
@@ -45,7 +46,7 @@ export default function RootLayout({
               <TanstackProvider>
                 <ToastContainer {...TOASTER_CONFIG} />
 
-                {children}
+                <AppLayout>{children}</AppLayout>
               </TanstackProvider>
             </ThirdwebProvider>
           </ThemeProvider>

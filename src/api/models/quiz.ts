@@ -1,12 +1,16 @@
-export interface Qustion {
+export interface QustionType {
   id: string;
   question: string;
   options: string[];
 }
 
-export interface Quiz {
+export interface QuizType {
   id: string;
   title: string;
   description: string;
-  questions: Qustion[];
+  isLive: boolean;
+  mintedCount: number;
+  image: string;
+  mintPrice: number;
+  questions: QustionType[];
 }

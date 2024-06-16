@@ -1,60 +1,45 @@
-import { useCurrentQuiz } from '@/api/hooks/useGetCurrentQuiz';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
+import Image from 'next/image';
 
-const Quiz = () => {
-  const { quiz, isLoading } = useCurrentQuiz();
+import { QuizType } from '@/api/models/quiz';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
-  if (isLoading) {
-    return (
-      <div className='flex flex-col space-y-3'>
-        <Skeleton className='h-[125px] min-w-[500px] rounded-xl' />
-        <div className='space-y-2'>
-          <Skeleton className='h-8 min-w-[500px]' />
-          <Skeleton className='h-8 min-w-[500px]' />
-          <Skeleton className='h-8 min-w-[500px]' />
-        </div>
-      </div>
-    );
-  }
+type Props = {
+  quiz: QuizType;
+};
 
-  if (!quiz) {
-    return (
-      <p className='text-muted-foreground text-lg font-semibold'>
-        Sorry, no quiz for today, please check again later!
-      </p>
-    );
-  }
+const Quiz = (props: Props) => {
+  const { quiz } = props;
 
   return (
-    <div>
-      <h2 className='text-center text-3xl font-semibold'>{quiz?.title}</h2>
+    <Link href={`/quiz/${quiz.id}`}>
+      <Card className='flex bg-gray-400 bg-opacity-10 bg-clip-padding p-4 backdrop-blur-sm backdrop-filter'>
+        <Image src={quiz.image} alt={quiz.title} width={600} height={350} />
 
-      <p className='text-muted-foreground text-center text-lg'>
-        {quiz.description}
-      </p>
+        <CardContent className='flex flex-[1_1_auto] flex-col justify-between'>
+          <div className='flex items-center justify-between'>
+            <CardTitle>{quiz.title}</CardTitle>
 
-      <div className='space-y-4'>
-        {quiz.questions.map((question) => (
-          <div key={question.id} className='space-y-2'>
-            <h3 className='text-lg font-semibold'>{question.question}</h3>
-            <ul className='space-y-4'>
-              {question.options.map((option) => (
-                <li key={option} className='flex items-center space-x-2'>
-                  <Checkbox id={option} />
-                  <label
-                    htmlFor={option}
-                    className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                  >
-                    {option}
-                  </label>
-                </li>
-              ))}
-            </ul>
+            {quiz.isLive && (
+              <div>
+                <Badge>Live</Badge>
+              </div>
+            )}
           </div>
-        ))}
-      </div>
-    </div>
+
+          <div>{quiz.description}</div>
+
+          <div className='flex items-center justify-between'>
+            <div>
+              <Badge variant='outline'>Minted: {quiz.mintedCount}/1000</Badge>
+            </div>
+
+            <div className='font-semibold'>{quiz.mintPrice} ETH</div>
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 
