@@ -1,24 +1,32 @@
 'use client';
 
-import { createThirdwebClient } from 'thirdweb';
-import { ConnectButton } from 'thirdweb/react';
-import { createWallet, inAppWallet } from 'thirdweb/wallets';
+import { ConnectButton, useActiveWallet } from 'thirdweb/react';
+import { createWallet } from 'thirdweb/wallets';
 
-const client = createThirdwebClient({
-  clientId: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID!,
-});
+import { thirdwebClient } from '@/config/thirdweb';
+import Quiz from '@/views/quiz';
+import { Separator } from '@/components/ui/separator';
 
-const wallets = [
-  inAppWallet(),
-  createWallet('io.metamask'),
-  createWallet('com.coinbase.wallet'),
-  createWallet('me.rainbow'),
-];
+const wallets = [createWallet('io.metamask'), createWallet('io.rabby')];
 
-export default function App() {
+export default function Home() {
+  const wallet = useActiveWallet();
+
   return (
-    <div>
-      <ConnectButton client={client} wallets={wallets} />
+    <div className='px-6'>
+      <div className='flex justify-end py-6'>
+        <ConnectButton client={thirdwebClient} wallets={wallets} />
+      </div>
+
+      {!!wallet && (
+        <>
+          <Separator />
+
+          <div className='flex justify-center py-6'>
+            <Quiz />
+          </div>
+        </>
+      )}
     </div>
   );
 }
