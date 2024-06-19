@@ -1,5 +1,5 @@
 export enum Character {
-  WARRIOR = 'WARRIOR',
+  KNIGHT = 'KNIGHT',
   WIZARD = 'WIZARD',
   ROGUE = 'ROGUE',
   RANGER = 'RANGER',

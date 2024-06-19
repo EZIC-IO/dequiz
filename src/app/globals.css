@@ -73,5 +73,11 @@
     body {
       @apply bg-background text-foreground;
       @apply text-primary;
+
+      background: linear-gradient(180deg, #0F172A 0%, #050D1E 100%);
     }
+  }
+
+  .blurred-background {
+    filter: blur(20px); 
   }

@@ -1,12 +1,13 @@
-import Link from 'next/link';
 import Image from 'next/image';
-import { Orbit } from 'lucide-react';
+import { Hammer, Orbit } from 'lucide-react';
+import Link from 'next/link';
 
 import { QuizType } from '@/api/models/quiz';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { weiToEth } from '@/utils/convert';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
+import { Button } from '@/components/ui/button';
+import Loader from '@/components/loader';
 
 type Props = {
   quiz: QuizType;
@@ -15,60 +16,74 @@ type Props = {
 const Quiz = (props: Props) => {
   const { quiz } = props;
 
-  const { totalSupply, mintPrice, symbol, alreadyMintedGlobalAmount } =
+  const { totalSupply, symbol, alreadyMintedGlobalAmount, isLoading } =
     useGetQuizContractData();
 
+  if (isLoading) {
+    return (
+      <Loader title='Forging your destiny in the realms of fantasy... Prepare to unveil your true calling.' />
+    );
+  }
+
   return (
-    <Link href={`/quiz/${quiz.id}`}>
-      <Card className='flex bg-gray-400 bg-opacity-10 bg-clip-padding p-4 backdrop-blur-sm backdrop-filter'>
+    <Card className='flex justify-between' background='/quiz/gradient-1.png'>
+      <div className='w-[50%]'>
         <Image
-          className='rounded-xl border border-primary p-1'
-          src={quiz.image}
+          src={quiz.previewImage}
           alt={quiz.title}
-          width={600}
-          height={350}
+          width={682}
+          height={563}
+          loading='eager'
+          quality={100}
         />
+      </div>
 
-        <CardContent className='flex flex-[1_1_auto] flex-col justify-between'>
-          <div className='flex items-center justify-between'>
-            <CardTitle className='flex items-center gap-4 text-3xl'>
-              <Orbit color='#3e9392' />
+      <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between pl-[92px] pr-[56px] pt-[63px]'>
+        <div className='flex items-center justify-between'>
+          <div className='flex gap-5'>
+            {quiz.isLive && (
+              <Badge variant='outline' className='bg-[#4ade8014] text-primary'>
+                Live
+              </Badge>
+            )}
 
-              {quiz.title}
-            </CardTitle>
+            <Badge variant='outline' className='flex gap-2 text-primary'>
+              <Orbit color='#4ADE80' />
+              <span>Epoch {quiz.epochId}</span>
+            </Badge>
 
-            {symbol && <div className='text-2xl text-green'>{symbol}</div>}
+            {symbol && (
+              <Badge variant='outline' className='text-primary'>
+                {symbol}
+              </Badge>
+            )}
           </div>
+        </div>
 
-          <div className='text-lg'>{quiz.description}</div>
+        <h1 className='mt-5 text-5xl font-extrabold'>{quiz.title}</h1>
 
-          <div className='flex items-center justify-between'>
-            {alreadyMintedGlobalAmount && totalSupply && (
-              <div>
-                <Badge variant='outline' className='text-lg'>
+        <div className='mt-5'>{quiz.description}</div>
+
+        <div className='mt-10 flex items-center justify-between'>
+          <Link href={`/quiz/${quiz.id}`}>
+            <Button variant='secondary'>Start</Button>
+          </Link>
+
+          {alreadyMintedGlobalAmount && totalSupply && (
+            <div>
+              <Badge variant='outline' className='flex gap-2 text-lg'>
+                <Hammer />
+
+                <span>
                   Minted: {Number(alreadyMintedGlobalAmount)}/
                   {Number(totalSupply)}
-                </Badge>
-              </div>
-            )}
-
-            {mintPrice && (
-              <div className='tex-tlg font-semibold'>
-                {weiToEth(mintPrice)} ETH
-              </div>
-            )}
-
-            {quiz.isLive && (
-              <div>
-                <Badge className='border-transparent bg-green text-primary hover:bg-green/80'>
-                  Live
-                </Badge>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
+                </span>
+              </Badge>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

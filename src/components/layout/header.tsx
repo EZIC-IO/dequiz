@@ -11,7 +11,7 @@ const wallets = [createWallet('io.metamask'), createWallet('io.rabby')];
 
 const Header = () => {
   return (
-    <div className='flex justify-between py-6'>
+    <header className='flex justify-between py-10'>
       <Link href='/'>
         <Image
           alt='Logo'
@@ -24,7 +24,7 @@ const Header = () => {
       <div className='flex items-center'>
         <ConnectButton client={thirdwebClient} wallets={wallets} />
       </div>
-    </div>
+    </header>
   );
 };
 

@@ -10,13 +10,15 @@ export interface QustionType {
   id: string;
   question: string;
   options: OptionType[];
+  previewImage: string;
 }
 
 export interface QuizType {
   id: string;
+  epochId: string;
   title: string;
   description: string;
   isLive: boolean;
-  image: string;
+  previewImage: string;
   questions: QustionType[];
 }

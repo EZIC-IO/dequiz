@@ -1,18 +1,15 @@
 'use client';
 
-import { Separator } from '@/components/ui/separator';
 import Header from '@/components/layout/header';
 
 const AppLayout = (props: React.PropsWithChildren) => {
   const { children } = props;
 
   return (
-    <div className='mx-auto max-w-[1440px] px-6'>
+    <div className='mx-auto max-w-[1440px] px-12'>
       <Header />
 
-      <Separator />
-
-      <div className='flex justify-center py-6'>{children}</div>
+      <main>{children}</main>
     </div>
   );
 };

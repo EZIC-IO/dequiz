@@ -4,15 +4,16 @@ import { Character } from '../models/character';
 export const quizes: QuizType[] = [
   {
     id: '1',
-    title: 'Epoch 1 - Quiz 1',
+    epochId: '1',
+    title: "What's your fantasy world occupation?",
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    image:
-      'https://img.freepik.com/free-photo/cyberpunk-urban-scenery_23-2150712464.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1718323200&semt=ais_user',
+      'In a realm where magic weaves through every corner and creatures lurk in the shadows, everyone dreams of their perfect role. Ever felt destined for something more than the ordinary? Maybe your true calling is to be a powerful mage, a brave ranger, or a cunning rogue. Or perhaps you have a more unique destiny? Take the test and discover your true fantasy vocation. Once revealed, mint your character and embark on your epic adventure!',
+    previewImage: '/quiz/quiz-preview.png',
     isLive: true,
     questions: [
       {
         id: '1',
+        previewImage: '/quiz/occupation.png',
         question: 'How would you describe your personality?',
         options: [
           {
@@ -20,7 +21,7 @@ export const quizes: QuizType[] = [
             label: 'Adventurous/Brave',
             score: {
               [Character.WIZARD]: 1,
-              [Character.WARRIOR]: 3,
+              [Character.KNIGHT]: 3,
               [Character.ROGUE]: 2,
               [Character.RANGER]: 2,
             },
@@ -30,7 +31,7 @@ export const quizes: QuizType[] = [
             label: 'Creative/Artful',
             score: {
               [Character.WIZARD]: 2,
-              [Character.WARRIOR]: 1,
+              [Character.KNIGHT]: 1,
               [Character.ROGUE]: 2,
               [Character.RANGER]: 2,
             },
@@ -40,7 +41,7 @@ export const quizes: QuizType[] = [
             label: 'Wise/Analytical',
             score: {
               [Character.WIZARD]: 3,
-              [Character.WARRIOR]: 1,
+              [Character.KNIGHT]: 1,
               [Character.ROGUE]: 1,
               [Character.RANGER]: 1,
             },
@@ -49,6 +50,7 @@ export const quizes: QuizType[] = [
       },
       {
         id: '2',
+        previewImage: '/quiz/environment.png',
         question: 'Which type of environment resonates most with your soul?',
         options: [
           {
@@ -56,7 +58,7 @@ export const quizes: QuizType[] = [
             label: 'Forest',
             score: {
               [Character.WIZARD]: 1,
-              [Character.WARRIOR]: 2,
+              [Character.KNIGHT]: 2,
               [Character.ROGUE]: 2,
               [Character.RANGER]: 3,
             },
@@ -66,7 +68,7 @@ export const quizes: QuizType[] = [
             label: 'Mountains',
             score: {
               [Character.WIZARD]: 1,
-              [Character.WARRIOR]: 3,
+              [Character.KNIGHT]: 3,
               [Character.ROGUE]: 1,
               [Character.RANGER]: 2,
             },
@@ -76,7 +78,7 @@ export const quizes: QuizType[] = [
             label: 'Desert',
             score: {
               [Character.WIZARD]: 2,
-              [Character.WARRIOR]: 1,
+              [Character.KNIGHT]: 1,
               [Character.ROGUE]: 3,
               [Character.RANGER]: 1,
             },
@@ -85,6 +87,7 @@ export const quizes: QuizType[] = [
       },
       {
         id: '3',
+        previewImage: '/quiz/role.png',
         question: 'What role do you often take in a group?',
         options: [
           {
@@ -92,7 +95,7 @@ export const quizes: QuizType[] = [
             label: 'Leader',
             score: {
               [Character.WIZARD]: 1,
-              [Character.WARRIOR]: 3,
+              [Character.KNIGHT]: 3,
               [Character.ROGUE]: 1,
               [Character.RANGER]: 2,
             },
@@ -102,7 +105,7 @@ export const quizes: QuizType[] = [
             label: 'Strategist',
             score: {
               [Character.WIZARD]: 3,
-              [Character.WARRIOR]: 2,
+              [Character.KNIGHT]: 2,
               [Character.ROGUE]: 1,
               [Character.RANGER]: 2,
             },
@@ -112,7 +115,7 @@ export const quizes: QuizType[] = [
             label: 'Innovator',
             score: {
               [Character.WIZARD]: 2,
-              [Character.WARRIOR]: 1,
+              [Character.KNIGHT]: 1,
               [Character.ROGUE]: 3,
               [Character.RANGER]: 1,
             },
@@ -121,6 +124,7 @@ export const quizes: QuizType[] = [
       },
       {
         id: '4',
+        previewImage: '/quiz/spend-time.png',
         question: 'How do you prefer to spend your leisure time?',
         options: [
           {
@@ -128,7 +132,7 @@ export const quizes: QuizType[] = [
             label: 'Traveling',
             score: {
               [Character.WIZARD]: 1,
-              [Character.WARRIOR]: 2,
+              [Character.KNIGHT]: 2,
               [Character.ROGUE]: 2,
               [Character.RANGER]: 3,
             },
@@ -138,7 +142,7 @@ export const quizes: QuizType[] = [
             label: 'Relaxing with a book',
             score: {
               [Character.WIZARD]: 3,
-              [Character.WARRIOR]: 1,
+              [Character.KNIGHT]: 1,
               [Character.ROGUE]: 1,
               [Character.RANGER]: 1,
             },
@@ -148,7 +152,7 @@ export const quizes: QuizType[] = [
             label: 'Working on a creative project/side-project',
             score: {
               [Character.WIZARD]: 1,
-              [Character.WARRIOR]: 2,
+              [Character.KNIGHT]: 2,
               [Character.ROGUE]: 3,
               [Character.RANGER]: 1,
             },
@@ -157,6 +161,7 @@ export const quizes: QuizType[] = [
       },
       {
         id: '5',
+        previewImage: '/quiz/goal.png',
         question: 'What is your ultimate goal in life?',
         options: [
           {
@@ -164,7 +169,7 @@ export const quizes: QuizType[] = [
             label: 'Adventure',
             score: {
               [Character.WIZARD]: 1,
-              [Character.WARRIOR]: 3,
+              [Character.KNIGHT]: 3,
               [Character.ROGUE]: 2,
               [Character.RANGER]: 3,
             },
@@ -174,7 +179,7 @@ export const quizes: QuizType[] = [
             label: 'Knowledge',
             score: {
               [Character.WIZARD]: 3,
-              [Character.WARRIOR]: 1,
+              [Character.KNIGHT]: 1,
               [Character.ROGUE]: 1,
               [Character.RANGER]: 1,
             },
@@ -184,7 +189,7 @@ export const quizes: QuizType[] = [
             label: 'Harmony',
             score: {
               [Character.WIZARD]: 2,
-              [Character.WARRIOR]: 2,
+              [Character.KNIGHT]: 2,
               [Character.ROGUE]: 2,
               [Character.RANGER]: 2,
             },
