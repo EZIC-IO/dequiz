@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { generateCharacter } from '@/utils/quiz';
 import { Character } from '@/api/models/character';
+import { CHARACTERS_LABEL } from '@/constants/character';
 
 const QuizDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -61,6 +62,13 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     }));
   };
 
+  const handleReset = () => {
+    setCharacter(undefined);
+    setAnswers({});
+    setCurrentSlideIndex(0);
+    swiper?.slideTo(0);
+  };
+
   return (
     <div className='w-full'>
       <h2 className='mb-8 text-center text-3xl font-semibold'>
@@ -92,56 +100,51 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
 
         <div className='w-[50%] space-y-8'>
           {!character ? (
-            <Swiper
-              autoHeight
-              onSwiper={setSwiper}
-              allowTouchMove={false}
-              onActiveIndexChange={(swiper) =>
-                setCurrentSlideIndex(swiper.activeIndex)
-              }
-            >
-              {quizDetails.questions.map((question, index) => (
-                <SwiperSlide key={question.id}>
-                  <div className='flex-[1_1_auto] space-y-4' key={question.id}>
-                    <div className='space-y-8'>
-                      <h3 className='text-lg font-semibold'>
-                        {index + 1}. {question.question}
-                      </h3>
-                      <ul className='space-y-4'>
-                        {question.options.map((option) => (
-                          <li
-                            key={option.id}
-                            className='flex items-center space-x-2'
-                          >
-                            <Checkbox
-                              id={option.id}
-                              onClick={() =>
-                                handleChooseOption(question.id, option.id)
-                              }
-                            />
-                            <label
-                              htmlFor={option.id}
-                              className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                            >
-                              {option.label}
-                            </label>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          ) : (
-            <div className='text-center text-2xl'>
-              <div>Congratulations!</div>
-              <div>You are {character}</div>
-            </div>
-          )}
-
-          {!character ? (
             <>
+              <Swiper
+                autoHeight
+                onSwiper={setSwiper}
+                allowTouchMove={false}
+                onActiveIndexChange={(swiper) =>
+                  setCurrentSlideIndex(swiper.activeIndex)
+                }
+              >
+                {quizDetails.questions.map((question, index) => (
+                  <SwiperSlide key={question.id}>
+                    <div
+                      className='flex-[1_1_auto] space-y-4'
+                      key={question.id}
+                    >
+                      <div className='space-y-8'>
+                        <h3 className='text-lg font-semibold'>
+                          {index + 1}. {question.question}
+                        </h3>
+                        <ul className='space-y-4'>
+                          {question.options.map((option) => (
+                            <li
+                              key={option.id}
+                              className='flex items-center space-x-2'
+                            >
+                              <Checkbox
+                                id={option.id}
+                                onClick={() =>
+                                  handleChooseOption(question.id, option.id)
+                                }
+                              />
+                              <label
+                                htmlFor={option.id}
+                                className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                              >
+                                {option.label}
+                              </label>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
               {currentSlideIndex !== quizDetails.questions.length - 1 ? (
                 <Button
                   disabled={isActionDisabled}
@@ -156,8 +159,19 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
               )}
             </>
           ) : (
-            <div className='flex justify-center'>
-              <Button>Mint</Button>
+            <div className='justify center flex flex-col gap-10'>
+              <div className='text-center text-2xl'>
+                <div>Congratulations!</div>
+                <div>You are {CHARACTERS_LABEL[character]}</div>
+              </div>
+
+              <div className='flex justify-center gap-8'>
+                <Button>Mint</Button>
+
+                <Button variant='secondary' onClick={handleReset}>
+                  Try again
+                </Button>
+              </div>
             </div>
           )}
         </div>

@@ -1,5 +1,6 @@
 export enum Character {
-  Wizard = 'Wizard',
-  Knight = 'Knight',
-  Rogue = 'Rogue',
+  WARRIOR = 'WARRIOR',
+  WIZARD = 'WIZARD',
+  ROGUE = 'ROGUE',
+  RANGER = 'RANGER',
 }
