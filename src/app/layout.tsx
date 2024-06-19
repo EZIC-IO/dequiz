@@ -10,6 +10,7 @@ import { TOASTER_CONFIG } from '@/config/toaster';
 import { cn } from '@/lib/utils';
 
 import 'react-toastify/dist/ReactToastify.css';
+import 'swiper/css';
 import './globals.css';
 
 const fontSans = FontSans({
@@ -32,7 +33,7 @@ export default function RootLayout({
         <head />
         <body
           className={cn(
-            'bg-background min-h-screen bg-zinc-950 font-sans antialiased',
+            'min-h-screen bg-background bg-zinc-950 font-sans antialiased',
             fontSans.variable
           )}
         >

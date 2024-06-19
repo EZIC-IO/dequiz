@@ -1,7 +1,15 @@
+import { Character } from './character';
+
+export interface OptionType {
+  id: string;
+  label: string;
+  score: Record<Character, number>;
+}
+
 export interface QustionType {
   id: string;
   question: string;
-  options: string[];
+  options: OptionType[];
 }
 
 export interface QuizType {
@@ -9,8 +17,6 @@ export interface QuizType {
   title: string;
   description: string;
   isLive: boolean;
-  mintedCount: number;
   image: string;
-  mintPrice: number;
   questions: QustionType[];
 }

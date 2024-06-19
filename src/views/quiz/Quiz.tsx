@@ -1,16 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Orbit } from 'lucide-react';
-import { useReadContract } from 'thirdweb/react';
-import { baseSepolia } from 'thirdweb/chains';
-import { getContract } from 'thirdweb/contract';
 
 import { QuizType } from '@/api/models/quiz';
-import { thirdwebClient, contractAddress } from '@/config/thirdweb';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { abi } from '@/config/abi';
 import { weiToEth } from '@/utils/convert';
+import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 
 type Props = {
   quiz: QuizType;
@@ -19,36 +15,8 @@ type Props = {
 const Quiz = (props: Props) => {
   const { quiz } = props;
 
-  const contract = getContract({
-    client: thirdwebClient,
-    chain: baseSepolia,
-    address: contractAddress,
-    abi: abi as any[],
-  });
-
-  const { isLoading: totalSupplyLoading, data: totalSupply } = useReadContract({
-    method: 'totalSupply',
-    contract,
-    params: ['0x267b6E6B5B91a793122996b1EbDdEB31b4a3a31b'],
-  });
-  const { isLoading: mintPriceLoading, data: mintPrice } = useReadContract({
-    method: 'MINT_PRICE',
-    contract,
-    params: ['0x267b6E6B5B91a793122996b1EbDdEB31b4a3a31b'],
-  });
-  const { isLoading: symbolLoading, data: symbol } = useReadContract({
-    method: 'symbol',
-    contract,
-    params: ['0x267b6E6B5B91a793122996b1EbDdEB31b4a3a31b'],
-  });
-  const {
-    isLoading: alreadyMintedGlobalAmountLoading,
-    data: alreadyMintedGlobalAmount,
-  } = useReadContract({
-    method: 'alreadyMintedGlobalAmount',
-    contract,
-    params: ['0x267b6E6B5B91a793122996b1EbDdEB31b4a3a31b'],
-  });
+  const { totalSupply, mintPrice, symbol, alreadyMintedGlobalAmount } =
+    useGetQuizContractData();
 
   return (
     <Link href={`/quiz/${quiz.id}`}>
@@ -69,7 +37,7 @@ const Quiz = (props: Props) => {
               {quiz.title}
             </CardTitle>
 
-            {symbol && <div className='text-green text-2xl'>{symbol}</div>}
+            {symbol && <div className='text-2xl text-green'>{symbol}</div>}
           </div>
 
           <div className='text-lg'>{quiz.description}</div>
@@ -92,7 +60,7 @@ const Quiz = (props: Props) => {
 
             {quiz.isLive && (
               <div>
-                <Badge className='bg-green hover:bg-green/80 border-transparent text-primary'>
+                <Badge className='border-transparent bg-green text-primary hover:bg-green/80'>
                   Live
                 </Badge>
               </div>
