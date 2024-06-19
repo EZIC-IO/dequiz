@@ -27,7 +27,7 @@ const QuizResults = (props: Props) => {
   const properties = CHARACTER_PROPERTIES[character];
 
   return (
-    <Card className='flex' background='/quiz/gradient-1.png'>
+    <Card className='flex' background='/gradient/results-gradient.png'>
       <div className='w-[60%]'>
         <Image
           src='/quiz/quiz-results.png'

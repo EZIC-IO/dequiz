@@ -11,6 +11,7 @@ export interface QustionType {
   question: string;
   options: OptionType[];
   previewImage: string;
+  gradientImage: string;
 }
 
 export interface QuizType {
@@ -20,5 +21,6 @@ export interface QuizType {
   description: string;
   isLive: boolean;
   previewImage: string;
+  gradientImage: string;
   questions: QustionType[];
 }

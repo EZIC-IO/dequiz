@@ -1,5 +1,4 @@
 import { Wand } from 'lucide-react';
-import Image from 'next/image';
 
 import { Card } from './ui/card';
 
@@ -12,8 +11,8 @@ const Loader = (props: Props) => {
 
   return (
     <Card
-      className='relative flex flex-col items-center justify-center'
-      background='/quiz/gradient-1.png'
+      className='relative flex h-full w-full flex-col items-center justify-center'
+      background='/gradient/loader-gradient.png'
     >
       <Wand width={60} height={60} color='#fff' />
 

@@ -27,8 +27,8 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const { totalSupply, alreadyMintedGlobalAmount, mintPrice, isLoading } =
     useGetQuizContractData();
 
-  const isActionDisabled =
-    !answers[quizDetails?.questions[currentSlideIndex]?.id as string];
+  const currentQuetion = quizDetails?.questions[currentSlideIndex];
+  const isActionDisabled = !answers[currentQuetion?.id as string];
 
   if (isLoading) {
     return (
@@ -90,79 +90,89 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <Card className='flex justify-between' background='/quiz/gradient-1.png'>
-      <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
-        <div className='mt-10'>
-          <Swiper
-            autoHeight
-            onSwiper={setSwiper}
-            allowTouchMove={false}
-            onActiveIndexChange={(swiper) =>
-              setCurrentSlideIndex(swiper.activeIndex)
-            }
-          >
-            {quizDetails.questions.map((question) => (
-              <SwiperSlide key={question.id}>
-                <div className='flex-[1_1_auto] space-y-4' key={question.id}>
-                  <div className='space-y-8'>
-                    <h3 className='text-2xl font-semibold'>
-                      {question.question}
-                    </h3>
-                    <ul className='space-y-4'>
-                      {question.options.map((option) => (
-                        <li
-                          key={option.id}
-                          className='flex items-center space-x-2'
-                        >
-                          <Checkbox
-                            id={option.id}
-                            onClick={() =>
-                              handleChooseOption(question.id, option.id)
-                            }
-                          />
-                          <label
-                            htmlFor={option.id}
-                            className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+    <div className='h-full w-full pt-12'>
+      <Card
+        className='flex justify-between'
+        background={currentQuetion?.gradientImage}
+      >
+        <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
+          <div className='mt-10'>
+            <Swiper
+              autoHeight
+              onSwiper={setSwiper}
+              allowTouchMove={false}
+              onActiveIndexChange={(swiper) =>
+                setCurrentSlideIndex(swiper.activeIndex)
+              }
+            >
+              {quizDetails.questions.map((question) => (
+                <SwiperSlide key={question.id}>
+                  <div className='flex-[1_1_auto] space-y-4' key={question.id}>
+                    <div className='space-y-8'>
+                      <h3 className='text-2xl font-semibold'>
+                        {question.question}
+                      </h3>
+                      <ul className='space-y-4'>
+                        {question.options.map((option) => (
+                          <li
+                            key={option.id}
+                            className='flex items-center space-x-2'
                           >
-                            {option.label}
-                          </label>
-                        </li>
-                      ))}
-                    </ul>
+                            <Checkbox
+                              id={option.id}
+                              onClick={() =>
+                                handleChooseOption(question.id, option.id)
+                              }
+                            />
+                            <label
+                              htmlFor={option.id}
+                              className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                            >
+                              {option.label}
+                            </label>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-          <div className='mt-10 flex justify-end'>
-            {currentSlideIndex !== quizDetails.questions.length - 1 ? (
-              <Button disabled={isActionDisabled} onClick={handleNextQuestion}>
-                Next
-              </Button>
-            ) : (
-              <Button disabled={isActionDisabled} onClick={handleFinish}>
-                Finish
-              </Button>
-            )}
+            <div className='mt-10 flex justify-end'>
+              {currentSlideIndex !== quizDetails.questions.length - 1 ? (
+                <Button
+                  disabled={isActionDisabled}
+                  onClick={handleNextQuestion}
+                >
+                  Next
+                </Button>
+              ) : (
+                <Button disabled={isActionDisabled} onClick={handleFinish}>
+                  Finish
+                </Button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className='w-[60%]'>
-        <Image
-          src={quizDetails.previewImage}
-          alt={quizDetails.title}
-          width={773}
-          height={769}
-          quality={100}
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
-      </div>
-    </Card>
+        <div className='relative w-[60%]'>
+          {currentQuetion && (
+            <Image
+              src={currentQuetion.previewImage}
+              alt={currentQuetion.question}
+              width={773}
+              height={769}
+              quality={100}
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
+            />
+          )}
+        </div>
+      </Card>
+    </div>
   );
 };
 
