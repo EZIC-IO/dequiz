@@ -99,7 +99,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
         className='flex justify-between'
         background={currentQuetion?.gradientImage}
       >
-        <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
+        <div className='w-[40%] py-[60px] pl-[51px] pr-[66px]'>
           <Line
             percent={progress}
             strokeWidth={4}
@@ -162,7 +162,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
 
-        <div className='relative w-[60%]'>
+        <div className='relative flex w-[60%] justify-end'>
           {currentQuetion && (
             <Image
               src={currentQuetion.previewImage}
@@ -170,10 +170,6 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
               width={773}
               height={769}
               quality={100}
-              style={{
-                width: '100%',
-                height: 'auto',
-              }}
             />
           )}
         </div>

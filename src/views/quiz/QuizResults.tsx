@@ -42,22 +42,26 @@ const QuizResults = (props: Props) => {
         <div className='flex flex-col gap-10'>
           <h3 className='text-2xl font-semibold'>{properties.title}</h3>
 
-          <div>
+          <div className='flex gap-2'>
             {properties.skills.map((skill, index) => (
               <Badge
                 key={`${skill}-${index}`}
                 variant='outline'
-                className='text-primary'
+                className='flex gap-2 text-sm font-normal text-primary'
               >
-                {skill}
+                {skill.icon}
+
+                <span>{skill.label}</span>
               </Badge>
             ))}
           </div>
 
           <div>{properties.description}</div>
 
-          <div className='flex justify-center gap-8'>
-            <Button>Claim Mint - {weiToEth(mintPrice)}</Button>
+          <div className='flex gap-8'>
+            <Button variant='secondary'>
+              Claim Mint - {weiToEth(mintPrice)}
+            </Button>
 
             <Button variant='secondary' onClick={onReset}>
               Generate Again
@@ -65,14 +69,16 @@ const QuizResults = (props: Props) => {
           </div>
 
           {alreadyMintedGlobalAmount && totalSupply && (
-            <Badge variant='outline' className='flex gap-2 text-lg'>
-              <Hammer />
+            <div className='flex'>
+              <Badge variant='outline' className='flex gap-2 text-lg'>
+                <Hammer />
 
-              <span>
-                Minted: {Number(alreadyMintedGlobalAmount)}/
-                {Number(totalSupply)}
-              </span>
-            </Badge>
+                <span>
+                  Minted: {Number(alreadyMintedGlobalAmount)}/
+                  {Number(totalSupply)}
+                </span>
+              </Badge>
+            </div>
           )}
         </div>
       </div>
