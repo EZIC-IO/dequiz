@@ -1,6 +1,6 @@
 'use client';
 
-import Quiz from '@/views/quiz';
+import { Quiz } from '@/views/quiz';
 import { useGetQuizes } from '@/api/hooks/useGetQuizes';
 
 export default function Home() {

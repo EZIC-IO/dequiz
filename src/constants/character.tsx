@@ -19,11 +19,12 @@ interface CharacterProperties {
   skills: Skill[];
 }
 
+// TODO: update the descriptions & skill icons
 export const CHARACTER_PROPERTIES: Record<Character, CharacterProperties> = {
   [Character.KNIGHT]: {
-    title: 'Behold, the Ranger Emerges!',
+    title: 'Behold, the Knight Emerges!',
     description:
-      'As a Ranger, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
+      'As a Knight, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
     skills: [
       {
         label: 'Adventourus',
@@ -40,9 +41,9 @@ export const CHARACTER_PROPERTIES: Record<Character, CharacterProperties> = {
     ],
   },
   [Character.WIZARD]: {
-    title: 'Behold, the Ranger Emerges!',
+    title: 'Behold, the Wizard Emerges!',
     description:
-      'As a Ranger, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
+      'As a Wizard, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
     skills: [
       {
         label: 'Knowledge',
@@ -59,9 +60,9 @@ export const CHARACTER_PROPERTIES: Record<Character, CharacterProperties> = {
     ],
   },
   [Character.ROGUE]: {
-    title: 'Behold, the Ranger Emerges!',
+    title: 'Behold, the Rogue Emerges!',
     description:
-      'As a Ranger, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
+      'As a Rogue, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
     skills: [
       {
         label: 'Innovativeness',

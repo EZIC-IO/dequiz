@@ -200,7 +200,7 @@ export const quizes: QuizType[] = [
         question: 'What is your ultimate goal in life?',
         options: [
           {
-            id: '11',
+            id: '13',
             label: 'Adventure',
             score: {
               [Character.WIZARD]: 1,
@@ -211,7 +211,7 @@ export const quizes: QuizType[] = [
             icon: <Zap />,
           },
           {
-            id: '12',
+            id: '14',
             label: 'Knowledge',
             score: {
               [Character.WIZARD]: 3,
@@ -222,7 +222,7 @@ export const quizes: QuizType[] = [
             icon: <Search />,
           },
           {
-            id: '13',
+            id: '15',
             label: 'Harmony',
             score: {
               [Character.WIZARD]: 2,

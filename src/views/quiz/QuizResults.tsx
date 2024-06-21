@@ -30,6 +30,7 @@ const QuizResults = (props: Props) => {
     <Card className='flex' background='/gradient/results-gradient.png'>
       <div className='w-[60%]'>
         <Image
+          // TODO: replace w/ image from the API
           src='/quiz/quiz-results.png'
           alt='Quiz results'
           width={773}

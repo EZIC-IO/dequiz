@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
 
 type Props = {
   label: string;
@@ -8,20 +8,21 @@ type Props = {
   onChange?: (value: string) => void;
 };
 
-const Radio = (props: Props) => {
-  const { name, label, icon, onChange, value } = props;
+const Radio = forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const { name, label, icon, onChange, ...rest } = props;
 
   const id = useId();
 
   return (
     <>
       <input
-        type='radio'
         id={id}
+        ref={ref}
+        type='radio'
         name={name}
-        value={value}
         className='peer hidden'
         onChange={(e) => onChange?.(e.target.value)}
+        {...rest}
       />
       <label
         htmlFor={id}
@@ -34,6 +35,8 @@ const Radio = (props: Props) => {
       </label>
     </>
   );
-};
+});
+
+Radio.displayName = 'Radio';
 
 export default Radio;
