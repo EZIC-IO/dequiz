@@ -4,6 +4,7 @@ export interface OptionType {
   id: string;
   label: string;
   score: Record<Character, number>;
+  icon?: React.ReactNode;
 }
 
 export interface QustionType {

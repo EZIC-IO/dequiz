@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { useState } from 'react';
+import { Line } from 'rc-progress';
 
 import { Card } from '@/components/ui/card';
 import { useGetQuizDetails } from '@/api/hooks/useGetQuizDetails';
@@ -14,6 +15,7 @@ import { generateCharacter } from '@/utils/quiz';
 import { Character } from '@/api/models/character';
 import { QuizResults } from '@/views/quiz';
 import Loader from '@/components/loader';
+import Radio from '@/components/ui/radio';
 
 const QuizDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -29,6 +31,8 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
 
   const currentQuetion = quizDetails?.questions[currentSlideIndex];
   const isActionDisabled = !answers[currentQuetion?.id as string];
+  const progress =
+    (currentSlideIndex / (quizDetails?.questions?.length ?? 0)) * 100;
 
   if (isLoading) {
     return (
@@ -96,7 +100,15 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
         background={currentQuetion?.gradientImage}
       >
         <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
-          <div className='mt-10'>
+          <Line
+            percent={progress}
+            strokeWidth={4}
+            trailWidth={4}
+            strokeColor='#64748B'
+            trailColor='#1E293B'
+          />
+
+          <div className='mt-20'>
             <Swiper
               autoHeight
               onSwiper={setSwiper}
@@ -112,24 +124,18 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
                       <h3 className='text-2xl font-semibold'>
                         {question.question}
                       </h3>
-                      <ul className='space-y-4'>
+                      <ul className='space-y-6'>
                         {question.options.map((option) => (
-                          <li
-                            key={option.id}
-                            className='flex items-center space-x-2'
-                          >
-                            <Checkbox
-                              id={option.id}
-                              onClick={() =>
+                          <li key={option.id}>
+                            <Radio
+                              name={question.question}
+                              label={option.label}
+                              icon={option.icon}
+                              value={option.id}
+                              onChange={() =>
                                 handleChooseOption(question.id, option.id)
                               }
                             />
-                            <label
-                              htmlFor={option.id}
-                              className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                            >
-                              {option.label}
-                            </label>
                           </li>
                         ))}
                       </ul>

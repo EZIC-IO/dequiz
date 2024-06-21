@@ -1,3 +1,20 @@
+import {
+  BookHeart,
+  Crown,
+  Glasses,
+  Lightbulb,
+  MountainSnow,
+  Palette,
+  Rocket,
+  Search,
+  Shell,
+  Sun,
+  TentTree,
+  TreePine,
+  WandSparkles,
+  Zap,
+} from 'lucide-react';
+
 import { QuizType } from '../models/quiz';
 import { Character } from '../models/character';
 
@@ -27,6 +44,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 2,
               [Character.RANGER]: 2,
             },
+            icon: <Palette />,
           },
           {
             id: '2',
@@ -37,6 +55,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 2,
               [Character.RANGER]: 2,
             },
+            icon: <MountainSnow />,
           },
           {
             id: '3',
@@ -47,6 +66,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 1,
               [Character.RANGER]: 1,
             },
+            icon: <Lightbulb />,
           },
         ],
       },
@@ -65,6 +85,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 2,
               [Character.RANGER]: 3,
             },
+            icon: <TreePine />,
           },
           {
             id: '5',
@@ -75,6 +96,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 1,
               [Character.RANGER]: 2,
             },
+            icon: <MountainSnow />,
           },
           {
             id: '6',
@@ -85,6 +107,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 3,
               [Character.RANGER]: 1,
             },
+            icon: <Shell />,
           },
         ],
       },
@@ -103,6 +126,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 1,
               [Character.RANGER]: 2,
             },
+            icon: <Crown />,
           },
           {
             id: '8',
@@ -113,6 +137,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 1,
               [Character.RANGER]: 2,
             },
+            icon: <Glasses />,
           },
           {
             id: '9',
@@ -123,6 +148,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 3,
               [Character.RANGER]: 1,
             },
+            icon: <Rocket />,
           },
         ],
       },
@@ -141,6 +167,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 2,
               [Character.RANGER]: 3,
             },
+            icon: <TentTree />,
           },
           {
             id: '11',
@@ -151,6 +178,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 1,
               [Character.RANGER]: 1,
             },
+            icon: <BookHeart />,
           },
           {
             id: '12',
@@ -161,6 +189,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 3,
               [Character.RANGER]: 1,
             },
+            icon: <WandSparkles />,
           },
         ],
       },
@@ -179,6 +208,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 2,
               [Character.RANGER]: 3,
             },
+            icon: <Zap />,
           },
           {
             id: '12',
@@ -189,6 +219,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 1,
               [Character.RANGER]: 1,
             },
+            icon: <Search />,
           },
           {
             id: '13',
@@ -199,6 +230,7 @@ export const quizes: QuizType[] = [
               [Character.ROGUE]: 2,
               [Character.RANGER]: 2,
             },
+            icon: <Sun />,
           },
         ],
       },
