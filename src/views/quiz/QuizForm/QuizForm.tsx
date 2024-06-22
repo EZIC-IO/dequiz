@@ -1,7 +1,7 @@
 'use client';
 
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Line } from 'rc-progress';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -9,36 +9,49 @@ import { Button } from '@/components/ui/button';
 import CharacterAppearance from './CharacterAppearance';
 import Radio from '@/components/ui/radio';
 import { QuizType } from '@/api/models/quiz';
+import { FormValues } from './utils';
 
 type Props = {
   quiz: QuizType;
   currentSlideIndex: number;
+  swiper?: SwiperClass;
+  onSwiper: (swiper: SwiperClass) => void;
   onSlideChange: (index: number) => void;
-  onGenerate: (values: Record<string, string>) => void;
+  onSubmit: (values: FormValues) => void;
 };
 
 const QuizDetails = (props: Props) => {
-  const { quiz, onGenerate, currentSlideIndex, onSlideChange } = props;
-
-  const [swiper, setSwiper] = useState<SwiperClass>();
+  const { quiz, onSubmit, currentSlideIndex, onSlideChange, swiper, onSwiper } =
+    props;
   const [answeredQuestionIds, setAnsweredQuestionIds] = useState<Array<string>>(
     []
   );
 
-  const { handleSubmit, control } = useForm<Record<string, string>>();
+  const { handleSubmit, control } = useForm<FormValues>();
 
   const progress = (currentSlideIndex / (swiper?.slides?.length ?? 0)) * 100;
   const currentQuetion = quiz.questions[currentSlideIndex];
-  const isNextQuestionAllowed =
-    currentQuetion?.id && answeredQuestionIds.includes(currentQuetion.id);
+  const isLastSlide =
+    swiper && swiper?.slides && swiper.activeIndex === swiper.slides.length - 1;
 
-  const onSubmit = handleSubmit(onGenerate);
+  const isNextQuestionAllowed = useMemo(() => {
+    if (isLastSlide) {
+      // TODO: return true ?
+      return true;
+    }
+
+    return (
+      currentQuetion?.id && answeredQuestionIds.includes(currentQuetion.id)
+    );
+  }, [answeredQuestionIds, currentQuetion?.id, isLastSlide]);
+
+  const handleFormSubmit = handleSubmit(onSubmit);
 
   const handleNextQuestion = () => {
     if (!swiper) return;
 
-    if (swiper.activeIndex === swiper.slides.length - 1) {
-      onSubmit();
+    if (isLastSlide) {
+      handleFormSubmit();
     } else {
       swiper?.slideNext();
     }
@@ -62,7 +75,7 @@ const QuizDetails = (props: Props) => {
         <form onSubmit={(e) => e.preventDefault()}>
           <Swiper
             autoHeight
-            onSwiper={setSwiper}
+            onSwiper={onSwiper}
             allowTouchMove={false}
             onActiveIndexChange={(swiper) => onSlideChange(swiper.activeIndex)}
           >
@@ -105,10 +118,9 @@ const QuizDetails = (props: Props) => {
               </SwiperSlide>
             ))}
 
-            {/* TODO: */}
-            {/* <SwiperSlide>
-              <CharacterAppearance />
-            </SwiperSlide> */}
+            <SwiperSlide>
+              <CharacterAppearance control={control} />
+            </SwiperSlide>
           </Swiper>
 
           <div className='mt-10 flex justify-end'>
@@ -123,7 +135,7 @@ const QuizDetails = (props: Props) => {
                 disabled={!isNextQuestionAllowed}
                 onClick={handleNextQuestion}
               >
-                Next
+                {isLastSlide ? 'Generate' : 'Next'}
               </Button>
             </div>
           </div>

@@ -3,13 +3,13 @@ import { Hammer } from 'lucide-react';
 
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Character } from '@/api/models/character';
+import { RPGVocation } from '@/api/models/gen-image';
 import { CHARACTER_PROPERTIES } from '@/constants/character';
 import { Badge } from '@/components/ui/badge';
 import { weiToEth } from '@/utils/convert';
 
 type Props = {
-  character: Character;
+  character: RPGVocation;
   onReset: () => void;
   mintPrice: number;
   alreadyMintedGlobalAmount: number;

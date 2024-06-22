@@ -10,6 +10,7 @@ import { TOASTER_CONFIG } from '@/config/toaster';
 import { cn } from '@/lib/utils';
 
 import 'react-toastify/dist/ReactToastify.css';
+import 'rc-slider/assets/index.css';
 import 'swiper/css';
 import './globals.css';
 

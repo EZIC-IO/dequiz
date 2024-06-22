@@ -1,11 +1,11 @@
-import { Character } from '@/api/models/character';
+import { RPGVocation } from '@/api/models/gen-image';
 import { Sun, Heart, Leaf } from 'lucide-react';
 
-export const CHARACTERS_LABEL: Record<Character, string> = {
-  [Character.KNIGHT]: 'Knight',
-  [Character.WIZARD]: 'Wizard',
-  [Character.ROGUE]: 'Rogue',
-  [Character.RANGER]: 'Ranger',
+export const CHARACTERS_LABEL: Record<RPGVocation, string> = {
+  [RPGVocation.KNIGHT]: 'Knight',
+  [RPGVocation.WIZARD]: 'Wizard',
+  [RPGVocation.ROGUE]: 'Rogue',
+  [RPGVocation.RANGER]: 'Ranger',
 };
 
 interface Skill {
@@ -20,8 +20,8 @@ interface CharacterProperties {
 }
 
 // TODO: update the descriptions & skill icons
-export const CHARACTER_PROPERTIES: Record<Character, CharacterProperties> = {
-  [Character.KNIGHT]: {
+export const CHARACTER_PROPERTIES: Record<RPGVocation, CharacterProperties> = {
+  [RPGVocation.KNIGHT]: {
     title: 'Behold, the Knight Emerges!',
     description:
       'As a Knight, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
@@ -40,7 +40,7 @@ export const CHARACTER_PROPERTIES: Record<Character, CharacterProperties> = {
       },
     ],
   },
-  [Character.WIZARD]: {
+  [RPGVocation.WIZARD]: {
     title: 'Behold, the Wizard Emerges!',
     description:
       'As a Wizard, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
@@ -59,7 +59,7 @@ export const CHARACTER_PROPERTIES: Record<Character, CharacterProperties> = {
       },
     ],
   },
-  [Character.ROGUE]: {
+  [RPGVocation.ROGUE]: {
     title: 'Behold, the Rogue Emerges!',
     description:
       'As a Rogue, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
@@ -78,7 +78,7 @@ export const CHARACTER_PROPERTIES: Record<Character, CharacterProperties> = {
       },
     ],
   },
-  [Character.RANGER]: {
+  [RPGVocation.RANGER]: {
     title: 'Behold, the Ranger Emerges!',
     description:
       'As a Ranger, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
