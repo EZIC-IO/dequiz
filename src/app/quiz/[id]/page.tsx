@@ -115,7 +115,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className='h-full w-full pt-12'>
+    <div className='h-full w-full pt-12 pl-4'>
       <Card
         className='flex justify-between'
         background={currentSlideImages?.gradientImage}
@@ -131,7 +131,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
           />
         </div>
 
-        <div className='relative flex w-[55%] justify-end'>
+        <div className='relative flex w-[45%] justify-end'>
           {currentSlideImages.image && (
             <Image
               width={773}
