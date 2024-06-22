@@ -1,5 +1,18 @@
 import { RPGVocation } from '@/api/models/gen-image';
-import { Sun, Heart, Leaf } from 'lucide-react';
+import {
+  Sun,
+  Heart,
+  Leaf,
+  Sword,
+  Tent,
+  BicepsFlexed,
+  BookOpen,
+  Sparkles,
+  Map,
+  Pyramid,
+  Zap,
+  Moon,
+} from 'lucide-react';
 
 export const CHARACTERS_LABEL: Record<RPGVocation, string> = {
   [RPGVocation.KNIGHT]: 'Knight',
@@ -19,62 +32,61 @@ interface CharacterProperties {
   skills: Skill[];
 }
 
-// TODO: update the descriptions & skill icons
 export const CHARACTER_PROPERTIES: Record<RPGVocation, CharacterProperties> = {
   [RPGVocation.KNIGHT]: {
     title: 'Behold, the Knight Emerges!',
     description:
-      'As a Knight, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
+      'As a Knight, you embody the spirit of chivalry and honor, sworn to protect the realm and its people. Your strength and discipline are unparalleled, making you a stalwart defender in the face of danger. With your unwavering courage and mastery of combat, you stand as a beacon of justice, ready to confront any threat that dares to challenge the peace of the kingdom.',
     skills: [
       {
-        label: 'Adventourus',
-        icon: <Sun />,
+        label: 'Adventurousness',
+        icon: <Tent />,
       },
       {
-        label: 'Wisdom',
-        icon: <Heart />,
+        label: 'Strength',
+        icon: <BicepsFlexed />,
       },
       {
-        label: 'Strategy',
-        icon: <Leaf />,
+        label: 'Leadership',
+        icon: <Sword />,
       },
     ],
   },
   [RPGVocation.WIZARD]: {
     title: 'Behold, the Wizard Emerges!',
     description:
-      'As a Wizard, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
+      'As a Wizard, you are a master of the arcane arts, wielding powerful magic to shape the world around you. Your vast knowledge and wisdom set you apart, allowing you to unlock the secrets of the universe. With your spellbook in hand, you can summon elemental forces, conjure illusions, and bend reality to your will. Your intellect and mystical prowess make you a formidable force against any adversary.',
     skills: [
       {
         label: 'Knowledge',
-        icon: <Sun />,
+        icon: <BookOpen />,
       },
       {
-        label: 'Wizdom',
-        icon: <Heart />,
+        label: 'Wisdom',
+        icon: <Pyramid />,
       },
       {
         label: 'Strategy',
-        icon: <Leaf />,
+        icon: <Map />,
       },
     ],
   },
   [RPGVocation.ROGUE]: {
     title: 'Behold, the Rogue Emerges!',
     description:
-      'As a Rogue, you are a guardian of the wild, always seeking harmony between nature and civilization. Your keen senses and unmatched agility make you a formidable protector of the forest. You thrive on adventure, using your resourcefulness and bravery to overcome any challenge.',
+      'As a Rogue, you are the shadow that moves unseen, a master of stealth and deception. Your agility and cunning allow you to navigate the darkest corners and uncover hidden truths. Whether you are gathering intelligence or striking from the shadows, your quick reflexes and sharp mind give you the upper hand. You thrive in the underworld, using your skills to outsmart and outmaneuver any opponent that stands in your way.',
     skills: [
       {
         label: 'Innovativeness',
-        icon: <Sun />,
+        icon: <Sparkles />,
       },
       {
         label: 'Agility',
-        icon: <Heart />,
+        icon: <Moon />,
       },
       {
         label: 'Swiftness',
-        icon: <Leaf />,
+        icon: <Zap />,
       },
     ],
   },
@@ -89,7 +101,7 @@ export const CHARACTER_PROPERTIES: Record<RPGVocation, CharacterProperties> = {
       },
       {
         label: 'Agility',
-        icon: <Heart />,
+        icon: <Moon />,
       },
       {
         label: 'Resourcefulness',
