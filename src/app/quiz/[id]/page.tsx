@@ -7,14 +7,11 @@ import { Card } from '@/components/ui/card';
 import { useGetQuizDetails } from '@/api/hooks/useGetQuizDetails';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { generateCharacter } from '@/utils/quiz';
-import { RPGVocation } from '@/api/models/gen-image';
+import { GenPayloadDto, RPGVocation } from '@/api/models/gen-image';
 import { QuizForm, QuizResults } from '@/views/quiz';
 import Loader from '@/components/loader';
 import { SwiperClass } from 'swiper/react';
-import {
-  FormValues,
-  mapFormValuesToGenPayload,
-} from '@/views/quiz/QuizForm/utils';
+import { FormValues } from '@/views/quiz/QuizForm/utils';
 import { useGenerateImage } from '@/api/hooks/useGenerateImage';
 
 const characterAppearanceImages = {
@@ -31,6 +28,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [character, setCharacter] = useState<RPGVocation | null>(null);
   const [swiper, setSwiper] = useState<SwiperClass>();
+  const [genPayloadData, setGenPayloadData] = useState<GenPayloadDto>();
 
   const { generateImage, isPending: isGenerating } = useGenerateImage();
   const { quizDetails } = useGetQuizDetails(id);
@@ -75,31 +73,30 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     return null;
   }
 
-  const handleReset = () => {
-    setCharacter(null);
-    setCurrentSlideIndex(0);
-  };
-
   const handleGenerateCharacter = (values: FormValues) => {
     const { hairLength, hairColor, facialHair, eyeColor, gender, ...rest } =
       values;
 
     const character = generateCharacter(quizDetails.questions, rest);
+    const data: GenPayloadDto = {
+      hairColor,
+      hairLength,
+      facialHair,
+      eyeColor,
+      gender,
+      rpgVocation: character,
+    };
 
     setCharacter(character);
+    setGenPayloadData(data);
 
-    generateImage(
-      mapFormValuesToGenPayload(
-        {
-          hairLength,
-          hairColor,
-          facialHair,
-          eyeColor,
-          gender,
-        },
-        character
-      )
-    );
+    generateImage(data);
+  };
+
+  const handleRegenerateCharacter = () => {
+    if (genPayloadData) {
+      generateImage(genPayloadData);
+    }
   };
 
   if (character) {
@@ -107,20 +104,20 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
       <QuizResults
         character={character}
         mintPrice={mintPrice}
-        onReset={handleReset}
         totalSupply={totalSupply}
+        onRegenerate={handleRegenerateCharacter}
         alreadyMintedGlobalAmount={alreadyMintedGlobalAmount}
       />
     );
   }
 
   return (
-    <div className='h-full w-full pt-12 pl-4'>
+    <div className='h-full w-full pl-4 pt-12'>
       <Card
         className='flex justify-between'
         background={currentSlideImages?.gradientImage}
       >
-        <div className='w-[45%] py-[60px] pl-[51px] pr-[66px]'>
+        <div className='w-[45%] overflow-y-scroll py-[60px] pl-[51px] pr-[66px]'>
           <QuizForm
             swiper={swiper}
             onSwiper={setSwiper}

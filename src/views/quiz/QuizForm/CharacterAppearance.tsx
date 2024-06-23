@@ -9,6 +9,8 @@ import {
   CharacterAppearanceFormValues,
   GENDER_OPTIONS,
   HAIR_LENGTH_OPTIONS,
+  EYE_COLOR_OPTONS,
+  HAIR_COLOR_OPTIONS,
 } from './utils';
 import { Gender } from '@/api/models/gen-image';
 
@@ -19,7 +21,6 @@ type Props = {
 const CharacterAppearance = (props: Props) => {
   const { control } = props;
 
-  // Watch the value of the gender field
   const selectedGender = useWatch({
     control,
     name: 'gender',
@@ -48,14 +49,49 @@ const CharacterAppearance = (props: Props) => {
           ))}
         </ul>
 
-        {/* TODO: add colors fields */}
-        {/* <div className='space-y-6'>
+        <div className='space-y-6'>
           <div className='font-lg'>Eye Color</div>
+          <ul className='flex gap-2'>
+            {EYE_COLOR_OPTONS.map((color) => (
+              <li key={`${color.value}-${color.label}`}>
+                <Controller
+                  name='eyeColor'
+                  control={control}
+                  render={({ field }) => (
+                    <Radio
+                      {...field}
+                      value={color.value}
+                      labelStyles={{ backgroundColor: color.label }}
+                      className='h-[32px] w-[32px] rounded-full'
+                    />
+                  )}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className='space-y-6'>
           <div className='font-lg'>Hair Color</div>
-        </div> */}
+          <ul className='flex gap-2'>
+            {HAIR_COLOR_OPTIONS.map((color) => (
+              <li key={`${color.value}-${color.label}`}>
+                <Controller
+                  name='hairColor'
+                  control={control}
+                  render={({ field }) => (
+                    <Radio
+                      {...field}
+                      value={color.value}
+                      labelStyles={{ backgroundColor: color.label }}
+                      className='h-[32px] w-[32px] rounded-full'
+                    />
+                  )}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className='space-y-6'>
           <div className='font-lg'>Hair Length</div>
@@ -72,15 +108,12 @@ const CharacterAppearance = (props: Props) => {
           </ul>
         </div>
 
-        {/* Render beard option only for Male */}
         {selectedGender === Gender.MALE && (
-          <div className='space-y-6'>
-            <div className='flex items-center space-x-2'>
-              <Switch id='facial-hair' />
-              <Label className='pl-4' htmlFor='facial-hair'>
-                Facial Hair
-              </Label>
-            </div>
+          <div className='flex items-center space-x-2'>
+            <Switch id='facial-hair' />
+            <Label className='pl-4' htmlFor='facial-hair'>
+              Facial Hair
+            </Label>
           </div>
         )}
       </div>
@@ -89,6 +122,3 @@ const CharacterAppearance = (props: Props) => {
 };
 
 export default CharacterAppearance;
-function useFormValues() {
-  throw new Error('Function not implemented.');
-}
