@@ -62,7 +62,7 @@ const QuizDetails = (props: Props) => {
   };
 
   return (
-    <div className='h-[40vh]'>
+    <div className='h-[50vh]'>
       <Line
         percent={progress}
         strokeWidth={4}

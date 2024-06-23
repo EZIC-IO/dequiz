@@ -33,6 +33,21 @@ export const GENDER_OPTIONS = [
   },
 ];
 
+export const HAIR_LENGTH_OPTIONS = [
+  {
+    label: 'Short',
+    value: HairLength.SHORT,
+  },
+  {
+    label: 'Medium',
+    value: HairLength.MEDIUM,
+  },
+  {
+    label: 'Long',
+    value: HairLength.LONG,
+  },
+];
+
 export const EYE_COLORS = Object.values(EyeColor);
 
 export const HAIR_COLORS = Object.values(HairColor);

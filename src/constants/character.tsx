@@ -1,7 +1,6 @@
 import { RPGVocation } from '@/api/models/gen-image';
 import {
   Sun,
-  Heart,
   Leaf,
   Sword,
   Tent,

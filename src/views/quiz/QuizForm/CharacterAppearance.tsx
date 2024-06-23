@@ -1,12 +1,16 @@
-import { Controller, Control } from 'react-hook-form';
-import Slider from 'rc-slider';
+import { Controller, Control, useWatch } from 'react-hook-form';
+
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 
 import Radio from '@/components/ui/radio';
 import {
   FormValues,
   CharacterAppearanceFormValues,
   GENDER_OPTIONS,
+  HAIR_LENGTH_OPTIONS,
 } from './utils';
+import { Gender } from '@/api/models/gen-image';
 
 type Props = {
   control: Control<FormValues, CharacterAppearanceFormValues>;
@@ -14,6 +18,12 @@ type Props = {
 
 const CharacterAppearance = (props: Props) => {
   const { control } = props;
+
+  // Watch the value of the gender field
+  const selectedGender = useWatch({
+    control,
+    name: 'gender',
+  });
 
   return (
     <div>
@@ -49,72 +59,36 @@ const CharacterAppearance = (props: Props) => {
 
         <div className='space-y-6'>
           <div className='font-lg'>Hair Length</div>
-
-          <Controller
-            name='hairLength'
-            control={control}
-            render={({ field }) => (
-              <Slider
-                {...field}
-                className='m-2'
-                styles={{
-                  track: {
-                    backgroundColor: '#64748B',
-                    height: 8,
-                  },
-                  rail: {
-                    backgroundColor: '#1E293B',
-                    height: 8,
-                  },
-                }}
-                dotStyle={{
-                  width: 20,
-                  height: 20,
-                }}
-                activeDotStyle={{
-                  width: 20,
-                  height: 20,
-                }}
-              />
-            )}
-          />
+          <ul className='flex gap-2'>
+            {HAIR_LENGTH_OPTIONS.map((option) => (
+              <li key={option.value}>
+                <Controller
+                  name='hairLength'
+                  control={control}
+                  render={({ field }) => <Radio {...field} {...option} />}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className='space-y-6'>
-          <div className='font-lg'>Facial Hair</div>
-
-          <Controller
-            name='facialHair'
-            control={control}
-            render={({ field }) => (
-              <Slider
-                {...field}
-                className='m-2'
-                styles={{
-                  track: {
-                    backgroundColor: '#64748B',
-                    height: 8,
-                  },
-                  rail: {
-                    backgroundColor: '#1E293B',
-                    height: 8,
-                  },
-                }}
-                dotStyle={{
-                  width: 20,
-                  height: 20,
-                }}
-                activeDotStyle={{
-                  width: 20,
-                  height: 20,
-                }}
-              />
-            )}
-          />
-        </div>
+        {/* Render beard option only for Male */}
+        {selectedGender === Gender.MALE && (
+          <div className='space-y-6'>
+            <div className='flex items-center space-x-2'>
+              <Switch id='facial-hair' />
+              <Label className='pl-4' htmlFor='facial-hair'>
+                Facial Hair
+              </Label>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default CharacterAppearance;
+function useFormValues() {
+  throw new Error('Function not implemented.');
+}
