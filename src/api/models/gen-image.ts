@@ -89,13 +89,6 @@ export enum EyeColorHEX {
   VIOLET = '#EE82EE',
 }
 
-export enum FacialHair {
-  NO = 'no',
-  SHORT = 'short',
-  MEDIUM = 'medium',
-  LONG = 'long',
-}
-
 export interface GenImgDto {
   epochId: string;
   identityHash: string;
@@ -108,6 +101,6 @@ export interface GenPayloadDto {
   skinTone?: SkinTone;
   hairColor?: HairColor;
   hairLength?: HairLength;
-  facialHair?: FacialHair;
+  facialHair?: boolean;
   eyeColor?: EyeColor;
 }

@@ -1,19 +1,19 @@
 import {
   EyeColor,
-  FacialHair,
+  EyeColorHEX,
   Gender,
   GenPayloadDto,
   HairColor,
+  HairColorHEX,
   HairLength,
   RPGVocation,
 } from '@/api/models/gen-image';
 
 export type CharacterAppearanceFormValues = Omit<
   GenPayloadDto,
-  'rpgVocation' | 'hairLength' | 'facialHair'
+  'rpgVocation' | 'facialHair'
 > & {
-  hairLength?: number;
-  facialHair?: number;
+  facialHair: boolean;
 };
 
 export type FormValues = Record<string, string> & CharacterAppearanceFormValues;
@@ -33,42 +33,99 @@ export const GENDER_OPTIONS = [
   },
 ];
 
-export const EYE_COLORS = Object.values(EyeColor);
+export const HAIR_LENGTH_OPTIONS = [
+  {
+    label: 'Short',
+    value: HairLength.SHORT,
+  },
+  {
+    label: 'Medium',
+    value: HairLength.MEDIUM,
+  },
+  {
+    label: 'Long',
+    value: HairLength.LONG,
+  },
+];
 
-export const HAIR_COLORS = Object.values(HairColor);
+export const EYE_COLOR_OPTONS = [
+  {
+    value: EyeColor.DARK_BROWN,
+    label: EyeColorHEX.DARK_BROWN,
+  },
+  {
+    value: EyeColor.BROWN,
+    label: EyeColorHEX.BROWN,
+  },
+  {
+    value: EyeColor.HAZEL,
+    label: EyeColorHEX.HAZEL,
+  },
+  {
+    value: EyeColor.AMBER,
+    label: EyeColorHEX.AMBER,
+  },
+  {
+    value: EyeColor.GREEN,
+    label: EyeColorHEX.GREEN,
+  },
+  {
+    value: EyeColor.BLUE,
+    label: EyeColorHEX.BLUE,
+  },
+  {
+    value: EyeColor.GRAY,
+    label: EyeColorHEX.GRAY,
+  },
+  {
+    value: EyeColor.LIGHT_BLUE,
+    label: EyeColorHEX.LIGHT_BLUE,
+  },
+  {
+    value: EyeColor.VIOLET,
+    label: EyeColorHEX.VIOLET,
+  },
+];
 
-const getHairLength = (hairLength = 0): HairLength => {
-  if (hairLength < 30) {
-    return HairLength.SHORT;
-  } else if (hairLength < 70) {
-    return HairLength.MEDIUM;
-  } else {
-    return HairLength.LONG;
-  }
-};
-
-const getFacialHairLabel = (facialHair = 0): FacialHair => {
-  if (!facialHair) {
-    return FacialHair.NO;
-  } else if (facialHair < 30) {
-    return FacialHair.SHORT;
-  } else if (facialHair < 70) {
-    return FacialHair.MEDIUM;
-  } else {
-    return FacialHair.LONG;
-  }
-};
-
-export const mapFormValuesToGenPayload = (
-  values: CharacterAppearanceFormValues,
-  rpgVocation: RPGVocation
-): GenPayloadDto => {
-  const { facialHair, hairLength, ...rest } = values;
-
-  return {
-    ...rest,
-    rpgVocation,
-    hairLength: getHairLength(hairLength),
-    facialHair: getFacialHairLabel(facialHair),
-  };
-};
+export const HAIR_COLOR_OPTIONS = [
+  {
+    value: HairColor.BLACK,
+    label: HairColorHEX.BLACK,
+  },
+  {
+    value: HairColor.DARK_BROWN,
+    label: HairColorHEX.DARK_BROWN,
+  },
+  {
+    value: EyeColor.BROWN,
+    label: HairColorHEX.BROWN,
+  },
+  {
+    value: HairColor.LIGHT_BROWN,
+    label: HairColorHEX.LIGHT_BROWN,
+  },
+  {
+    value: HairColor.FAIR,
+    label: HairColorHEX.FAIR,
+  },
+  {
+    value: HairColor.BLONDE,
+    label: HairColorHEX.BLONDE,
+  },
+  {
+    value: HairColor.DIRTY_BLONDE,
+    label: HairColorHEX.DIRTY_BLONDE,
+  },
+  {
+    value: HairColor.RED,
+    label: HairColorHEX.RED,
+  },
+  {
+    value: HairColor.GRAY,
+    label: HairColorHEX.GRAY,
+  },
+  {
+    value: HairColor.WHITE,
+    label: HairColorHEX.WHITE,
+  },
+];

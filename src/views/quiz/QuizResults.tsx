@@ -10,7 +10,7 @@ import { weiToEth } from '@/utils/convert';
 
 type Props = {
   character: RPGVocation;
-  onReset: () => void;
+  onRegenerate: () => void;
   mintPrice: number;
   alreadyMintedGlobalAmount: number;
   totalSupply: number;
@@ -20,7 +20,7 @@ const QuizResults = (props: Props) => {
   const {
     character,
     mintPrice,
-    onReset,
+    onRegenerate,
     alreadyMintedGlobalAmount,
     totalSupply,
   } = props;
@@ -64,7 +64,7 @@ const QuizResults = (props: Props) => {
               Claim Mint - {weiToEth(mintPrice)}
             </Button>
 
-            <Button variant='secondary' onClick={onReset}>
+            <Button variant='secondary' onClick={onRegenerate}>
               Generate Again
             </Button>
           </div>
