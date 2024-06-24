@@ -5,7 +5,8 @@ import { useReadContract } from 'thirdweb/react';
 import { baseSepolia } from 'thirdweb/chains';
 
 import { abi } from '@/config/abi';
-import { thirdwebClient, contractAddress } from '@/config/thirdweb';
+import { thirdwebClient } from '@/config/thirdweb';
+import { contractAddress } from '@/constants/contract';
 
 const useGetQuizContractData = () => {
   const contract = getContract({

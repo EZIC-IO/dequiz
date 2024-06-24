@@ -6,8 +6,7 @@ import {
   HairColor,
   HairColorHEX,
   HairLength,
-  RPGVocation,
-} from '@/api/models/gen-image';
+} from '@/api/models/gen-image.dto';
 
 export type CharacterAppearanceFormValues = Omit<
   GenPayloadDto,

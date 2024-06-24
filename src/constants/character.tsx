@@ -1,4 +1,4 @@
-import { RPGVocation } from '@/api/models/gen-image';
+import { RPGVocation } from '@/api/models/gen-image.dto';
 import {
   Sun,
   Leaf,

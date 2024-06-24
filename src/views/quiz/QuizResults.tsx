@@ -1,12 +1,15 @@
 import Image from 'next/image';
-import { Hammer } from 'lucide-react';
+import { BadgeInfo, Hammer, RotateCw } from 'lucide-react';
 
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { RPGVocation } from '@/api/models/gen-image';
+import { RPGVocation } from '@/api/models/gen-image.dto';
 import { CHARACTER_PROPERTIES } from '@/constants/character';
 import { Badge } from '@/components/ui/badge';
-import { weiToEth } from '@/utils/convert';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+import { GenerationActionResponse } from '@/api/hooks/useGenerateImage';
 
 type Props = {
   character: RPGVocation;
@@ -14,6 +17,7 @@ type Props = {
   mintPrice: number;
   alreadyMintedGlobalAmount: number;
   totalSupply: number;
+  generationAction: GenerationActionResponse;
 };
 
 const QuizResults = (props: Props) => {
@@ -23,24 +27,27 @@ const QuizResults = (props: Props) => {
     onRegenerate,
     alreadyMintedGlobalAmount,
     totalSupply,
+    generationAction,
   } = props;
+
+  const [characterName, setCharacterName] = useState('');
+
   const properties = CHARACTER_PROPERTIES[character];
 
   return (
     <Card className='flex' background='/gradient/results-gradient.png'>
       <div className='w-[60%]'>
         <Image
-          // TODO: replace w/ image from the API
-          src='/quiz/quiz-results.png'
           alt='Quiz results'
           width={773}
           height={769}
           quality={100}
+          src={generationAction.imageUrl}
         />
       </div>
 
       <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
-        <div className='flex flex-col gap-10'>
+        <div className='flex flex-col gap-5'>
           <h3 className='text-2xl font-semibold'>{properties.title}</h3>
 
           <div className='flex gap-2'>
@@ -59,28 +66,50 @@ const QuizResults = (props: Props) => {
 
           <div>{properties.description}</div>
 
-          <div className='flex gap-8'>
-            <Button variant='secondary'>
-              Claim Mint - {weiToEth(mintPrice)}
-            </Button>
+          <div>
+            <Label className='pb-2' htmlFor='character-name'>
+              Name your Character
+            </Label>
 
-            <Button variant='secondary' onClick={onRegenerate}>
-              Generate Again
-            </Button>
+            <div className='flex gap-2'>
+              <Input
+                id='character-name'
+                placeholder='Name'
+                value={characterName}
+                onChange={(e) => setCharacterName(e.target.value)}
+              />
+
+              <Button variant='secondary'>Proceed</Button>
+            </div>
           </div>
 
-          {alreadyMintedGlobalAmount && totalSupply && (
-            <div className='flex'>
-              <Badge variant='outline' className='flex gap-2 text-lg'>
-                <Hammer />
+          <div className='mt-5'>
+            <div className='flex justify-between gap-2'>
+              <Button variant='secondary' onClick={onRegenerate}>
+                Generate Again
+                <RotateCw className='ml-2 h-4 w-4' />
+              </Button>
 
-                <span>
-                  Minted: {Number(alreadyMintedGlobalAmount)}/
-                  {Number(totalSupply)}
-                </span>
-              </Badge>
+              {alreadyMintedGlobalAmount && totalSupply && (
+                <div className='flex'>
+                  <Badge variant='outline' className='flex gap-2 text-lg'>
+                    <Hammer />
+
+                    <span>
+                      Minted: {Number(alreadyMintedGlobalAmount)}/
+                      {Number(totalSupply)}
+                    </span>
+                  </Badge>
+                </div>
+              )}
             </div>
-          )}
+
+            {/* TODO: count attempts | locally or be ? */}
+            <div className='mt-3 flex items-center gap-2 text-xs'>
+              <BadgeInfo />
+              Note: you have 3 attempts remaining
+            </div>
+          </div>
         </div>
       </div>
     </Card>

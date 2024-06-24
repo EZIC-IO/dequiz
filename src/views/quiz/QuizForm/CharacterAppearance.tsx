@@ -12,7 +12,7 @@ import {
   EYE_COLOR_OPTONS,
   HAIR_COLOR_OPTIONS,
 } from './utils';
-import { Gender } from '@/api/models/gen-image';
+import { Gender } from '@/api/models/gen-image.dto';
 
 type Props = {
   control: Control<FormValues, CharacterAppearanceFormValues>;

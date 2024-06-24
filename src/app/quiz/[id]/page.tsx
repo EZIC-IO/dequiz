@@ -7,12 +7,13 @@ import { Card } from '@/components/ui/card';
 import { useGetQuizDetails } from '@/api/hooks/useGetQuizDetails';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { generateCharacter } from '@/utils/quiz';
-import { GenPayloadDto, RPGVocation } from '@/api/models/gen-image';
+import { GenImgDto, RPGVocation } from '@/api/models/gen-image.dto';
 import { QuizForm, QuizResults } from '@/views/quiz';
 import Loader from '@/components/loader';
 import { SwiperClass } from 'swiper/react';
 import { FormValues } from '@/views/quiz/QuizForm/utils';
 import { useGenerateImage } from '@/api/hooks/useGenerateImage';
+import { CURRRENT_EPOCH_ID } from '@/constants/epoch';
 
 const characterAppearanceImages = {
   gradientImage: '/gradient/gradient-6.png',
@@ -28,9 +29,13 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [character, setCharacter] = useState<RPGVocation | null>(null);
   const [swiper, setSwiper] = useState<SwiperClass>();
-  const [genPayloadData, setGenPayloadData] = useState<GenPayloadDto>();
+  const [genPayloadData, setGenPayloadData] = useState<GenImgDto>();
 
-  const { generateImage, isPending: isGenerating } = useGenerateImage();
+  const {
+    generateImage,
+    isPending: isGenerating,
+    data: generationAction,
+  } = useGenerateImage();
   const { quizDetails } = useGetQuizDetails(id);
   const { totalSupply, alreadyMintedGlobalAmount, mintPrice, isLoading } =
     useGetQuizContractData();
@@ -78,13 +83,18 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
       values;
 
     const character = generateCharacter(quizDetails.questions, rest);
-    const data: GenPayloadDto = {
-      hairColor,
-      hairLength,
-      facialHair,
-      eyeColor,
-      gender,
-      rpgVocation: character,
+    const data: GenImgDto = {
+      epochId: CURRRENT_EPOCH_ID,
+      // TODO: generate identityHash
+      identityHash: '0x1234567890',
+      payload: {
+        hairColor,
+        hairLength,
+        facialHair,
+        eyeColor,
+        gender,
+        rpgVocation: character,
+      },
     };
 
     setCharacter(character);
@@ -99,12 +109,13 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  if (character) {
+  if (character && generationAction) {
     return (
       <QuizResults
         character={character}
         mintPrice={mintPrice}
         totalSupply={totalSupply}
+        generationAction={generationAction}
         onRegenerate={handleRegenerateCharacter}
         alreadyMintedGlobalAmount={alreadyMintedGlobalAmount}
       />
@@ -112,12 +123,12 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className='h-full w-full pl-4 pt-12'>
+    <div className='h-full w-full pl-4'>
       <Card
         className='flex justify-between'
         background={currentSlideImages?.gradientImage}
       >
-        <div className='w-[45%] overflow-y-scroll py-[60px] pl-[51px] pr-[66px]'>
+        <div className='w-[55%] overflow-y-scroll py-[60px] pl-[51px] pr-[66px]'>
           <QuizForm
             swiper={swiper}
             onSwiper={setSwiper}

@@ -1,5 +1,5 @@
 import { QustionType } from '@/api/models/quiz';
-import { RPGVocation } from '@/api/models/gen-image';
+import { RPGVocation } from '@/api/models/gen-image.dto';
 
 export const generateCharacter = (
   questions: QustionType[],

@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 import { QuizType } from '../models/quiz';
-import { RPGVocation } from '../models/gen-image';
+import { RPGVocation } from '../models/gen-image.dto';
 
 export const quizes: QuizType[] = [
   {
