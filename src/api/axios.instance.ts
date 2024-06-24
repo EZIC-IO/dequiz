@@ -10,14 +10,24 @@ nextAPI.interceptors.request.use(
     if (config.method === 'post') {
       const secret = process.env.NEXT_PUBLIC_SIGNATURE_KEY ?? '';
       const timestamp = Date.now();
+      const url = `${config.url}?timestamp=${timestamp}`;
 
-      const message = `${config.url}?timestamp=${timestamp}`;
-      const signature = await generateSignature(message, secret);
+      const signature = await generateSignature(url, secret);
 
+      config.url = url;
       config.headers['x-signature'] = signature;
     }
 
     return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  function (response) {
+    return response.data;
   },
   function (error) {
     return Promise.reject(error);
