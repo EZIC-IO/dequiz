@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useActiveAccount } from 'thirdweb/react';
 
 import { Card } from '@/components/ui/card';
 import { useGetQuizDetails } from '@/api/hooks/useGetQuizDetails';
@@ -14,6 +15,9 @@ import { SwiperClass } from 'swiper/react';
 import { FormValues } from '@/views/quiz/QuizForm/utils';
 import { useGenerateImage } from '@/api/hooks/useGenerateImage';
 import { CURRRENT_EPOCH_ID } from '@/constants/epoch';
+import { GENERATE_IMAGE_TOTAL_ATTEMPTS } from '@/constants/generage-image';
+import { STORAGE_GENERATE_ATTEMPTS } from '@/constants/storage-keys';
+import { hashWalletAddress } from '@/utils/signature';
 
 const characterAppearanceImages = {
   gradientImage: '/gradient/gradient-6.png',
@@ -26,16 +30,32 @@ const characterAppearanceImages = {
 const QuizDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
+  const activeAccount = useActiveAccount();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [character, setCharacter] = useState<RPGVocation | null>(null);
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [genPayloadData, setGenPayloadData] = useState<GenImgDto>();
+  const [attemptsLeft, setAttemptsLeft] = useState(
+    GENERATE_IMAGE_TOTAL_ATTEMPTS
+  );
+
+  const handleGenerateImageSuccess = () => {
+    setAttemptsLeft((prev) => {
+      const attemptsLeft = prev - 1;
+
+      localStorage.setItem(STORAGE_GENERATE_ATTEMPTS, attemptsLeft.toString());
+
+      return attemptsLeft;
+    });
+  };
 
   const {
     generateImage,
     isPending: isGenerating,
     data: generationAction,
-  } = useGenerateImage();
+  } = useGenerateImage({
+    onSuccess: handleGenerateImageSuccess,
+  });
   const { quizDetails } = useGetQuizDetails(id);
   const { totalSupply, alreadyMintedGlobalAmount, mintPrice, isLoading } =
     useGetQuizContractData();
@@ -64,6 +84,18 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     isCharacterAppearanceSlide,
   ]);
 
+  useEffect(() => {
+    try {
+      const attemptsLeft = localStorage.getItem(STORAGE_GENERATE_ATTEMPTS);
+
+      if (attemptsLeft) {
+        setAttemptsLeft(+attemptsLeft);
+      }
+    } catch (e) {
+      setAttemptsLeft(GENERATE_IMAGE_TOTAL_ATTEMPTS);
+    }
+  }, []);
+
   if (isLoading) {
     return (
       <Loader title='Forging your destiny in the realms of fantasy... Prepare to unveil your true calling.' />
@@ -79,14 +111,15 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   }
 
   const handleGenerateCharacter = (values: FormValues) => {
+    if (!activeAccount?.address) return;
+
     const { hairLength, hairColor, facialHair, eyeColor, gender, ...rest } =
       values;
 
     const character = generateCharacter(quizDetails.questions, rest);
     const data: GenImgDto = {
       epochId: CURRRENT_EPOCH_ID,
-      // TODO: generate identityHash
-      identityHash: '0x1234567890',
+      identityHash: hashWalletAddress(activeAccount?.address),
       payload: {
         hairColor,
         hairLength,
@@ -115,6 +148,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
         character={character}
         mintPrice={mintPrice}
         totalSupply={totalSupply}
+        attemptsLeft={attemptsLeft}
         generationAction={generationAction}
         onRegenerate={handleRegenerateCharacter}
         alreadyMintedGlobalAmount={alreadyMintedGlobalAmount}

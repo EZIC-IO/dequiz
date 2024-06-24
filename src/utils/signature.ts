@@ -1,3 +1,5 @@
+import CryptoJS from 'crypto-js';
+
 export const generateSignature = async (message: string, secret: string) => {
   const encoder = new TextEncoder();
   const keyData = encoder.encode(secret);
@@ -15,4 +17,10 @@ export const generateSignature = async (message: string, secret: string) => {
   return Array.from(new Uint8Array(signature))
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
+};
+
+export const hashWalletAddress = (walletAddress: string) => {
+  const hash = CryptoJS.SHA256(walletAddress.toLowerCase());
+
+  return hash.toString(CryptoJS.enc.Hex);
 };

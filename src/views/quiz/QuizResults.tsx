@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { BadgeInfo, Hammer, RotateCw } from 'lucide-react';
+import pluralize from 'pluralize';
 
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ type Props = {
   mintPrice: number;
   alreadyMintedGlobalAmount: number;
   totalSupply: number;
+  attemptsLeft: number;
   generationAction: GenerationActionResponse;
 };
 
@@ -25,6 +27,7 @@ const QuizResults = (props: Props) => {
     character,
     mintPrice,
     onRegenerate,
+    attemptsLeft,
     alreadyMintedGlobalAmount,
     totalSupply,
     generationAction,
@@ -33,6 +36,7 @@ const QuizResults = (props: Props) => {
   const [characterName, setCharacterName] = useState('');
 
   const properties = CHARACTER_PROPERTIES[character];
+  const hasAttempts = attemptsLeft > 0;
 
   return (
     <Card className='flex' background='/gradient/results-gradient.png'>
@@ -85,7 +89,11 @@ const QuizResults = (props: Props) => {
 
           <div className='mt-5'>
             <div className='flex justify-between gap-2'>
-              <Button variant='secondary' onClick={onRegenerate}>
+              <Button
+                disabled={!hasAttempts}
+                variant='secondary'
+                onClick={onRegenerate}
+              >
                 Generate Again
                 <RotateCw className='ml-2 h-4 w-4' />
               </Button>
@@ -104,10 +112,10 @@ const QuizResults = (props: Props) => {
               )}
             </div>
 
-            {/* TODO: count attempts | locally or be ? */}
             <div className='mt-3 flex items-center gap-2 text-xs'>
               <BadgeInfo />
-              Note: you have 3 attempts remaining
+              Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
+              remaining
             </div>
           </div>
         </div>
