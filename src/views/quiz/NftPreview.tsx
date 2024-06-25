@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { Wand } from 'lucide-react';
 import { useWriteContract } from 'wagmi';
 import { toEther } from 'thirdweb/utils';
+import { baseSepolia } from 'thirdweb/chains';
+import {
+  useActiveWalletChain,
+  useSwitchActiveWalletChain,
+} from 'thirdweb/react';
 
 import { abi } from '@/config/abi';
 import { Button } from '@/components/ui/button';
@@ -24,7 +29,11 @@ const NftPreview = (props: Props) => {
 
   const [isMintResultModalOpen, setIsMintResultModalOpen] = useState(false);
 
+  const chain = useActiveWalletChain();
+  const switchChain = useSwitchActiveWalletChain();
   const { reportSuccessfulMint } = useReportSuccessfulMint();
+
+  const isCorrectChain = chain?.id === baseSepolia.id;
 
   const handleMintSuccess = (minTx: string) => {
     setIsMintResultModalOpen(true);
@@ -35,16 +44,24 @@ const NftPreview = (props: Props) => {
   const { writeContract: mint, isPending: claimIsPending } = useWriteContract({
     mutation: {
       onSuccess: handleMintSuccess,
+      onError: (e) => {
+        console.error('Error minting', e);
+      },
     },
   });
 
-  const handleMint = () => {
+  const handleChangeNetwork = () => {
+    switchChain(baseSepolia);
+  };
+
+  const handleMint = async () => {
     mint({
       abi,
       functionName: 'safeMint',
       address: contractAddress,
       args: [generationAction?.metadataBareIPFS],
       value: mintPrice,
+      chainId: baseSepolia.id,
     });
   };
 
@@ -58,10 +75,10 @@ const NftPreview = (props: Props) => {
 
   return (
     <>
-      {generationAction?.imageGatewayIPFS && (
+      {generationAction && (
         <MintResult
           open={isMintResultModalOpen}
-          image={generationAction.imageGatewayIPFS}
+          generationAction={generationAction}
           onOpenChange={handleMintResulModalOpenChange}
         />
       )}
@@ -90,13 +107,20 @@ const NftPreview = (props: Props) => {
 
                   <div>
                     <div className='text-xl'>Your NFT is ready!</div>
-                    <Button
-                      disabled={claimIsPending}
-                      className='mt-10'
-                      onClick={handleMint}
-                    >
-                      {claimIsPending ? 'Minting...' : 'Mint'}
-                    </Button>
+                    {isCorrectChain ? (
+                      <Button
+                        disabled={claimIsPending}
+                        className='mt-10'
+                        onClick={handleMint}
+                      >
+                        {claimIsPending ? 'Minting...' : 'Mint'}
+                      </Button>
+                    ) : (
+                      <Button className='mt-10' onClick={handleChangeNetwork}>
+                        Change Network
+                      </Button>
+                    )}
+
                     <div className='mt-4'>{toEther(mintPrice)} ETH</div>
                   </div>
                 </div>

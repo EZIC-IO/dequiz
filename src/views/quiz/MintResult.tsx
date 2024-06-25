@@ -11,13 +11,12 @@ import { GenerationAction } from '@/api/models/generation.dto';
 
 type Props = {
   open: boolean;
-  image: string;
-  generationAction?: GenerationAction;
+  generationAction: GenerationAction;
   onOpenChange: (open: boolean) => void;
 };
 
 const MintResult = (props: Props) => {
-  const { open, onOpenChange, image, generationAction } = props;
+  const { open, onOpenChange, generationAction } = props;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -27,10 +26,15 @@ const MintResult = (props: Props) => {
         </DialogHeader>
 
         <div className='flex justify-center'>
-          <img style={{ width: 299, height: 311 }} alt='Nft' src={image} />
+          <img
+            style={{ width: 299, height: 311 }}
+            alt='Nft'
+            src={generationAction.imageGatewayIPFS}
+          />
         </div>
 
-        {generationAction && (
+        {(generationAction?.txBlockExplorerUrl ||
+          generationAction?.openSeaUrl) && (
           <div>
             <div className='my-10 text-center'>View On</div>
 
