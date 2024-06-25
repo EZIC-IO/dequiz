@@ -3,11 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConnectButton } from 'thirdweb/react';
-import { createWallet } from 'thirdweb/wallets';
 
 import { thirdwebClient } from '@/config/thirdweb';
-
-const wallets = [createWallet('io.metamask'), createWallet('io.rabby')];
+import { wallets } from '@/constants/wallets';
 
 const Header = () => {
   return (

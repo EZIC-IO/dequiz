@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Hammer, Orbit } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { QuizType } from '@/api/models/quiz';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +9,9 @@ import { Badge } from '@/components/ui/badge';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/loader';
+import { useActiveAccount, useConnectModal } from 'thirdweb/react';
+import { wallets } from '@/constants/wallets';
+import { thirdwebClient } from '@/config/thirdweb';
 
 type Props = {
   quiz: QuizType;
@@ -16,8 +20,62 @@ type Props = {
 const Quiz = (props: Props) => {
   const { quiz } = props;
 
-  const { totalSupply, symbol, alreadyMintedGlobalAmount, isLoading } =
-    useGetQuizContractData();
+  const router = useRouter();
+
+  const { connect } = useConnectModal();
+  const {
+    isConnected,
+    totalSupply,
+    symbol,
+    alreadyMintedGlobalAmount,
+    isLoading,
+    hasMinted,
+    hasTotalSuplyMinted,
+  } = useGetQuizContractData();
+
+  const getStatus = () => {
+    if (hasMinted) {
+      return 'Minted';
+    } else {
+      return quiz.isLive && !hasTotalSuplyMinted ? 'Live' : 'Passed';
+    }
+  };
+
+  const handleConnect = async () => {
+    try {
+      await connect({ client: thirdwebClient, wallets });
+
+      router.push(`/quiz/${quiz.id}`);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const renderActionButton = () => {
+    if (hasMinted) {
+      return (
+        <Link href={`/quiz/${quiz.id}`}>
+          <Button variant='secondary'>View your NFT</Button>
+        </Link>
+      );
+    }
+
+    if (hasTotalSuplyMinted) {
+      return null;
+    }
+
+    return isConnected ? (
+      <Link href={`/quiz/${quiz.id}`}>
+        <Button variant='secondary'>Start</Button>
+      </Link>
+    ) : (
+      <Link href={`/quiz/${quiz.id}`} onClick={(e) => e.preventDefault()}>
+        <Button variant='secondary' onClick={handleConnect}>
+          Start
+        </Button>
+      </Link>
+    );
+  };
 
   if (isLoading) {
     return (
@@ -42,14 +100,9 @@ const Quiz = (props: Props) => {
         <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between pl-[92px] pr-[56px] pt-[63px]'>
           <div className='flex items-center justify-between'>
             <div className='flex gap-5'>
-              {quiz.isLive && (
-                <Badge
-                  variant='outline'
-                  className='bg-[#4ade8014] text-primary'
-                >
-                  Live
-                </Badge>
-              )}
+              <Badge variant='outline' className='bg-[#4ade8014] text-primary'>
+                {getStatus()}
+              </Badge>
 
               <Badge variant='outline' className='flex gap-2 text-primary'>
                 <Orbit color='#4ADE80' />
@@ -69,9 +122,7 @@ const Quiz = (props: Props) => {
           <div className='mt-5'>{quiz.description}</div>
 
           <div className='mt-10 flex items-center justify-between'>
-            <Link href={`/quiz/${quiz.id}`}>
-              <Button variant='secondary'>Start</Button>
-            </Link>
+            {renderActionButton()}
 
             {alreadyMintedGlobalAmount && totalSupply && (
               <div>

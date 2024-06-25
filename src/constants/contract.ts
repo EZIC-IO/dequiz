@@ -4,7 +4,7 @@ import { getContract } from 'thirdweb/contract';
 import { abi } from '@/config/abi';
 import { thirdwebClient } from '@/config/thirdweb';
 
-export const contractAddress = '0x85962Dcf3eB36C8d460dB56F9c945E67eB9D78f0';
+export const contractAddress = '0xF3081AD87919E2A49173821422d4a4203A5FdF07';
 
 export const contract = getContract({
   client: thirdwebClient,
