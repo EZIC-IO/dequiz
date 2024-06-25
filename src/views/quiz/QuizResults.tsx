@@ -1,5 +1,8 @@
 import { BadgeInfo, Hammer, RotateCw } from 'lucide-react';
 import pluralize from 'pluralize';
+import { Controller, useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import { useState } from 'react';
 
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,19 +11,22 @@ import { CHARACTER_PROPERTIES } from '@/constants/character';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
-import { GenerationActionResponse } from '@/api/hooks/useGenerateImage';
 import NftPreview from './NftPreview';
 import { useInitPublishImage } from '@/api/hooks/useInitPublish';
+import { GenerationAction } from '@/api/models/generation.dto';
 
 type Props = {
   character: RPGVocation;
   onRegenerate: () => void;
-  mintPrice: number;
+  mintPrice: bigint;
   alreadyMintedGlobalAmount: number;
   totalSupply: number;
   attemptsLeft: number;
-  generationAction: GenerationActionResponse;
+  generationAction: GenerationAction;
+};
+
+type FormValues = {
+  name: string;
 };
 
 const QuizResults = (props: Props) => {
@@ -35,18 +41,24 @@ const QuizResults = (props: Props) => {
   } = props;
 
   const [isNftPreviewOpen, setIsNftPreviewOpen] = useState(false);
-  const [characterName, setCharacterName] = useState('');
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isValid },
+  } = useForm<FormValues>({
+    mode: 'all',
+    defaultValues: { name: '' },
+  });
 
   const { initPublish, isPending: isLoading, data } = useInitPublishImage();
 
   const properties = CHARACTER_PROPERTIES[character];
   const hasAttempts = attemptsLeft > 0;
 
-  const handleProceed = () => {
-    if (!characterName) return;
-
+  const handleProceed = (values: FormValues) => {
     setIsNftPreviewOpen(true);
-    initPublish({ name: characterName, genActionId: generationAction._id });
+    initPublish({ ...values, genActionId: generationAction._id });
   };
 
   const handleNftPreviewOpenChange = (open: boolean) => {
@@ -56,12 +68,11 @@ const QuizResults = (props: Props) => {
   return (
     <>
       <NftPreview
-        mintData={data}
         mintPrice={mintPrice}
         isLoading={isLoading}
         open={isNftPreviewOpen}
-        generationAction={generationAction}
-        onChange={handleNftPreviewOpenChange}
+        generationAction={data}
+        onOpenChange={handleNftPreviewOpenChange}
       />
 
       <Card className='flex' background='/gradient/results-gradient.png'>
@@ -98,19 +109,39 @@ const QuizResults = (props: Props) => {
                 Name your Character
               </Label>
 
-              <div className='flex gap-2'>
-                {/* TODO: mark as requried -> form */}
-                <Input
-                  id='character-name'
-                  placeholder='Name'
-                  value={characterName}
-                  onChange={(e) => setCharacterName(e.target.value)}
+              <form
+                className='flex gap-2'
+                onSubmit={handleSubmit(handleProceed)}
+              >
+                <Controller
+                  name='name'
+                  control={control}
+                  rules={{ required: 'Fill in the name' }}
+                  render={({ field }) => (
+                    <div>
+                      <Input
+                        id='character-name'
+                        placeholder='Name'
+                        {...field}
+                      />
+
+                      <ErrorMessage
+                        errors={errors}
+                        name='name'
+                        render={({ message }: { message: string }) => (
+                          <p className='pt-0.5 text-xs text-danger'>
+                            {message}
+                          </p>
+                        )}
+                      />
+                    </div>
+                  )}
                 />
 
-                <Button variant='secondary' onClick={handleProceed}>
+                <Button type='submit' variant='secondary' disabled={!isValid}>
                   Proceed
                 </Button>
-              </div>
+              </form>
             </div>
 
             <div className='mt-5'>
@@ -140,7 +171,12 @@ const QuizResults = (props: Props) => {
 
               <div className='mt-3 flex items-center gap-2 text-xs'>
                 <BadgeInfo />
-                Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
+                Note: you have{' '}
+                {pluralize(
+                  'attempt',
+                  attemptsLeft > 0 ? attemptsLeft : 0,
+                  true
+                )}{' '}
                 remaining
               </div>
             </div>

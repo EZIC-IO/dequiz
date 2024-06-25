@@ -4,6 +4,7 @@ export const abi = [
       { internalType: 'string', name: 'name', type: 'string' },
       { internalType: 'string', name: 'symbol', type: 'string' },
       { internalType: 'address', name: 'initialOwner', type: 'address' },
+      { internalType: 'string', name: 'contractMetadataURI', type: 'string' },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -112,12 +113,7 @@ export const abi = [
         name: 'operator',
         type: 'address',
       },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'approved',
-        type: 'bool',
-      },
+      { indexed: false, internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'ApprovalForAll',
     type: 'event',
@@ -176,18 +172,8 @@ export const abi = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
       {
         indexed: true,
         internalType: 'uint256',
@@ -251,6 +237,13 @@ export const abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'contractURI',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
     name: 'getApproved',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -271,6 +264,13 @@ export const abi = [
     inputs: [],
     name: 'name',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'addr', type: 'address' }],
+    name: 'ownedTokenId',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },

@@ -98,7 +98,6 @@ export interface GenImgDto {
 export interface GenPayloadDto {
   rpgVocation: RPGVocation;
   gender?: Gender;
-  skinTone?: SkinTone;
   hairColor?: HairColor;
   hairLength?: HairLength;
   facialHair?: boolean;

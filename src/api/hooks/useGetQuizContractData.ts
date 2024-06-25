@@ -1,21 +1,10 @@
 'use client';
 
-import { getContract } from 'thirdweb/contract';
 import { useReadContract } from 'thirdweb/react';
-import { baseSepolia } from 'thirdweb/chains';
 
-import { abi } from '@/config/abi';
-import { thirdwebClient } from '@/config/thirdweb';
-import { contractAddress } from '@/constants/contract';
+import { contract } from '@/constants/contract';
 
 const useGetQuizContractData = () => {
-  const contract = getContract({
-    client: thirdwebClient,
-    chain: baseSepolia,
-    address: contractAddress,
-    abi: abi as any[],
-  });
-
   const { data: totalSupply, isLoading: isTotalSupplyLoading } =
     useReadContract({
       method: 'totalSupply',

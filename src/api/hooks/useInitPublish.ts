@@ -1,7 +1,7 @@
 'use client';
 
+import { GenerationAction } from '../models/generation.dto';
 import { InitPublishDto } from '../models/init-publish.dto';
-import { ReportSuccessfulMintDto } from '../models/report-successful-mint.dto';
 import { useRequestMutation } from '../useRequest';
 
 export const useInitPublishImage = () => {
@@ -9,8 +9,8 @@ export const useInitPublishImage = () => {
     data,
     mutate: initPublish,
     ...rest
-  } = useRequestMutation<ReportSuccessfulMintDto, void, InitPublishDto>(
-    '/gen-img',
+  } = useRequestMutation<GenerationAction, void, InitPublishDto>(
+    '/init-publish',
     {
       method: 'POST',
     }

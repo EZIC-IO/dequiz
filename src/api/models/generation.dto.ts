@@ -33,4 +33,5 @@ export interface GenerationAction {
   openSeaUrl: string;
   createdAt: number;
   epochId: string;
+  _id: string;
 }

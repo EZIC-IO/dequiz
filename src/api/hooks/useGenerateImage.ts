@@ -9,14 +9,7 @@ import {
 } from '../models/generation.dto';
 import { UseMutationOptions } from '@tanstack/react-query';
 
-export type GenerationActionResponse = GenerationAction & { _id: string };
-
-type Options = UseMutationOptions<
-  GenerationActionResponse,
-  void,
-  GenImgDto,
-  string[]
->;
+type Options = UseMutationOptions<GenerationAction, void, GenImgDto, string[]>;
 
 export const useGenerateImage = (options?: Options) => {
   // TODO: uncomment while API integration
@@ -24,7 +17,7 @@ export const useGenerateImage = (options?: Options) => {
     data,
     mutate: generateImage,
     ...rest
-  } = useRequestMutation<GenerationActionResponse, void, GenImgDto>(
+  } = useRequestMutation<GenerationAction, void, GenImgDto>(
     '/gen-img',
     {
       method: 'POST',

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import CharacterAppearance from './CharacterAppearance';
 import Radio from '@/components/ui/radio';
 import { QuizType } from '@/api/models/quiz';
-import { FormValues } from './utils';
+import { defaultValues, FormValues } from './utils';
 
 type Props = {
   quiz: QuizType;
@@ -27,7 +27,9 @@ const QuizDetails = (props: Props) => {
     []
   );
 
-  const { handleSubmit, control } = useForm<FormValues>();
+  const { handleSubmit, control } = useForm<FormValues>({
+    defaultValues: defaultValues as FormValues,
+  });
 
   const progress = (currentSlideIndex / (swiper?.slides?.length ?? 0)) * 100;
   const currentQuetion = quiz.questions[currentSlideIndex];
@@ -36,7 +38,6 @@ const QuizDetails = (props: Props) => {
 
   const isNextQuestionAllowed = useMemo(() => {
     if (isLastSlide) {
-      // TODO: return true ?
       return true;
     }
 

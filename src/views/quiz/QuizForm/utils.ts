@@ -8,14 +8,8 @@ import {
   HairLength,
 } from '@/api/models/gen-image.dto';
 
-export type CharacterAppearanceFormValues = Omit<
-  GenPayloadDto,
-  'rpgVocation' | 'facialHair'
-> & {
-  facialHair: boolean;
-};
-
-export type FormValues = Record<string, string> & CharacterAppearanceFormValues;
+export type CharacterAppearanceFormValues = Omit<GenPayloadDto, 'rpgVocation'>;
+export type FormValues = CharacterAppearanceFormValues & Record<string, string>;
 
 export const GENDER_OPTIONS = [
   {
@@ -96,7 +90,7 @@ export const HAIR_COLOR_OPTIONS = [
     label: HairColorHEX.DARK_BROWN,
   },
   {
-    value: EyeColor.BROWN,
+    value: HairColor.BROWN,
     label: HairColorHEX.BROWN,
   },
   {
@@ -128,3 +122,11 @@ export const HAIR_COLOR_OPTIONS = [
     label: HairColorHEX.WHITE,
   },
 ];
+
+export const defaultValues: CharacterAppearanceFormValues = {
+  facialHair: false,
+  hairColor: HAIR_COLOR_OPTIONS[0].value,
+  hairLength: HAIR_LENGTH_OPTIONS[0].value,
+  eyeColor: EYE_COLOR_OPTONS[0].value,
+  gender: GENDER_OPTIONS[0].value,
+};

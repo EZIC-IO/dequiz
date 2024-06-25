@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { ThemeProvider } from '@/providers/theme-provider';
 import { TanstackProvider } from '@/providers/tanstck-query-provider';
+import { WagmiProvider } from '@/providers/wagmi-provider';
 import AppLayout from '@/components/layout/app-layout';
 import { TOASTER_CONFIG } from '@/config/toaster';
 import { cn } from '@/lib/utils';
@@ -40,11 +41,13 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <ThirdwebProvider>
-              <TanstackProvider>
-                <ToastContainer {...TOASTER_CONFIG} />
+              <WagmiProvider>
+                <TanstackProvider>
+                  <ToastContainer {...TOASTER_CONFIG} />
 
-                <AppLayout>{children}</AppLayout>
-              </TanstackProvider>
+                  <AppLayout>{children}</AppLayout>
+                </TanstackProvider>
+              </WagmiProvider>
             </ThirdwebProvider>
           </ThemeProvider>
         </body>
