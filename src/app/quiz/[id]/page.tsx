@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
-import { useActiveAccount } from 'thirdweb/react';
+import { useActiveAccount, useConnectModal } from 'thirdweb/react';
 
 import { Card } from '@/components/ui/card';
 import { useGetQuizDetails } from '@/api/hooks/useGetQuizDetails';
@@ -18,6 +18,8 @@ import { CURRRENT_EPOCH_ID } from '@/constants/epoch';
 import { GENERATE_IMAGE_TOTAL_ATTEMPTS } from '@/constants/generage-image';
 import { STORAGE_GENERATE_ATTEMPTS } from '@/constants/storage-keys';
 import { hashWalletAddress } from '@/utils/signature';
+import { thirdwebClient } from '@/config/thirdweb';
+import { wallets } from '@/constants/wallets';
 
 const characterAppearanceImages = {
   gradientImage: '/gradient/gradient-6.png',
@@ -30,11 +32,13 @@ const characterAppearanceImages = {
 const QuizDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
+  const { connect } = useConnectModal();
+
   const activeAccount = useActiveAccount();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [character, setCharacter] = useState<RPGVocation | null>(null);
   const [swiper, setSwiper] = useState<SwiperClass>();
-  const [genPayloadData, setGenPayloadData] = useState<GenImgDto>();
+  const [formValues, setFormValues] = useState<FormValues>();
   const [attemptsLeft, setAttemptsLeft] = useState(
     GENERATE_IMAGE_TOTAL_ATTEMPTS
   );
@@ -57,14 +61,18 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     onSuccess: handleGenerateImageSuccess,
   });
   const { quizDetails } = useGetQuizDetails(id);
-  const { totalSupply, alreadyMintedGlobalAmount, mintPrice, isLoading } =
-    useGetQuizContractData();
+  const {
+    totalSupply,
+    alreadyMintedGlobalAmount,
+    mintPrice,
+    isLoading,
+    isConnected,
+  } = useGetQuizContractData();
 
   const currentQuestion = quizDetails?.questions[currentSlideIndex];
   const isCharacterAppearanceSlide = swiper?.slides
     ? currentSlideIndex === swiper?.slides?.length - 1
     : false;
-
   const currentSlideImages = useMemo(() => {
     if (isCharacterAppearanceSlide) {
       return characterAppearanceImages;
@@ -96,6 +104,53 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     }
   }, []);
 
+  const handleConnect = async () => {
+    try {
+      const wallet = await connect({ client: thirdwebClient, wallets });
+
+      return (wallet as any).getAccount().address as string;
+    } catch (e) {
+      console.error(e);
+      return '';
+    }
+  };
+
+  const handleGenerateCharacter = async (values: FormValues) => {
+    const walletAddress = !isConnected
+      ? await handleConnect()
+      : activeAccount?.address;
+
+    if (!walletAddress || !quizDetails) return;
+
+    const { hairLength, hairColor, facialHair, eyeColor, gender, ...rest } =
+      values;
+
+    const character = generateCharacter(quizDetails.questions, rest);
+    const data: GenImgDto = {
+      epochId: CURRRENT_EPOCH_ID,
+      identityHash: hashWalletAddress(walletAddress),
+      payload: {
+        hairColor,
+        hairLength,
+        facialHair,
+        eyeColor,
+        gender,
+        rpgVocation: character,
+      },
+    };
+
+    setCharacter(character);
+    setFormValues(values);
+
+    generateImage(data);
+  };
+
+  const handleRegenerateCharacter = async () => {
+    if (formValues) {
+      handleGenerateCharacter(formValues);
+    }
+  };
+
   if (isLoading) {
     return (
       <Loader title='Forging your destiny in the realms of fantasy... Prepare to unveil your true calling.' />
@@ -109,38 +164,6 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   if (!quizDetails) {
     return null;
   }
-
-  const handleGenerateCharacter = (values: FormValues) => {
-    if (!activeAccount?.address) return;
-
-    const { hairLength, hairColor, facialHair, eyeColor, gender, ...rest } =
-      values;
-
-    const character = generateCharacter(quizDetails.questions, rest);
-    const data: GenImgDto = {
-      epochId: CURRRENT_EPOCH_ID,
-      identityHash: hashWalletAddress(activeAccount?.address),
-      payload: {
-        hairColor,
-        hairLength,
-        facialHair,
-        eyeColor,
-        gender,
-        rpgVocation: character,
-      },
-    };
-
-    setCharacter(character);
-    setGenPayloadData(data);
-
-    generateImage(data);
-  };
-
-  const handleRegenerateCharacter = () => {
-    if (genPayloadData) {
-      generateImage(genPayloadData);
-    }
-  };
 
   if (character && generationAction) {
     return (

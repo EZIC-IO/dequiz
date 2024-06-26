@@ -78,6 +78,7 @@ const QuizDetails = (props: Props) => {
             autoHeight
             onSwiper={onSwiper}
             allowTouchMove={false}
+            initialSlide={currentSlideIndex}
             onActiveIndexChange={(swiper) => onSlideChange(swiper.activeIndex)}
           >
             {quiz.questions.map((question, index) => (

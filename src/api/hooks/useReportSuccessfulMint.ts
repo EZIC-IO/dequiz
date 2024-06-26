@@ -1,12 +1,20 @@
 'use client';
 
+import { UseMutationOptions } from '@tanstack/react-query';
 import {
   ReportSuccessfulMintDto,
   UpdatedFields,
 } from '../models/report-successful-mint.dto';
 import { useRequestMutation } from '../useRequest';
 
-export const useReportSuccessfulMint = () => {
+type Options = UseMutationOptions<
+  UpdatedFields,
+  void,
+  ReportSuccessfulMintDto,
+  string[]
+>;
+
+export const useReportSuccessfulMint = (options?: Options) => {
   const {
     data,
     mutate: reportSuccessfulMint,
@@ -15,7 +23,8 @@ export const useReportSuccessfulMint = () => {
     '/report-successful-mint',
     {
       method: 'POST',
-    }
+    },
+    options
   );
 
   return {

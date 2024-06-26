@@ -1,4 +1,5 @@
 import { MutationCache, QueryClientConfig } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
 export const QUERY_CONFIG: QueryClientConfig = {
@@ -9,9 +10,12 @@ export const QUERY_CONFIG: QueryClientConfig = {
     },
   },
   mutationCache: new MutationCache({
-    onError: (error: any) => {
-      if (error.errorMessage) {
-        toast.error(error.errorMessage ?? 'Something went wrong!');
+    onError: (error) => {
+      const errorMessage = (error as AxiosError<{ message: string }>).response
+        ?.data?.message;
+
+      if (errorMessage) {
+        toast.error(errorMessage ?? 'Something went wrong!');
       }
     },
   }),

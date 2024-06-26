@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/loader';
-import { useActiveAccount, useConnectModal } from 'thirdweb/react';
+import { useConnectModal } from 'thirdweb/react';
 import { wallets } from '@/constants/wallets';
 import { thirdwebClient } from '@/config/thirdweb';
 
@@ -121,7 +121,9 @@ const Quiz = (props: Props) => {
 
           <div className='mt-5'>{quiz.description}</div>
 
-          <div className='mt-10 flex items-center justify-between'>
+          <div
+            className={`mt-10 flex items-center ${hasTotalSuplyMinted ? 'justify-end' : 'justify-between'}`}
+          >
             {renderActionButton()}
 
             {alreadyMintedGlobalAmount && totalSupply && (
