@@ -1,9 +1,10 @@
-import { Character } from './character';
+// import { Character } from './character';
 
 export interface OptionType {
   id: string;
   label: string;
-  score: Record<Character, number>;
+  score: Record<any, number>;
+  // score: Record<Character, number>;
   icon?: React.ReactNode;
 }
 

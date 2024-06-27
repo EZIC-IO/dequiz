@@ -128,12 +128,17 @@ const QuizDetails = (props: Props) => {
           <div className='mt-10 flex justify-end'>
             <div className='flex gap-2'>
               {currentSlideIndex !== 0 && (
-                <Button variant='secondary' onClick={handlePrevQuestion}>
+                <Button
+                  className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
+                  variant={'secondary'}
+                  onClick={handlePrevQuestion}
+                >
                   Previous
                 </Button>
               )}
 
               <Button
+                className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
                 disabled={!isNextQuestionAllowed}
                 onClick={handleNextQuestion}
               >

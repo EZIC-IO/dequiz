@@ -22,7 +22,7 @@ export const quizes: QuizType[] = [
   {
     id: '1',
     epochId: '1',
-    title: "What's your fantasy world occupation?",
+    title: "What's your fantasy world RPG Vocation?",
     gradientImage: '/gradient/home-gradient.png',
     description:
       'In a realm where magic weaves through every corner and creatures lurk in the shadows, everyone dreams of their perfect role. Ever felt destined for something more than the ordinary? Maybe your true calling is to be a powerful mage, a brave ranger, or a cunning rogue. Or perhaps you have a more unique destiny? Take the test and discover your true fantasy vocation. Once revealed, mint your character and embark on your epic adventure!',
