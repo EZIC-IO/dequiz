@@ -11,6 +11,7 @@ import {
   useContractEvents,
   useSwitchActiveWalletChain,
 } from 'thirdweb/react';
+import { useRouter } from 'next/router';
 
 import { abi } from '@/config/abi';
 import { Button } from '@/components/ui/button';
@@ -25,7 +26,6 @@ import MintResult from './MintResult';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
-
 type Props = {
   open: boolean;
   isLoading: boolean;
@@ -36,6 +36,8 @@ type Props = {
 
 const NftPreview = (props: Props) => {
   const { isLoading, open, onOpenChange, mintPrice, generationAction } = props;
+
+  const router = useRouter();
 
   const [mintTx, setMintTx] = useState('');
   const [isMintResultModalOpen, setIsMintResultModalOpen] = useState(false);
@@ -137,6 +139,7 @@ const NftPreview = (props: Props) => {
 
     if (!open) {
       onOpenChange(false);
+      router.replace('/minted');
     }
   };
 

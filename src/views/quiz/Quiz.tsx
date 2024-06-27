@@ -54,7 +54,7 @@ const Quiz = (props: Props) => {
   const renderActionButton = () => {
     if (hasMinted) {
       return (
-        <Link href={`/quiz/${quiz.id}`}>
+        <Link href='/minted'>
           <Button variant='secondary'>View your NFT</Button>
         </Link>
       );

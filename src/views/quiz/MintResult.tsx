@@ -8,6 +8,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { GenerationAction } from '@/api/models/generation.dto';
+import IconExplorer from '@/components/icons/IconExplorer';
+import IconOpenSea from '@/components/icons/IconOpenSea';
 
 type Props = {
   open: boolean;
@@ -40,14 +42,23 @@ const MintResult = (props: Props) => {
 
             <div className='flex justify-center gap-6'>
               {generationAction?.txBlockExplorerUrl && (
-                <Link href={generationAction.txBlockExplorerUrl}>
-                  <Button variant='secondary'>Explorer</Button>
+                <Link
+                  target='_blank'
+                  href={generationAction.txBlockExplorerUrl}
+                >
+                  <Button variant='secondary' className='flex gap-2'>
+                    <IconExplorer />
+                    Transaction
+                  </Button>
                 </Link>
               )}
 
               {generationAction?.openSeaUrl && (
-                <Link href={generationAction.openSeaUrl}>
-                  <Button variant='secondary'>OpenSea</Button>
+                <Link target='_blank' href={generationAction.openSeaUrl}>
+                  <Button variant='secondary' className='flex gap-2'>
+                    <IconOpenSea />
+                    OpenSea
+                  </Button>
                 </Link>
               )}
             </div>
