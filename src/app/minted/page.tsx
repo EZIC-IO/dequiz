@@ -45,7 +45,8 @@ const NftDetails = () => {
         <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
           <div className='flex flex-col gap-10'>
             <h2 className='text-3xl font-bold'>
-              deQuiz NFT 1 - <span className='text-green'>Minted</span>
+              deQuiz | {mintedAction.metadata.name} -{' '}
+              <span className='text-green'>Minted</span>
             </h2>
 
             <h3 className='mt-12 text-2xl font-semibold'>{properties.title}</h3>
