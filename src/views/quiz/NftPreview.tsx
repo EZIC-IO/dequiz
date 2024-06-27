@@ -11,7 +11,7 @@ import {
   useContractEvents,
   useSwitchActiveWalletChain,
 } from 'thirdweb/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { abi } from '@/config/abi';
 import { Button } from '@/components/ui/button';
