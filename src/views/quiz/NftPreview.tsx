@@ -25,6 +25,7 @@ import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
 import ShimmerButton from '@/components/ui/shimmer-button';
+import IconEth from '@/components/icons/IconEth';
 
 type Props = {
   open: boolean;
@@ -191,7 +192,10 @@ const NftPreview = (props: Props) => {
                   <div className='mb-10 text-xl'>Your NFT is ready!</div>
                   {renderActionButton()}
 
-                  <div className='mt-4'>{toEther(mintPrice)} ETH</div>
+                  <div className='mt-4 flex gap-1'>
+                    <IconEth />
+                    <span>{toEther(mintPrice)} ETH</span>
+                  </div>
                 </div>
               </div>
             )

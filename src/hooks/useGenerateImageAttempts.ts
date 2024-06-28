@@ -12,7 +12,10 @@ export const useGenerateImageAttempts = () => {
   const { storageData, updateStorageData } = useStorageData();
 
   useEffect(() => {
-    if (!storageData) return;
+    if (!storageData) {
+      setAttemptsCount(GENERATE_IMAGE_TOTAL_ATTEMPTS);
+      return;
+    }
 
     const attemptsLeft = storageData.attemptsLeft;
 
