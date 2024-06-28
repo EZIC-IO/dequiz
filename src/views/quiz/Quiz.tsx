@@ -49,8 +49,6 @@ const Quiz = (props: Props) => {
   const handleConnect = async () => {
     try {
       await connect({ client: thirdwebClient, wallets });
-
-      router.push(`/quiz/${quiz.id}`);
     } catch (e) {
       console.error(e);
     }
@@ -75,7 +73,7 @@ const Quiz = (props: Props) => {
       </Link>
     ) : (
       <Link href={`/quiz/${quiz.id}`} onClick={(e) => e.preventDefault()}>
-        <ShimmerButton onClick={handleConnect}>Start</ShimmerButton>
+        <ShimmerButton onClick={handleConnect}>Connect to start</ShimmerButton>
       </Link>
     );
   };
