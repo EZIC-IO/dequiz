@@ -1,0 +1,1 @@
+export const GENERATE_IMAGE_TOTAL_ATTEMPTS = 4;
