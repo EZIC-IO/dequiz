@@ -1,9 +1,9 @@
-import { Character } from './character';
+import { RPGVocation } from './gen-image.dto';
 
 export interface OptionType {
   id: string;
   label: string;
-  score: Record<Character, number>;
+  score: Record<RPGVocation, number>;
   icon?: React.ReactNode;
 }
 

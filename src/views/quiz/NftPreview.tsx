@@ -154,15 +154,33 @@ const NftPreview = (props: Props) => {
 
   const renderActionButton = () => {
     if (!isConnected) {
-      return <Button onClick={handleConnect}>Connect to mint</Button>;
+      return (
+        <Button
+          className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
+          onClick={handleConnect}
+        >
+          Connect to mint
+        </Button>
+      );
     }
 
     if (!isCorrectChain) {
-      return <Button onClick={handleChangeNetwork}>Change Network</Button>;
+      return (
+        <Button
+          onClick={handleChangeNetwork}
+          className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
+        >
+          Change Network
+        </Button>
+      );
     }
 
     return (
-      <Button disabled={isMinting} onClick={handleMint}>
+      <Button
+        disabled={isMinting}
+        onClick={handleMint}
+        className='animate-shimmer inline-flex items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
+      >
         {isMinting ? 'Minting...' : 'Mint'}
       </Button>
     );

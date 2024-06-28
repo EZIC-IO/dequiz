@@ -11,12 +11,7 @@ const Header = () => {
   return (
     <header className='flex justify-between py-10'>
       <Link href='/'>
-        <Image
-          alt='Logo'
-          src='https://companieslogo.com/img/orig/COIN-a63dbab3.png?t=1648737284'
-          width={80}
-          height={80}
-        />
+        <Image alt='Logo' src='/Logo_1.svg' width={180} height={180} />
       </Link>
 
       <div className='flex items-center'>

@@ -55,7 +55,9 @@ const Quiz = (props: Props) => {
     if (hasMinted) {
       return (
         <Link href='/minted'>
-          <Button variant='secondary'>View your NFT</Button>
+          <Button className='animate-shimmer inline-flex items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'>
+            View your NFT
+          </Button>
         </Link>
       );
     }
@@ -66,11 +68,16 @@ const Quiz = (props: Props) => {
 
     return isConnected ? (
       <Link href={`/quiz/${quiz.id}`}>
-        <Button variant='secondary'>Start</Button>
+        <button className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'>
+          Start
+        </button>
       </Link>
     ) : (
       <Link href={`/quiz/${quiz.id}`} onClick={(e) => e.preventDefault()}>
-        <Button variant='secondary' onClick={handleConnect}>
+        <Button
+          className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
+          onClick={handleConnect}
+        >
           Start
         </Button>
       </Link>
