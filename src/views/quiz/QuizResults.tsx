@@ -174,7 +174,8 @@ const QuizResults = (props: Props) => {
               {isConnected && (
                 <div className='mt-3 flex items-center gap-2 text-xs'>
                   <BadgeInfo />
-                  Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
+                  Note: you have{' '}
+                  {pluralize('generation attempt', attemptsLeft, true)}{' '}
                   remaining
                 </div>
               )}
