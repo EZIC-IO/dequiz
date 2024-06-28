@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { GENERATE_IMAGE_TOTAL_ATTEMPTS } from '@/constants/generage-image';
-import { STORAGE_GENERATE_ATTEMPTS } from '@/constants/storage-keys';
+import { useStorageData } from './useStorageData';
 
 export const useGenerateImageAttempts = () => {
   const [attemptsCount, setAttemptsCount] = useState(
@@ -9,24 +9,23 @@ export const useGenerateImageAttempts = () => {
   );
   const attemptsLeft = attemptsCount > 0 ? attemptsCount : 0;
   const hasAttempts = attemptsLeft > 0;
+  const { storageData, updateStorageData } = useStorageData();
 
   useEffect(() => {
-    try {
-      const attemptsLeft = localStorage.getItem(STORAGE_GENERATE_ATTEMPTS);
+    if (!storageData) return;
 
-      if (attemptsLeft) {
-        setAttemptsCount(+attemptsLeft);
-      }
-    } catch (e) {
-      setAttemptsCount(GENERATE_IMAGE_TOTAL_ATTEMPTS);
+    const attemptsLeft = storageData.attemptsLeft;
+
+    if (attemptsLeft) {
+      setAttemptsCount(+attemptsLeft);
     }
-  }, []);
+  }, [storageData]);
 
-  const increaseLeftAttempts = () => {
+  const decreaseLeftAttempts = () => {
     setAttemptsCount((prev) => {
-      const attemptsLeft = prev + 1;
+      const attemptsLeft = prev - 1;
 
-      localStorage.setItem(STORAGE_GENERATE_ATTEMPTS, attemptsLeft.toString());
+      updateStorageData({ attemptsLeft });
 
       return attemptsLeft;
     });
@@ -35,6 +34,6 @@ export const useGenerateImageAttempts = () => {
   return {
     hasAttempts,
     attemptsLeft,
-    increaseLeftAttempts,
+    decreaseLeftAttempts,
   };
 };

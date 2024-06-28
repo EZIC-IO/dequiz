@@ -16,6 +16,7 @@ import { useInitPublishImage } from '@/api/hooks/useInitPublish';
 import { GenerationAction } from '@/api/models/generation.dto';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
+import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 
 type Props = {
   character: RPGVocation;
@@ -51,6 +52,7 @@ const QuizResults = (props: Props) => {
     defaultValues: { name: '' },
   });
 
+  const { isConnected } = useGetQuizContractData();
   const { hasAttempts, attemptsLeft } = useGenerateImageAttempts();
   const { initPublish, isPending: isLoading, data } = useInitPublishImage();
 
@@ -169,11 +171,13 @@ const QuizResults = (props: Props) => {
                 )}
               </div>
 
-              <div className='mt-3 flex items-center gap-2 text-xs'>
-                <BadgeInfo />
-                Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
-                remaining
-              </div>
+              {isConnected && (
+                <div className='mt-3 flex items-center gap-2 text-xs'>
+                  <BadgeInfo />
+                  Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
+                  remaining
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { Line } from 'rc-progress';
 import pluralize from 'pluralize';
 import { BadgeInfo } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
+import Link from 'next/link';
 
 import CharacterAppearance from './CharacterAppearance';
 import Radio from '@/components/ui/radio';
@@ -14,7 +15,6 @@ import { defaultValues, FormValues } from './utils';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
-
 type Props = {
   quiz: QuizType;
   currentSlideIndex: number;
@@ -34,7 +34,7 @@ const QuizDetails = (props: Props) => {
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: defaultValues as FormValues,
   });
-  const { hasMinted } = useGetQuizContractData();
+  const { hasMinted, isConnected } = useGetQuizContractData();
 
   const { hasAttempts, attemptsLeft } = useGenerateImageAttempts();
 
@@ -155,13 +155,21 @@ const QuizDetails = (props: Props) => {
             </div>
           </div>
 
-          {isLastSlide && (
+          {isLastSlide && isConnected && (
             <div className='flex justify-end'>
               <div className='mt-3 flex items-center gap-2 text-xs'>
                 <BadgeInfo />
-                {hasMinted
-                  ? `Note: you've already minted your NFT`
-                  : `Note: you have ${pluralize('attempt', attemptsLeft, true)} remaining`}
+                {hasMinted ? (
+                  <>
+                    Note: you&apos;ve already minted{' '}
+                    <Link href='/minted'>your NFT</Link>
+                  </>
+                ) : (
+                  <>
+                    Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
+                    remaining
+                  </>
+                )}
               </div>
             </div>
           )}

@@ -38,14 +38,14 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const [character, setCharacter] = useState<RPGVocation | null>(null);
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [formValues, setFormValues] = useState<FormValues>();
-  const { increaseLeftAttempts, hasAttempts } = useGenerateImageAttempts();
+  const { decreaseLeftAttempts, hasAttempts } = useGenerateImageAttempts();
 
   const {
     generateImage,
     isPending: isGenerating,
     data: generationAction,
   } = useGenerateImage({
-    onSuccess: increaseLeftAttempts,
+    onSuccess: decreaseLeftAttempts,
   });
   const { quizDetails } = useGetQuizDetails(id);
   const {
