@@ -15,6 +15,7 @@ import NftPreview from './NftPreview';
 import { useInitPublishImage } from '@/api/hooks/useInitPublish';
 import { GenerationAction } from '@/api/models/generation.dto';
 import ShimmerButton from '@/components/ui/shimmer-button';
+import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
 
 type Props = {
   character: RPGVocation;
@@ -22,7 +23,6 @@ type Props = {
   mintPrice: bigint;
   alreadyMintedGlobalAmount: number;
   totalSupply: number;
-  attemptsLeft: number;
   generationAction: GenerationAction;
 };
 
@@ -35,7 +35,6 @@ const QuizResults = (props: Props) => {
     character,
     mintPrice,
     onRegenerate,
-    attemptsLeft,
     alreadyMintedGlobalAmount,
     totalSupply,
     generationAction,
@@ -52,10 +51,10 @@ const QuizResults = (props: Props) => {
     defaultValues: { name: '' },
   });
 
+  const { hasAttempts, attemptsLeft } = useGenerateImageAttempts();
   const { initPublish, isPending: isLoading, data } = useInitPublishImage();
 
   const properties = CHARACTER_PROPERTIES[character];
-  const hasAttempts = attemptsLeft > 0;
 
   const handleProceed = (values: FormValues) => {
     setIsNftPreviewOpen(true);
@@ -172,12 +171,7 @@ const QuizResults = (props: Props) => {
 
               <div className='mt-3 flex items-center gap-2 text-xs'>
                 <BadgeInfo />
-                Note: you have{' '}
-                {pluralize(
-                  'attempt',
-                  attemptsLeft > 0 ? attemptsLeft : 0,
-                  true
-                )}{' '}
+                Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
                 remaining
               </div>
             </div>

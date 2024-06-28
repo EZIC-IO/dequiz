@@ -1,18 +1,19 @@
 import Image from 'next/image';
-import { Hammer, Orbit } from 'lucide-react';
+import { BadgeInfo, Hammer, Orbit } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import pluralize from 'pluralize';
 
 import { QuizType } from '@/api/models/quiz';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
-import { Button } from '@/components/ui/button';
 import Loader from '@/components/loader';
 import { useConnectModal } from 'thirdweb/react';
 import { wallets } from '@/constants/wallets';
 import { thirdwebClient } from '@/config/thirdweb';
 import ShimmerButton from '@/components/ui/shimmer-button';
+import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
 
 type Props = {
   quiz: QuizType;
@@ -23,6 +24,7 @@ const Quiz = (props: Props) => {
 
   const router = useRouter();
 
+  const { hasAttempts, attemptsLeft } = useGenerateImageAttempts();
   const { connect } = useConnectModal();
   const {
     isConnected,
@@ -33,6 +35,8 @@ const Quiz = (props: Props) => {
     hasMinted,
     hasTotalSuplyMinted,
   } = useGetQuizContractData();
+  const showAttemptsLeftCount =
+    !hasMinted && !hasTotalSuplyMinted && isConnected;
 
   const getStatus = () => {
     if (hasMinted) {
@@ -66,8 +70,8 @@ const Quiz = (props: Props) => {
     }
 
     return isConnected ? (
-      <Link href={`/quiz/${quiz.id}`}>
-        <ShimmerButton>Start</ShimmerButton>
+      <Link href={`/quiz/${quiz.id}`} aria-disabled={!hasAttempts}>
+        <ShimmerButton disabled={!hasAttempts}>Start</ShimmerButton>
       </Link>
     ) : (
       <Link href={`/quiz/${quiz.id}`} onClick={(e) => e.preventDefault()}>
@@ -138,6 +142,14 @@ const Quiz = (props: Props) => {
               </div>
             )}
           </div>
+
+          {showAttemptsLeftCount && (
+            <div className='mt-3 flex items-center gap-2 text-xs'>
+              <BadgeInfo />
+              Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
+              remaining
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

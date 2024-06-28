@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useActiveAccount, useConnectModal } from 'thirdweb/react';
 
 import { Card } from '@/components/ui/card';
@@ -15,11 +15,10 @@ import { SwiperClass } from 'swiper/react';
 import { FormValues } from '@/views/quiz/QuizForm/utils';
 import { useGenerateImage } from '@/api/hooks/useGenerateImage';
 import { CURRRENT_EPOCH_ID } from '@/constants/epoch';
-import { GENERATE_IMAGE_TOTAL_ATTEMPTS } from '@/constants/generage-image';
-import { STORAGE_GENERATE_ATTEMPTS } from '@/constants/storage-keys';
 import { hashWalletAddress } from '@/utils/signature';
 import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
+import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
 
 const characterAppearanceImages = {
   gradientImage: '/gradient/gradient-6.png',
@@ -39,27 +38,14 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const [character, setCharacter] = useState<RPGVocation | null>(null);
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [formValues, setFormValues] = useState<FormValues>();
-  const [attemptsLeft, setAttemptsLeft] = useState(
-    GENERATE_IMAGE_TOTAL_ATTEMPTS
-  );
-  const hasAttempts = attemptsLeft > 0;
-
-  const handleGenerateImageSuccess = () => {
-    setAttemptsLeft((prev) => {
-      const attemptsLeft = prev - 1;
-
-      localStorage.setItem(STORAGE_GENERATE_ATTEMPTS, attemptsLeft.toString());
-
-      return attemptsLeft;
-    });
-  };
+  const { increaseLeftAttempts, hasAttempts } = useGenerateImageAttempts();
 
   const {
     generateImage,
     isPending: isGenerating,
     data: generationAction,
   } = useGenerateImage({
-    onSuccess: handleGenerateImageSuccess,
+    onSuccess: increaseLeftAttempts,
   });
   const { quizDetails } = useGetQuizDetails(id);
   const {
@@ -92,18 +78,6 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     currentQuestion?.question,
     isCharacterAppearanceSlide,
   ]);
-
-  useEffect(() => {
-    try {
-      const attemptsLeft = localStorage.getItem(STORAGE_GENERATE_ATTEMPTS);
-
-      if (attemptsLeft) {
-        setAttemptsLeft(+attemptsLeft);
-      }
-    } catch (e) {
-      setAttemptsLeft(GENERATE_IMAGE_TOTAL_ATTEMPTS);
-    }
-  }, []);
 
   const handleConnect = async () => {
     try {
@@ -174,7 +148,6 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
         character={character}
         mintPrice={mintPrice}
         totalSupply={totalSupply}
-        attemptsLeft={attemptsLeft}
         generationAction={generationAction}
         onRegenerate={handleRegenerateCharacter}
         alreadyMintedGlobalAmount={alreadyMintedGlobalAmount}

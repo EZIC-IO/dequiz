@@ -3,14 +3,17 @@
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { useMemo, useState } from 'react';
 import { Line } from 'rc-progress';
+import pluralize from 'pluralize';
+import { BadgeInfo } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { Button } from '@/components/ui/button';
 import CharacterAppearance from './CharacterAppearance';
 import Radio from '@/components/ui/radio';
 import { QuizType } from '@/api/models/quiz';
 import { defaultValues, FormValues } from './utils';
 import ShimmerButton from '@/components/ui/shimmer-button';
+import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
+import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
 
 type Props = {
   quiz: QuizType;
@@ -31,32 +34,32 @@ const QuizDetails = (props: Props) => {
   const { handleSubmit, control } = useForm<FormValues>({
     defaultValues: defaultValues as FormValues,
   });
+  const { hasMinted } = useGetQuizContractData();
+
+  const { hasAttempts, attemptsLeft } = useGenerateImageAttempts();
 
   const progress = (currentSlideIndex / (swiper?.slides?.length ?? 0)) * 100;
   const currentQuetion = quiz.questions[currentSlideIndex];
   const isLastSlide =
     swiper && swiper?.slides && swiper.activeIndex === swiper.slides.length - 1;
 
-  const isNextQuestionAllowed = useMemo(() => {
-    if (isLastSlide) {
-      return true;
-    }
-
-    return (
-      currentQuetion?.id && answeredQuestionIds.includes(currentQuetion.id)
-    );
-  }, [answeredQuestionIds, currentQuetion?.id, isLastSlide]);
+  const isNextQuestionAllowed = useMemo(
+    () => currentQuetion?.id && answeredQuestionIds.includes(currentQuetion.id),
+    [answeredQuestionIds, currentQuetion?.id]
+  );
 
   const handleFormSubmit = handleSubmit(onSubmit);
 
   const handleNextQuestion = () => {
     if (!swiper || !isNextQuestionAllowed) return;
 
-    if (isLastSlide) {
-      handleFormSubmit();
-    } else {
-      swiper?.slideNext();
-    }
+    swiper.slideNext();
+  };
+
+  const handleGenerate = () => {
+    if (!hasAttempts || hasMinted) return;
+
+    handleFormSubmit();
   };
 
   const handlePrevQuestion = () => {
@@ -134,14 +137,34 @@ const QuizDetails = (props: Props) => {
                 </ShimmerButton>
               )}
 
-              <ShimmerButton
-                disabled={!isNextQuestionAllowed}
-                onClick={handleNextQuestion}
-              >
-                {isLastSlide ? 'Generate' : 'Next'}
-              </ShimmerButton>
+              {isLastSlide ? (
+                <ShimmerButton
+                  onClick={handleGenerate}
+                  disabled={hasMinted || !hasAttempts}
+                >
+                  Generate
+                </ShimmerButton>
+              ) : (
+                <ShimmerButton
+                  disabled={!isNextQuestionAllowed}
+                  onClick={handleNextQuestion}
+                >
+                  Next
+                </ShimmerButton>
+              )}
             </div>
           </div>
+
+          {isLastSlide && (
+            <div className='flex justify-end'>
+              <div className='mt-3 flex items-center gap-2 text-xs'>
+                <BadgeInfo />
+                {hasMinted
+                  ? `Note: you've already minted your NFT`
+                  : `Note: you have ${pluralize('attempt', attemptsLeft, true)} remaining`}
+              </div>
+            </div>
+          )}
         </form>
       </div>
     </div>
