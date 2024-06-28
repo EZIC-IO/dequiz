@@ -42,6 +42,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const [attemptsLeft, setAttemptsLeft] = useState(
     GENERATE_IMAGE_TOTAL_ATTEMPTS
   );
+  const hasAttempts = attemptsLeft > 0;
 
   const handleGenerateImageSuccess = () => {
     setAttemptsLeft((prev) => {
@@ -116,6 +117,8 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   };
 
   const handleGenerateCharacter = async (values: FormValues) => {
+    if (!hasAttempts) return;
+
     const walletAddress = !isConnected
       ? await handleConnect()
       : activeAccount?.address;

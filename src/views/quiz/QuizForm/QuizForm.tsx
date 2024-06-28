@@ -10,6 +10,7 @@ import CharacterAppearance from './CharacterAppearance';
 import Radio from '@/components/ui/radio';
 import { QuizType } from '@/api/models/quiz';
 import { defaultValues, FormValues } from './utils';
+import ShimmerButton from '@/components/ui/shimmer-button';
 
 type Props = {
   quiz: QuizType;
@@ -49,7 +50,7 @@ const QuizDetails = (props: Props) => {
   const handleFormSubmit = handleSubmit(onSubmit);
 
   const handleNextQuestion = () => {
-    if (!swiper) return;
+    if (!swiper || !isNextQuestionAllowed) return;
 
     if (isLastSlide) {
       handleFormSubmit();
@@ -128,22 +129,17 @@ const QuizDetails = (props: Props) => {
           <div className='mt-10 flex justify-end'>
             <div className='flex gap-2'>
               {currentSlideIndex !== 0 && (
-                <Button
-                  className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
-                  variant={'secondary'}
-                  onClick={handlePrevQuestion}
-                >
+                <ShimmerButton variant='secondary' onClick={handlePrevQuestion}>
                   Previous
-                </Button>
+                </ShimmerButton>
               )}
 
-              <Button
-                className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
+              <ShimmerButton
                 disabled={!isNextQuestionAllowed}
                 onClick={handleNextQuestion}
               >
                 {isLastSlide ? 'Generate' : 'Next'}
-              </Button>
+              </ShimmerButton>
             </div>
           </div>
         </form>

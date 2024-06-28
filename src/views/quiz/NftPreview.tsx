@@ -26,6 +26,8 @@ import MintResult from './MintResult';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
+import ShimmerButton from '@/components/ui/shimmer-button';
+
 type Props = {
   open: boolean;
   isLoading: boolean;
@@ -122,6 +124,8 @@ const NftPreview = (props: Props) => {
   };
 
   const handleMint = async () => {
+    if (isMinting) return;
+
     setIsMinting(true);
 
     mint({
@@ -155,34 +159,22 @@ const NftPreview = (props: Props) => {
   const renderActionButton = () => {
     if (!isConnected) {
       return (
-        <Button
-          className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
-          onClick={handleConnect}
-        >
-          Connect to mint
-        </Button>
+        <ShimmerButton onClick={handleConnect}>Connect to mint</ShimmerButton>
       );
     }
 
     if (!isCorrectChain) {
       return (
-        <Button
-          onClick={handleChangeNetwork}
-          className='animate-shimmer inline-flex h-12 items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
-        >
+        <ShimmerButton onClick={handleChangeNetwork}>
           Change Network
-        </Button>
+        </ShimmerButton>
       );
     }
 
     return (
-      <Button
-        disabled={isMinting}
-        onClick={handleMint}
-        className='animate-shimmer inline-flex items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:outline-none hover:ring-2 hover:ring-slate-400 hover:ring-offset-2 hover:ring-offset-slate-50'
-      >
+      <ShimmerButton disabled={isMinting} onClick={handleMint}>
         {isMinting ? 'Minting...' : 'Mint'}
-      </Button>
+      </ShimmerButton>
     );
   };
 
