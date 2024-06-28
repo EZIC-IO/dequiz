@@ -1,20 +1,21 @@
 'use client';
 
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Line } from 'rc-progress';
 import pluralize from 'pluralize';
 import { BadgeInfo } from 'lucide-react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, UseFormReturn } from 'react-hook-form';
 import Link from 'next/link';
 
 import CharacterAppearance from './CharacterAppearance';
 import Radio from '@/components/ui/radio';
 import { QuizType } from '@/api/models/quiz';
-import { defaultValues, FormValues } from './utils';
+import { FormValues } from './utils';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
+
 type Props = {
   quiz: QuizType;
   currentSlideIndex: number;
@@ -22,42 +23,49 @@ type Props = {
   onSwiper: (swiper: SwiperClass) => void;
   onSlideChange: (index: number) => void;
   onSubmit: (values: FormValues) => void;
+  form: UseFormReturn<FormValues, any, undefined>;
 };
 
 const QuizDetails = (props: Props) => {
-  const { quiz, onSubmit, currentSlideIndex, onSlideChange, swiper, onSwiper } =
-    props;
-  const [answeredQuestionIds, setAnsweredQuestionIds] = useState<Array<string>>(
-    []
-  );
+  const {
+    quiz,
+    onSubmit,
+    currentSlideIndex,
+    onSlideChange,
+    swiper,
+    onSwiper,
+    form,
+  } = props;
 
-  const { handleSubmit, control } = useForm<FormValues>({
-    defaultValues: defaultValues as FormValues,
-  });
+  const { handleSubmit, control, getValues } = form;
   const { hasMinted, isConnected } = useGetQuizContractData();
-
-  const { hasAttempts, attemptsLeft } = useGenerateImageAttempts();
+  const { attemptsLeft, hasAttempts } = useGenerateImageAttempts();
 
   const progress = (currentSlideIndex / (swiper?.slides?.length ?? 0)) * 100;
-  const currentQuetion = quiz.questions[currentSlideIndex];
+  const currentQuestion = quiz.questions[currentSlideIndex];
   const isLastSlide =
-    swiper && swiper?.slides && swiper.activeIndex === swiper.slides.length - 1;
+    swiper?.slides && swiper.activeIndex === swiper.slides.length - 1;
+  const canGenerate = hasMinted || !hasAttempts || !form.formState.isValid;
 
-  const isNextQuestionAllowed = useMemo(
-    () => currentQuetion?.id && answeredQuestionIds.includes(currentQuetion.id),
-    [answeredQuestionIds, currentQuetion?.id]
-  );
+  const values = getValues();
+  const isNextQuestionAllowed = useMemo(() => {
+    const currentQuestionValue = values[currentQuestion?.id];
+
+    return !!currentQuestionValue;
+  }, [currentQuestion?.id, values]);
 
   const handleFormSubmit = handleSubmit(onSubmit);
 
   const handleNextQuestion = () => {
-    if (!swiper || !isNextQuestionAllowed) return;
+    if (!isNextQuestionAllowed) return;
 
-    swiper.slideNext();
+    swiper?.slideNext();
+    // Trigger validation for persisted form if no fields touched
+    form.trigger();
   };
 
   const handleGenerate = () => {
-    if (!hasAttempts || hasMinted) return;
+    if (!canGenerate) return;
 
     handleFormSubmit();
   };
@@ -99,6 +107,7 @@ const QuizDetails = (props: Props) => {
                           <Controller
                             name={question.id}
                             control={control}
+                            rules={{ required: true }}
                             render={({ field }) => (
                               <Radio
                                 {...field}
@@ -106,13 +115,7 @@ const QuizDetails = (props: Props) => {
                                 icon={option.icon}
                                 value={option.id}
                                 name={question.id}
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setAnsweredQuestionIds((prev) => [
-                                    ...prev,
-                                    question.id,
-                                  ]);
-                                }}
+                                checked={field.value === option.id}
                               />
                             )}
                           />
@@ -138,10 +141,7 @@ const QuizDetails = (props: Props) => {
               )}
 
               {isLastSlide ? (
-                <ShimmerButton
-                  onClick={handleGenerate}
-                  disabled={hasMinted || !hasAttempts}
-                >
+                <ShimmerButton onClick={handleGenerate} disabled={!canGenerate}>
                   Generate
                 </ShimmerButton>
               ) : (

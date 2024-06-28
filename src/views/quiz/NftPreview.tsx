@@ -13,13 +13,12 @@ import {
 } from 'thirdweb/react';
 import { useRouter } from 'next/navigation';
 
-import { abi } from '@/config/abi';
-import { Button } from '@/components/ui/button';
-import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import {
   GenerationAction,
   GenerationActionStatus,
 } from '@/api/models/generation.dto';
+import { abi } from '@/config/abi';
+import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { contract, contractAddress } from '@/constants/contract';
 import { useReportSuccessfulMint } from '@/api/hooks/useReportSuccessfulMint';
 import MintResult from './MintResult';
@@ -152,7 +151,6 @@ const NftPreview = (props: Props) => {
       await connect({ client: thirdwebClient, wallets });
     } catch (e) {
       console.error(e);
-      return '';
     }
   };
 

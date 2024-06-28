@@ -43,7 +43,14 @@ const CharacterAppearance = (props: Props) => {
               <Controller
                 name='gender'
                 control={control}
-                render={({ field }) => <Radio {...field} {...option} />}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Radio
+                    {...field}
+                    {...option}
+                    checked={field.value === option.value}
+                  />
+                )}
               />
             </li>
           ))}
@@ -57,10 +64,12 @@ const CharacterAppearance = (props: Props) => {
                 <Controller
                   name='eyeColor'
                   control={control}
+                  rules={{ required: true }}
                   render={({ field }) => (
                     <Radio
                       {...field}
                       value={color.value}
+                      checked={field.value === color.value}
                       labelStyles={{ backgroundColor: color.label }}
                       className='h-[32px] w-[32px] rounded-full'
                     />
@@ -79,10 +88,12 @@ const CharacterAppearance = (props: Props) => {
                 <Controller
                   name='hairColor'
                   control={control}
+                  rules={{ required: true }}
                   render={({ field }) => (
                     <Radio
                       {...field}
                       value={color.value}
+                      checked={field.value === color.value}
                       labelStyles={{ backgroundColor: color.label }}
                       className='h-[32px] w-[32px] rounded-full'
                     />
@@ -101,7 +112,14 @@ const CharacterAppearance = (props: Props) => {
                 <Controller
                   name='hairLength'
                   control={control}
-                  render={({ field }) => <Radio {...field} {...option} />}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Radio
+                      {...field}
+                      {...option}
+                      checked={field.value === option.value}
+                    />
+                  )}
                 />
               </li>
             ))}
@@ -110,10 +128,23 @@ const CharacterAppearance = (props: Props) => {
 
         {selectedGender === Gender.MALE && (
           <div className='flex items-center space-x-2'>
-            <Switch id='facial-hair' />
-            <Label className='pl-4' htmlFor='facial-hair'>
-              Facial Hair
-            </Label>
+            <Controller
+              name='facialHair'
+              control={control}
+              render={({ field: { value, onChange, ...rest } }) => (
+                <>
+                  <Switch
+                    id='facial-hair'
+                    checked={value}
+                    onCheckedChange={onChange}
+                    {...rest}
+                  />
+                  <Label className='pl-4' htmlFor='facial-hair'>
+                    Facial Hair
+                  </Label>
+                </>
+              )}
+            />
           </div>
         )}
       </div>

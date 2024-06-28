@@ -6,14 +6,23 @@ type Props = {
   icon?: React.ReactNode;
   value?: string;
   name?: string;
+  checked?: boolean;
   onChange?: (value: string) => void;
   className?: string;
   labelStyles?: CSSProperties;
 };
 
 const Radio = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { name, label, icon, onChange, labelStyles, className, ...rest } =
-    props;
+  const {
+    name,
+    label,
+    checked = false,
+    icon,
+    onChange,
+    labelStyles,
+    className,
+    ...rest
+  } = props;
 
   const id = useId();
 
@@ -24,6 +33,7 @@ const Radio = forwardRef<HTMLInputElement, Props>((props, ref) => {
         ref={ref}
         type='radio'
         name={name}
+        checked={checked}
         className='peer hidden'
         onChange={(e) => onChange?.(e.target.value)}
         {...rest}

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { BadgeInfo, Hammer, Orbit } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import pluralize from 'pluralize';
 
 import { QuizType } from '@/api/models/quiz';
@@ -21,8 +20,6 @@ type Props = {
 
 const Quiz = (props: Props) => {
   const { quiz } = props;
-
-  const router = useRouter();
 
   const { hasAttempts, attemptsLeft } = useGenerateImageAttempts();
   const { connect } = useConnectModal();

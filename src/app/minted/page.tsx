@@ -14,7 +14,7 @@ import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { GenerationActionStatus } from '@/api/models/generation.dto';
 
 const NftDetails = () => {
-  const { mintedAction, isLoading } = useGetMintedAction();
+  const { mintedAction, isLoading, error } = useGetMintedAction();
   const { isConnected } = useGetQuizContractData();
 
   if (isLoading) {
@@ -23,6 +23,12 @@ const NftDetails = () => {
 
   if (!isConnected) {
     return <Loader title='Please connect your wallet!' />;
+  }
+
+  if (error) {
+    return (
+      <Loader title='Oops, something went wrong, please refresh your page.' />
+    );
   }
 
   if (!mintedAction || mintedAction.status !== GenerationActionStatus.MINTED) {

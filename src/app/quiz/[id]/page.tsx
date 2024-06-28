@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { useActiveAccount, useConnectModal } from 'thirdweb/react';
+import { useForm } from 'react-hook-form';
+import useFormPersist from 'react-hook-form-persist';
 
 import { Card } from '@/components/ui/card';
 import { useGetQuizDetails } from '@/api/hooks/useGetQuizDetails';
@@ -18,6 +20,7 @@ import { CURRRENT_EPOCH_ID } from '@/constants/epoch';
 import { hashWalletAddress } from '@/utils/signature';
 import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
+import { FormStorageKey } from '@/constants/storage';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
 
 const characterAppearanceImages = {
@@ -40,13 +43,6 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const [formValues, setFormValues] = useState<FormValues>();
   const { decreaseLeftAttempts, hasAttempts } = useGenerateImageAttempts();
 
-  const {
-    generateImage,
-    isPending: isGenerating,
-    data: generationAction,
-  } = useGenerateImage({
-    onSuccess: decreaseLeftAttempts,
-  });
   const { quizDetails } = useGetQuizDetails(id);
   const {
     totalSupply,
@@ -55,6 +51,25 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     isLoading,
     isConnected,
   } = useGetQuizContractData();
+
+  const form = useForm<FormValues>();
+  const { clear } = useFormPersist(FormStorageKey, {
+    ...form,
+    storage: window.localStorage,
+  });
+
+  const handleGenerateImageSuccess = () => {
+    clear();
+    decreaseLeftAttempts();
+  };
+
+  const {
+    generateImage,
+    isPending: isGenerating,
+    data: generationAction,
+  } = useGenerateImage({
+    onSuccess: handleGenerateImageSuccess,
+  });
 
   const currentQuestion = quizDetails?.questions[currentSlideIndex];
   const isCharacterAppearanceSlide = swiper?.slides
@@ -79,7 +94,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     isCharacterAppearanceSlide,
   ]);
 
-  const handleConnect = async () => {
+  const getWallet = async () => {
     try {
       const wallet = await connect({ client: thirdwebClient, wallets });
 
@@ -94,7 +109,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     if (!hasAttempts) return;
 
     const walletAddress = !isConnected
-      ? await handleConnect()
+      ? await getWallet()
       : activeAccount?.address;
 
     if (!walletAddress || !quizDetails) return;
@@ -109,10 +124,10 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
       payload: {
         hairColor,
         hairLength,
-        facialHair,
         eyeColor,
         gender,
         rpgVocation: character,
+        facialHair: facialHair ?? false,
       },
     };
 
@@ -166,6 +181,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
             swiper={swiper}
             onSwiper={setSwiper}
             quiz={quizDetails}
+            form={form}
             currentSlideIndex={currentSlideIndex}
             onSlideChange={setCurrentSlideIndex}
             onSubmit={handleGenerateCharacter}
