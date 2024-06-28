@@ -24,9 +24,9 @@ import { FormStorageKey } from '@/constants/storage';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
 
 const characterAppearanceImages = {
-  gradientImage: '/gradient/gradient-6.png',
+  gradientImage: '/gradient/gradient-6.webp',
   image: {
-    src: '/quiz/hero-appearance.png',
+    src: '/quiz/hero-appearance.webp',
     alt: "Shape Your Hero's Appearance",
   },
 };

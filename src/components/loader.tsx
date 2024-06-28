@@ -12,7 +12,7 @@ const Loader = (props: Props) => {
   return (
     <Card
       className='relative flex h-full w-full flex-col items-center justify-center'
-      background='/gradient/loader-gradient.png'
+      background='/gradient/loader-gradient.webp'
     >
       <Wand width={60} height={60} color='#fff' />
 

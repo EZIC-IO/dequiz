@@ -23,16 +23,16 @@ export const quizes: QuizType[] = [
     id: '1',
     epochId: '1',
     title: "What's your fantasy world RPG Vocation?",
-    gradientImage: '/gradient/home-gradient.png',
+    gradientImage: '/gradient/home-gradient.webp',
     description:
       'In a realm where magic weaves through every corner and creatures lurk in the shadows, everyone dreams of their perfect role. Ever felt destined for something more than the ordinary? Maybe your true calling is to be a powerful mage, a brave ranger, or a cunning rogue. Or perhaps you have a more unique destiny? Take the test and discover your true fantasy vocation. Once revealed, mint your character and embark on your epic adventure!',
-    previewImage: '/quiz/quiz-preview.png',
+    previewImage: '/quiz/quiz-preview.webp',
     isLive: true,
     questions: [
       {
         id: '1',
-        previewImage: '/quiz/occupation.png',
-        gradientImage: '/gradient/gradient-1.png',
+        previewImage: '/quiz/occupation.webp',
+        gradientImage: '/gradient/gradient-1.webp',
         question: 'How would you describe your personality?',
         options: [
           {
@@ -72,8 +72,8 @@ export const quizes: QuizType[] = [
       },
       {
         id: '2',
-        previewImage: '/quiz/environment.png',
-        gradientImage: '/gradient/gradient-2.png',
+        previewImage: '/quiz/environment.webp',
+        gradientImage: '/gradient/gradient-2.webp',
         question: 'Which type of environment resonates most with your soul?',
         options: [
           {
@@ -113,8 +113,8 @@ export const quizes: QuizType[] = [
       },
       {
         id: '3',
-        previewImage: '/quiz/role.png',
-        gradientImage: '/gradient/gradient-3.png',
+        previewImage: '/quiz/role.webp',
+        gradientImage: '/gradient/gradient-3.webp',
         question: 'What role do you often take in a group?',
         options: [
           {
@@ -154,8 +154,8 @@ export const quizes: QuizType[] = [
       },
       {
         id: '4',
-        previewImage: '/quiz/spend-time.png',
-        gradientImage: '/gradient/gradient-4.png',
+        previewImage: '/quiz/spend-time.webp',
+        gradientImage: '/gradient/gradient-4.webp',
         question: 'How do you prefer to spend your leisure time?',
         options: [
           {
@@ -195,8 +195,8 @@ export const quizes: QuizType[] = [
       },
       {
         id: '5',
-        previewImage: '/quiz/goal.png',
-        gradientImage: '/gradient/gradient-5.png',
+        previewImage: '/quiz/goal.webp',
+        gradientImage: '/gradient/gradient-5.webp',
         question: 'What is your ultimate goal in life?',
         options: [
           {

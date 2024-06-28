@@ -9,6 +9,7 @@ import { WagmiProvider } from '@/providers/wagmi-provider';
 import AppLayout from '@/components/layout/app-layout';
 import { TOASTER_CONFIG } from '@/config/toaster';
 import { cn } from '@/lib/utils';
+import { mainMeta } from '@/constants/meta';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'rc-slider/assets/index.css';
@@ -20,9 +21,7 @@ const fontSans = FontSans({
   variable: '--font-sans',
 });
 
-export const metadata: Metadata = {
-  title: 'DeQuiz',
-};
+export const metadata: Metadata = mainMeta;
 
 export default function RootLayout({
   children,

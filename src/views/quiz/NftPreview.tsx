@@ -21,7 +21,6 @@ import { abi } from '@/config/abi';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { contract, contractAddress } from '@/constants/contract';
 import { useReportSuccessfulMint } from '@/api/hooks/useReportSuccessfulMint';
-import MintResult from './MintResult';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
@@ -32,16 +31,14 @@ type Props = {
   isLoading: boolean;
   mintPrice: bigint;
   generationAction?: GenerationAction;
-  onOpenChange: (open: boolean) => void;
 };
 
 const NftPreview = (props: Props) => {
-  const { isLoading, open, onOpenChange, mintPrice, generationAction } = props;
+  const { isLoading, open, mintPrice, generationAction } = props;
 
   const router = useRouter();
 
   const [mintTx, setMintTx] = useState('');
-  const [isMintResultModalOpen, setIsMintResultModalOpen] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
 
   const { isConnected } = useGetQuizContractData();
@@ -89,11 +86,11 @@ const NftPreview = (props: Props) => {
     ],
   });
 
-  const { reportSuccessfulMint, data: mintData } = useReportSuccessfulMint({
-    onSuccess: () => {
-      setMintTx('');
-      setIsMinting(false);
-      setIsMintResultModalOpen(true);
+  const { reportSuccessfulMint } = useReportSuccessfulMint({
+    onSuccess: (data) => {
+      if (data?.status === GenerationActionStatus.MINTED) {
+        router.replace('/minted');
+      }
     },
   });
 
@@ -137,15 +134,6 @@ const NftPreview = (props: Props) => {
     });
   };
 
-  const handleMintResulModalOpenChange = (open: boolean) => {
-    setIsMintResultModalOpen(open);
-
-    if (!open) {
-      onOpenChange(false);
-      router.replace('/minted');
-    }
-  };
-
   const handleConnect = async () => {
     try {
       await connect({ client: thirdwebClient, wallets });
@@ -177,53 +165,40 @@ const NftPreview = (props: Props) => {
   };
 
   return (
-    <>
-      {generationAction && (
-        <MintResult
-          generationAction={generationAction}
-          onOpenChange={handleMintResulModalOpenChange}
-          open={
-            isMintResultModalOpen &&
-            mintData?.status === GenerationActionStatus.MINTED
-          }
-        />
-      )}
+    <Drawer dismissible={false} open={open}>
+      <DrawerContent>
+        <div className='flex h-full w-full flex-col items-center justify-center py-[112px]'>
+          {isLoading ? (
+            <>
+              <Wand width={60} height={60} color='#fff' />
 
-      <Drawer dismissible={false} open={open}>
-        <DrawerContent>
-          <div className='flex h-full w-full flex-col items-center justify-center py-[112px]'>
-            {isLoading ? (
-              <>
-                <Wand width={60} height={60} color='#fff' />
+              <div className='max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
+                We are preparing your NFT.
+                <br />
+                Please do not close this page.
+              </div>
+            </>
+          ) : (
+            generationAction && (
+              <div className='flex gap-4'>
+                <img
+                  style={{ width: 299, height: 311 }}
+                  alt='Nft Preview'
+                  src={generationAction.imageGatewayIPFS}
+                />
 
-                <div className='max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
-                  We are preparing your NFT.
-                  <br />
-                  Please do not close this page.
+                <div>
+                  <div className='mb-10 text-xl'>Your NFT is ready!</div>
+                  {renderActionButton()}
+
+                  <div className='mt-4'>{toEther(mintPrice)} ETH</div>
                 </div>
-              </>
-            ) : (
-              generationAction && (
-                <div className='flex gap-4'>
-                  <img
-                    style={{ width: 299, height: 311 }}
-                    alt='Nft Preview'
-                    src={generationAction.imageGatewayIPFS}
-                  />
-
-                  <div>
-                    <div className='mb-10 text-xl'>Your NFT is ready!</div>
-                    {renderActionButton()}
-
-                    <div className='mt-4'>{toEther(mintPrice)} ETH</div>
-                  </div>
-                </div>
-              )
-            )}
-          </div>
-        </DrawerContent>
-      </Drawer>
-    </>
+              </div>
+            )
+          )}
+        </div>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

@@ -63,10 +63,6 @@ const QuizResults = (props: Props) => {
     initPublish({ ...values, genActionId: generationAction._id });
   };
 
-  const handleNftPreviewOpenChange = (open: boolean) => {
-    setIsNftPreviewOpen(open);
-  };
-
   return (
     <>
       <NftPreview
@@ -74,10 +70,9 @@ const QuizResults = (props: Props) => {
         isLoading={isLoading}
         open={isNftPreviewOpen}
         generationAction={data}
-        onOpenChange={handleNftPreviewOpenChange}
       />
 
-      <Card className='flex' background='/gradient/results-gradient.png'>
+      <Card className='flex' background='/gradient/results-gradient.webp'>
         <div className='w-[60%]'>
           <img
             alt='Quiz results'

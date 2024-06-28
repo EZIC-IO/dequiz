@@ -39,7 +39,7 @@ const NftDetails = () => {
 
   return (
     <div className='h-full w-full pl-4'>
-      <Card className='flex' background='/gradient/results-gradient.png'>
+      <Card className='flex' background='/gradient/results-gradient.webp'>
         <div className='w-[60%]'>
           <img
             alt='Quiz results'
