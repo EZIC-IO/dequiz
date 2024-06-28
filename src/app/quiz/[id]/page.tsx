@@ -55,7 +55,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   const form = useForm<FormValues>();
   const { clear } = useFormPersist(FormStorageKey, {
     ...form,
-    storage: window.localStorage,
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
   });
 
   const handleGenerateImageSuccess = () => {
