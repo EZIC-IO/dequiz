@@ -5,19 +5,6 @@ const nextConfig = {
     config.externals.push('pino-pretty', 'encoding');
     return config;
   },
-  // TODO: remove
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'companieslogo.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'img.freepik.com',
-      },
-    ],
-  },
 };
 
 export default nextConfig;
