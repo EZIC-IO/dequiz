@@ -1,4 +1,5 @@
 User-Agent: *
+Disallow: /api/
 Allow: /
 
 Sitemap: https://dequiz.app/sitemap.xml
