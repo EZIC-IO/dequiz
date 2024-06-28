@@ -141,8 +141,8 @@ const Quiz = (props: Props) => {
           {showAttemptsLeftCount && (
             <div className='mt-3 flex items-center gap-2 text-xs'>
               <BadgeInfo />
-              Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
-              remaining
+              Note: you have{' '}
+              {pluralize('generation attempt', attemptsLeft, true)} remaining
             </div>
           )}
         </CardContent>

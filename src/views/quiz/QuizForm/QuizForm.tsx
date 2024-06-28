@@ -45,8 +45,7 @@ const QuizDetails = (props: Props) => {
   const currentQuestion = quiz.questions[currentSlideIndex];
   const isLastSlide =
     swiper?.slides && swiper.activeIndex === swiper.slides.length - 1;
-  const canGenerate = hasMinted || !hasAttempts || !form.formState.isValid;
-
+  const canGenerate = !hasMinted && hasAttempts && form.formState.isValid;
   const values = getValues();
   const isNextQuestionAllowed = useMemo(() => {
     const currentQuestionValue = values[currentQuestion?.id];
@@ -166,7 +165,8 @@ const QuizDetails = (props: Props) => {
                   </>
                 ) : (
                   <>
-                    Note: you have {pluralize('attempt', attemptsLeft, true)}{' '}
+                    Note: you have{' '}
+                    {pluralize('generation attempt', attemptsLeft, true)}{' '}
                     remaining
                   </>
                 )}
