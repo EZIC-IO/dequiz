@@ -82,70 +82,72 @@ const Quiz = (props: Props) => {
   }
 
   return (
-    <div className='flex h-full items-center'>
-      <Card
-        className='flex max-h-[563px] justify-between'
-        background={quiz.gradientImage}
-      >
-        <div className='relative w-[50%]'>
-          <Image
-            src={quiz.previewImage}
-            alt={quiz.title}
-            layout='fill'
-            loading='eager'
-            quality={100}
-          />
+    <Card
+      className='flex max-h-[583px] justify-between'
+      background={quiz.gradientImage}
+    >
+      <div className='relative w-[50%]'>
+        <Image
+          src={quiz.previewImage}
+          alt={quiz.title}
+          layout='fill'
+          loading='eager'
+          quality={100}
+        />
+      </div>
+
+      <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between overflow-y-auto py-10 pl-20 pr-14'>
+        <div className='flex items-center justify-between'>
+          <div className='flex gap-5'>
+            <Badge variant='success'>{getStatus()}</Badge>
+
+            <Badge className='flex gap-2'>
+              <Orbit size={16} color='#4ADE80' />
+              <span>Epoch {quiz.epochId}</span>
+            </Badge>
+
+            {symbol && <Badge variant='secondary'>{symbol}</Badge>}
+          </div>
         </div>
 
-        <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between overflow-y-scroll py-10 pl-20 pr-14'>
-          <div className='flex items-center justify-between'>
-            <div className='flex gap-5'>
-              <Badge variant='success'>{getStatus()}</Badge>
+        <h1 className='font-tangak mt-8 max-w-[400px] text-5xl'>
+          {quiz.title}
+        </h1>
 
+        <div className='mt-5 text-sm leading-6'>{quiz.description}</div>
+
+        <div
+          className={`mt-6 flex items-center gap-4 ${hasTotalSuplyMinted ? 'justify-end' : 'justify-between'}`}
+        >
+          {renderActionButton()}
+
+          {alreadyMintedGlobalAmount && totalSupply && (
+            <div>
               <Badge className='flex gap-2'>
-                <Orbit size={16} color='#4ADE80' />
-                <span>Epoch {quiz.epochId}</span>
+                <Hammer size={16} />
+
+                <span>
+                  Minted: {Number(alreadyMintedGlobalAmount)}/
+                  {Number(totalSupply)}
+                </span>
               </Badge>
-
-              {symbol && <Badge variant='secondary'>{symbol}</Badge>}
-            </div>
-          </div>
-
-          <h1 className='font-tangak mt-10 max-w-[400px] text-5xl'>
-            {quiz.title}
-          </h1>
-
-          <div className='mt-5 text-sm leading-7'>{quiz.description}</div>
-
-          <div
-            className={`mt-8 flex items-center ${hasTotalSuplyMinted ? 'justify-end' : 'justify-between'}`}
-          >
-            {renderActionButton()}
-
-            {alreadyMintedGlobalAmount && totalSupply && (
-              <div>
-                <Badge className='flex gap-2'>
-                  <Hammer size={16} />
-
-                  <span>
-                    Minted: {Number(alreadyMintedGlobalAmount)}/
-                    {Number(totalSupply)}
-                  </span>
-                </Badge>
-              </div>
-            )}
-          </div>
-
-          {showAttemptsLeftCount && (
-            <div className='mt-6 flex items-center gap-1 text-xs'>
-              <BadgeInfo size={16} />
-              Note: you have{' '}
-              {pluralize('generation attempt', attemptsLeft, true)} remaining
             </div>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+
+        {showAttemptsLeftCount && (
+          <div className='mt-4 flex items-center gap-1 text-xs'>
+            <BadgeInfo size={16} />
+            Note: you have {pluralize(
+              'generation attempt',
+              attemptsLeft,
+              true
+            )}{' '}
+            remaining
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

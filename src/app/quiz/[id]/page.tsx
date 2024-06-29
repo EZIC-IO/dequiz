@@ -171,35 +171,33 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className='h-full w-full pl-4'>
-      <Card
-        className='flex justify-between'
-        background={currentSlideImages?.gradientImage}
-      >
-        <div className='max-h-[769px] w-[43%] overflow-y-scroll py-14 pl-12 pr-16'>
-          <QuizForm
-            swiper={swiper}
-            onSwiper={setSwiper}
-            quiz={quizDetails}
-            form={form}
-            currentSlideIndex={currentSlideIndex}
-            onSlideChange={setCurrentSlideIndex}
-            onSubmit={handleGenerateCharacter}
-          />
-        </div>
+    <Card
+      className='flex justify-between'
+      background={currentSlideImages?.gradientImage}
+    >
+      <div className='max-h-[769px] w-[43%] overflow-y-auto py-14 pl-12 pr-16'>
+        <QuizForm
+          swiper={swiper}
+          onSwiper={setSwiper}
+          quiz={quizDetails}
+          form={form}
+          currentSlideIndex={currentSlideIndex}
+          onSlideChange={setCurrentSlideIndex}
+          onSubmit={handleGenerateCharacter}
+        />
+      </div>
 
-        <div className='relative flex w-[57%] justify-end'>
-          {currentSlideImages.image && (
-            <Image
-              quality={100}
-              layout='fill'
-              alt={currentSlideImages.image.alt}
-              src={currentSlideImages.image.src}
-            />
-          )}
-        </div>
-      </Card>
-    </div>
+      <div className='relative flex w-[57%] justify-end'>
+        {currentSlideImages.image && (
+          <Image
+            quality={100}
+            layout='fill'
+            alt={currentSlideImages.image.alt}
+            src={currentSlideImages.image.src}
+          />
+        )}
+      </div>
+    </Card>
   );
 };
 

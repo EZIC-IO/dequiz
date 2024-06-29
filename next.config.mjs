@@ -11,7 +11,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.ipfscdn.io',
         port: '',
-        pathname: '/ipfs/**',
+        pathname: '/**',
       },
       {
         protocol: 'https',

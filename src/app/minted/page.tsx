@@ -40,81 +40,69 @@ const NftDetails = () => {
   const properties = CHARACTER_PROPERTIES[mintedAction.vocation];
 
   return (
-    <div className='h-full w-full'>
-      <div className='flex max-h-[769px] gap-10'>
-        <Card className='relative w-[44%]'>
-          <Image
-            layout='fill'
-            loading='eager'
-            quality={100}
-            alt={mintedAction.metadata.name}
-            src={mintedAction.imageGatewayIPFS}
-          />
-        </Card>
+    <div className='flex gap-10'>
+      <Card className='relative w-[44%]'>
+        <Image
+          layout='fill'
+          loading='eager'
+          quality={100}
+          alt={mintedAction.metadata.name}
+          src={mintedAction.imageGatewayIPFS}
+        />
+      </Card>
 
-        <Card
-          className='w-[56%] px-20 pb-48 pt-20'
-          background='/gradient/results-gradient.webp'
-        >
-          <div className='flex flex-col gap-10'>
-            <h2 className='font-tangak text-6xl font-bold'>
-              {mintedAction.metadata.name} -{' '}
-              <span className='text-bright-green'>Minted</span>
-            </h2>
+      <Card
+        className='max-h-[769px] w-[56%] px-20 pb-48 pt-20'
+        background='/gradient/results-gradient.webp'
+      >
+        <div className='flex flex-col gap-10'>
+          <h2 className='font-tangak text-6xl font-bold'>
+            {mintedAction.metadata.name} -{' '}
+            <span className='text-bright-green'>Minted</span>
+          </h2>
 
-            <h3 className='font-tangak mt-8 text-5xl font-semibold'>
-              {properties.title}
-            </h3>
+          <h3 className='font-tangak mt-8 text-5xl font-semibold'>
+            {properties.title}
+          </h3>
 
-            <div className='mt-5 flex gap-2'>
-              {properties.skills.map((skill, index) => (
-                <Badge
-                  key={`${skill}-${index}`}
-                  className='flex gap-2 text-sm font-normal text-primary'
-                >
-                  {skill.icon}
+          <div className='mt-5 flex gap-2'>
+            {properties.skills.map((skill, index) => (
+              <Badge
+                key={`${skill}-${index}`}
+                className='flex gap-2 text-sm font-normal text-primary'
+              >
+                {skill.icon}
 
-                  <span>{skill.label}</span>
-                </Badge>
-              ))}
-            </div>
-
-            <div className='mt-5 text-sm leading-7'>
-              {properties.description}
-            </div>
-
-            {(mintedAction?.txBlockExplorerUrl || mintedAction?.openSeaUrl) && (
-              <div className='mt-12 flex gap-6'>
-                {mintedAction?.txBlockExplorerUrl && (
-                  <Link target='_blank' href={mintedAction.txBlockExplorerUrl}>
-                    <Button
-                      size='lg'
-                      variant='secondary'
-                      className='flex gap-2'
-                    >
-                      <IconExplorer />
-                      Transaction
-                    </Button>
-                  </Link>
-                )}
-
-                {mintedAction?.openSeaUrl && (
-                  <Link target='_blank' href={mintedAction.openSeaUrl}>
-                    <Button
-                      size='lg'
-                      variant='secondary'
-                      className='flex gap-2'
-                    >
-                      <IconOpenSea />
-                      OpenSea
-                    </Button>
-                  </Link>
-                )}
-              </div>
-            )}
+                <span>{skill.label}</span>
+              </Badge>
+            ))}
           </div>
-        </Card>
-      </div>
+
+          <div className='mt-5 text-sm leading-7'>{properties.description}</div>
+
+          {(mintedAction?.txBlockExplorerUrl || mintedAction?.openSeaUrl) && (
+            <div className='mt-8 flex gap-6'>
+              {mintedAction?.txBlockExplorerUrl && (
+                <Link target='_blank' href={mintedAction.txBlockExplorerUrl}>
+                  <Button size='lg' variant='secondary' className='flex gap-2'>
+                    <IconExplorer />
+                    Transaction
+                  </Button>
+                </Link>
+              )}
+
+              {mintedAction?.openSeaUrl && (
+                <Link target='_blank' href={mintedAction.openSeaUrl}>
+                  <Button size='lg' variant='secondary' className='flex gap-2'>
+                    <IconOpenSea />
+                    OpenSea
+                  </Button>
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
+      </Card>
     </div>
   );
 };
