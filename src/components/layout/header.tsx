@@ -14,7 +14,7 @@ const Header = () => {
         <Image alt='Logo' src='/Logo_1.svg' width={180} height={180} />
       </Link>
 
-      <div className='flex items-center'>
+      <div className='hidden lg:block'>
         <ConnectButton client={thirdwebClient} wallets={wallets} />
       </div>
     </header>

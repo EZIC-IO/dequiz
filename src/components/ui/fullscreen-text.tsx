@@ -20,9 +20,9 @@ const FullScreenText = (props: FullScreenTextProps) => {
       >
         {icon ?? <Wand width={60} height={60} color='#fff' />}
 
-        <h4 className='font-tangak max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
+        <h3 className='font-tangak max-w-[805px] pt-10 text-center text-3xl font-extrabold !leading-snug lg:text-5xl'>
           {title}
-        </h4>
+        </h3>
       </Card>
     </div>
   );
