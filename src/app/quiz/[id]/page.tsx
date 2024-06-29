@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { useActiveAccount, useConnectModal } from 'thirdweb/react';
 import { useForm } from 'react-hook-form';
@@ -22,6 +21,7 @@ import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
 import { FormStorageKey } from '@/constants/storage';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
+import { BlurredImage } from '@/components/ui/blurred-image';
 
 const characterAppearanceImages = {
   gradientImage: '/gradient/gradient-6.webp',
@@ -189,9 +189,8 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
 
       <div className='relative flex w-[57%] justify-end'>
         {currentSlideImages.image && (
-          <Image
-            quality={100}
-            layout='fill'
+          <BlurredImage
+            fill
             alt={currentSlideImages.image.alt}
             src={currentSlideImages.image.src}
           />

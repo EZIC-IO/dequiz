@@ -26,7 +26,7 @@ import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import IconEth from '@/components/icons/IconEth';
-import { BadgedImage } from '@/components/ui/badged-image';
+import { BlurredImage } from '@/components/ui/blurred-image';
 
 type Props = {
   open: boolean;
@@ -188,10 +188,9 @@ const NftPreview = (props: Props) => {
           ) : (
             generationAction && (
               <div className='flex gap-10'>
-                <BadgedImage
+                <BlurredImage
                   width={299}
                   height={311}
-                  quality={100}
                   className='shadow-blue rounded-[10px]'
                   alt={generationAction.metadata.name}
                   src={generationAction.imageGatewayIPFS}

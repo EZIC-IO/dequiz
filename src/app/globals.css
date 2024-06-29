@@ -81,3 +81,11 @@
   .blurred-background {
     filter: blur(20px); 
   }
+
+  .image {
+    transition: filter 0.5s ease;
+  }
+  
+  .image-blur {
+    filter: blur(50px);
+  }

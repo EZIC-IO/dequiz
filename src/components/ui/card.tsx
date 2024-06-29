@@ -20,11 +20,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       {background && (
         <div className='absolute inset-0 z-[-1]'>
           <Image
+            fill
             src={background}
             alt='Gradient background'
-            layout='fill'
-            objectFit='cover'
-            objectPosition='center'
             className='blurred-background opacity-50'
           />
         </div>

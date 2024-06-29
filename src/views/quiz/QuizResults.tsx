@@ -3,7 +3,6 @@ import pluralize from 'pluralize';
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useState } from 'react';
-import Image from 'next/image';
 
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,6 +17,7 @@ import { GenerationAction } from '@/api/models/generation.dto';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
+import { BlurredImage } from '@/components/ui/blurred-image';
 
 type Props = {
   character: RPGVocation;
@@ -78,9 +78,8 @@ const QuizResults = (props: Props) => {
         background='/gradient/results-gradient.webp'
       >
         <div className='relative w-[57%]'>
-          <Image
-            layout='fill'
-            quality={100}
+          <BlurredImage
+            fill
             alt={generationAction.vocation}
             src={generationAction.imageUrl}
           />

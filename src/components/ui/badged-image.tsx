@@ -1,6 +1,7 @@
 import Image, { ImageProps } from 'next/image';
 
 import { Badge } from './badge';
+import { BlurredImage } from './blurred-image';
 
 type Props = ImageProps & {
   title?: string;
@@ -11,7 +12,7 @@ const BadgedImage = (props: Props) => {
 
   return (
     <div className='relative'>
-      <Image alt={alt} {...rest} />
+      <BlurredImage alt={alt} {...rest} />
 
       {title && (
         <Badge

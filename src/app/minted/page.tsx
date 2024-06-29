@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -14,6 +13,7 @@ import IconExplorer from '@/components/icons/IconExplorer';
 import IconOpenSea from '@/components/icons/IconOpenSea';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { GenerationActionStatus } from '@/api/models/generation.dto';
+import { BlurredImage } from '@/components/ui/blurred-image';
 
 const NftDetails = () => {
   const { mintedAction, isLoading, error } = useGetMintedAction();
@@ -48,10 +48,9 @@ const NftDetails = () => {
         ></div>
 
         <div className='relative z-[-1] h-full w-full rounded-3xl'>
-          <Image
-            layout='fill'
+          <BlurredImage
+            fill
             loading='eager'
-            quality={100}
             className='p-20 px-[53px] py-[124px]'
             alt={mintedAction.metadata.name}
             src={mintedAction.imageGatewayIPFS}

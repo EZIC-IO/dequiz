@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { BadgeInfo, Hammer, Orbit } from 'lucide-react';
 import Link from 'next/link';
 import pluralize from 'pluralize';
@@ -13,6 +12,7 @@ import { wallets } from '@/constants/wallets';
 import { thirdwebClient } from '@/config/thirdweb';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
+import { BlurredImage } from '@/components/ui/blurred-image';
 
 type Props = {
   quiz: QuizType;
@@ -87,12 +87,11 @@ const Quiz = (props: Props) => {
       background={quiz.gradientImage}
     >
       <div className='relative w-[50%]'>
-        <Image
+        <BlurredImage
+          fill
           src={quiz.previewImage}
           alt={quiz.title}
-          layout='fill'
           loading='eager'
-          quality={100}
         />
       </div>
 
