@@ -19,9 +19,11 @@ export const useGenerateImageAttempts = () => {
 
     const attemptsLeft = storageData.attemptsLeft;
 
-    if (attemptsLeft) {
-      setAttemptsCount(+attemptsLeft);
-    }
+    setAttemptsCount(
+      Number.isNaN(+attemptsLeft)
+        ? GENERATE_IMAGE_TOTAL_ATTEMPTS
+        : +attemptsLeft
+    );
   }, [storageData]);
 
   const decreaseLeftAttempts = () => {
