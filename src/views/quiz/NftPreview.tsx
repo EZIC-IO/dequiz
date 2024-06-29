@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BadgeCent, Wand } from 'lucide-react';
 import { useWriteContract } from 'wagmi';
 import { toEther } from 'thirdweb/utils';
-import { baseSepolia } from 'thirdweb/chains';
+import { base } from 'thirdweb/chains';
 import { Hex } from 'thirdweb';
 import {
   useActiveAccount,
@@ -98,7 +98,7 @@ const NftPreview = (props: Props) => {
     onError: () => setIsMinting(false),
   });
 
-  const isCorrectChain = chain?.id === baseSepolia.id;
+  const isCorrectChain = chain?.id === base.id;
 
   useEffect(() => {
     if (contractEvents?.length) {
@@ -120,7 +120,7 @@ const NftPreview = (props: Props) => {
   }, [contractEvents, account, generationAction, mintTx, reportSuccessfulMint]);
 
   const handleChangeNetwork = () => {
-    switchChain(baseSepolia);
+    switchChain(base);
   };
 
   const handleMint = async () => {
@@ -134,7 +134,7 @@ const NftPreview = (props: Props) => {
       address: contractAddress,
       args: [generationAction?.metadataBareIPFS],
       value: mintPrice,
-      chainId: baseSepolia.id,
+      chainId: base.id,
     });
   };
 
