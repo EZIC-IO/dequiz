@@ -7,7 +7,7 @@ import { QuizType } from '@/api/models/quiz';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
-import Loader from '@/components/loader';
+import { Loader } from '@/components/ui/loader';
 import { useConnectModal } from 'thirdweb/react';
 import { wallets } from '@/constants/wallets';
 import { thirdwebClient } from '@/config/thirdweb';
@@ -97,13 +97,13 @@ const Quiz = (props: Props) => {
           />
         </div>
 
-        <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between py-12 pl-20 pr-14 pt-[63px]'>
+        <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between overflow-y-scroll py-10 pl-20 pr-14'>
           <div className='flex items-center justify-between'>
             <div className='flex gap-5'>
               <Badge variant='success'>{getStatus()}</Badge>
 
               <Badge className='flex gap-2'>
-                <Orbit width={16} color='#4ADE80' />
+                <Orbit size={16} color='#4ADE80' />
                 <span>Epoch {quiz.epochId}</span>
               </Badge>
 
@@ -118,14 +118,14 @@ const Quiz = (props: Props) => {
           <div className='mt-5 text-sm leading-7'>{quiz.description}</div>
 
           <div
-            className={`mt-10 flex items-center ${hasTotalSuplyMinted ? 'justify-end' : 'justify-between'}`}
+            className={`mt-8 flex items-center ${hasTotalSuplyMinted ? 'justify-end' : 'justify-between'}`}
           >
             {renderActionButton()}
 
             {alreadyMintedGlobalAmount && totalSupply && (
               <div>
                 <Badge className='flex gap-2'>
-                  <Hammer width={16} />
+                  <Hammer size={16} />
 
                   <span>
                     Minted: {Number(alreadyMintedGlobalAmount)}/
@@ -137,8 +137,8 @@ const Quiz = (props: Props) => {
           </div>
 
           {showAttemptsLeftCount && (
-            <div className='mt-3 flex items-center gap-2 text-xs'>
-              <BadgeInfo />
+            <div className='mt-6 flex items-center gap-1 text-xs'>
+              <BadgeInfo size={16} />
               Note: you have{' '}
               {pluralize('generation attempt', attemptsLeft, true)} remaining
             </div>

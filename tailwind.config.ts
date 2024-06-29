@@ -34,7 +34,11 @@ const config = {
         heading: '#E2E8F0',
         danger: '#ff3333',
         'light-green': '#4ade8014',
-        'light-gray': '#94A3B8',
+        'bright-green': '#4ADE80',
+        'gray-100': '#94A3B8',
+        'gray-200': '#334155',
+        'gray-300': '#191e20',
+        black: '#09090B',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -69,6 +73,9 @@ const config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        blue: '0px 0px 0px 2px #4F607D',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -101,6 +108,9 @@ const config = {
         h1: { color: theme('colors.heading') },
         h2: { color: theme('colors.heading') },
         h3: { color: theme('colors.heading') },
+        h4: { color: theme('colors.heading') },
+        h5: { color: theme('colors.heading') },
+        h6: { color: theme('colors.heading') },
       });
     },
   ],

@@ -28,12 +28,12 @@ const CharacterAppearance = (props: Props) => {
 
   return (
     <div>
-      <h3 className='font-tangak text-2xl font-semibold'>
+      <h3 className='font-tangak text-3xl'>
         Shape Your Hero&apos;s Appearance
       </h3>
 
       <div className='flex flex-col gap-10'>
-        <div className='text-xxs mt-3'>
+        <div className='mt-3 text-sm'>
           Craft a distinctive appearance that fits your fantasy persona.
         </div>
 

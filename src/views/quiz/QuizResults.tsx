@@ -3,6 +3,7 @@ import pluralize from 'pluralize';
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useState } from 'react';
+import Image from 'next/image';
 
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -72,22 +73,24 @@ const QuizResults = (props: Props) => {
         generationAction={data}
       />
 
-      <Card className='flex' background='/gradient/results-gradient.webp'>
-        <div className='w-[60%]'>
-          <img
-            alt='Quiz results'
-            style={{ width: 773, height: 769 }}
+      <Card
+        className='flex max-h-[761px]'
+        background='/gradient/results-gradient.webp'
+      >
+        <div className='relative w-[57%]'>
+          <Image
+            layout='fill'
+            quality={100}
+            alt={generationAction.vocation}
             src={generationAction.imageUrl}
           />
         </div>
 
-        <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
-          <div className='flex flex-col gap-5'>
-            <h3 className='font-tangak text-2xl font-semibold'>
-              {properties.title}
-            </h3>
+        <div className='w-[43%] py-20 pl-12 pr-14'>
+          <div className='flex flex-col'>
+            <h3 className='font-tangak text-5xl'>{properties.title}</h3>
 
-            <div className='flex gap-2'>
+            <div className='mt-5 flex gap-2'>
               {properties.skills.map((skill, index) => (
                 <Badge
                   key={`${skill}-${index}`}
@@ -100,15 +103,15 @@ const QuizResults = (props: Props) => {
               ))}
             </div>
 
-            <div>{properties.description}</div>
+            <div className='mt-5 text-sm leading-7'>
+              {properties.description}
+            </div>
 
-            <div>
-              <Label className='pb-2' htmlFor='character-name'>
-                Name your Character
-              </Label>
+            <div className='mt-5'>
+              <Label htmlFor='character-name'>Name your Character</Label>
 
               <form
-                className='flex gap-2'
+                className='mt-1 flex gap-2'
                 onSubmit={handleSubmit(handleProceed)}
               >
                 <Controller
@@ -120,6 +123,7 @@ const QuizResults = (props: Props) => {
                       <Input
                         id='character-name'
                         placeholder='Name'
+                        className='w-[288px]'
                         {...field}
                       />
 
@@ -136,21 +140,26 @@ const QuizResults = (props: Props) => {
                   )}
                 />
 
-                <ShimmerButton type='submit' disabled={!isValid}>
+                <ShimmerButton
+                  className='h-10'
+                  type='submit'
+                  disabled={!isValid}
+                >
                   Proceed
                 </ShimmerButton>
               </form>
             </div>
 
-            <div className='mt-5'>
-              <div className='flex justify-between gap-2'>
+            <div className='mt-10'>
+              <div className='flex justify-between gap-4'>
                 <Button
                   disabled={!hasAttempts}
                   variant='secondary'
+                  className='flex gap-1.5'
                   onClick={onRegenerate}
                 >
                   Generate Again
-                  <RotateCw className='ml-2 h-4 w-4' />
+                  <RotateCw size={15} />
                 </Button>
 
                 {alreadyMintedGlobalAmount && totalSupply && (
@@ -168,8 +177,8 @@ const QuizResults = (props: Props) => {
               </div>
 
               {isConnected && (
-                <div className='mt-3 flex items-center gap-2 text-xs'>
-                  <BadgeInfo />
+                <div className='mt-6 flex items-center gap-1 text-xs'>
+                  <BadgeInfo size={16} />
                   Note: you have{' '}
                   {pluralize('generation attempt', attemptsLeft, true)}{' '}
                   remaining

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Wand } from 'lucide-react';
+import { BadgeCent, Wand } from 'lucide-react';
 import { useWriteContract } from 'wagmi';
 import { toEther } from 'thirdweb/utils';
 import { baseSepolia } from 'thirdweb/chains';
@@ -26,6 +26,7 @@ import { thirdwebClient } from '@/config/thirdweb';
 import { wallets } from '@/constants/wallets';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import IconEth from '@/components/icons/IconEth';
+import { BadgedImage } from '@/components/ui/badged-image';
 
 type Props = {
   open: boolean;
@@ -159,19 +160,24 @@ const NftPreview = (props: Props) => {
     }
 
     return (
-      <ShimmerButton disabled={isMinting} onClick={handleMint}>
+      <ShimmerButton
+        className='flex gap-2'
+        disabled={isMinting}
+        onClick={handleMint}
+      >
         {isMinting ? 'Minting...' : 'Mint'}
+        <BadgeCent size={16} />
       </ShimmerButton>
     );
   };
 
   return (
     <Drawer dismissible={false} open={open}>
-      <DrawerContent>
-        <div className='flex h-full w-full flex-col items-center justify-center py-[112px]'>
+      <DrawerContent className='bg-black'>
+        <div className='flex h-full w-full flex-col items-center justify-center px-10 py-16'>
           {isLoading ? (
             <>
-              <Wand width={60} height={60} color='#fff' />
+              <Wand size={60} color='#fff' />
 
               <div className='font-tangak max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
                 We are preparing your NFT.
@@ -181,18 +187,21 @@ const NftPreview = (props: Props) => {
             </>
           ) : (
             generationAction && (
-              <div className='flex gap-4'>
-                <img
-                  style={{ width: 299, height: 311 }}
-                  alt='Nft Preview'
+              <div className='flex gap-10'>
+                <BadgedImage
+                  width={299}
+                  height={311}
+                  quality={100}
+                  className='shadow-blue rounded-[10px]'
+                  alt={generationAction.metadata.name}
                   src={generationAction.imageGatewayIPFS}
+                  title={generationAction.metadata.name}
                 />
 
                 <div>
-                  <div className='font-tangak mb-10 text-xl'>
-                    Your NFT is ready!
-                  </div>
-                  {renderActionButton()}
+                  <h4 className='font-tangak text-3xl'>Your NFT is ready!</h4>
+
+                  <div className='mt-10'>{renderActionButton()}</div>
 
                   <div className='mt-4 flex gap-1'>
                     <IconEth />

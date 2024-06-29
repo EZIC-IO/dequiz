@@ -74,7 +74,7 @@ const QuizDetails = (props: Props) => {
   };
 
   return (
-    <div className='h-[50vh]'>
+    <div>
       <Line
         percent={progress}
         strokeWidth={4}
@@ -83,98 +83,94 @@ const QuizDetails = (props: Props) => {
         trailColor='#1E293B'
       />
 
-      <div className='mt-20'>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Swiper
-            autoHeight
-            onSwiper={onSwiper}
-            allowTouchMove={false}
-            initialSlide={currentSlideIndex}
-            onActiveIndexChange={(swiper) => onSlideChange(swiper.activeIndex)}
-          >
-            {quiz.questions.map((question, index) => (
-              <SwiperSlide key={`${question.id}-${index}`}>
-                <div className='flex-[1_1_auto] space-y-4'>
-                  <div className='space-y-8'>
-                    <h3 className='font-tangak text-2xl font-semibold'>
-                      {question.question}
-                    </h3>
+      <form className='mt-12' onSubmit={(e) => e.preventDefault()}>
+        <Swiper
+          autoHeight
+          onSwiper={onSwiper}
+          allowTouchMove={false}
+          initialSlide={currentSlideIndex}
+          onActiveIndexChange={(swiper) => onSlideChange(swiper.activeIndex)}
+        >
+          {quiz.questions.map((question, index) => (
+            <SwiperSlide key={`${question.id}-${index}`}>
+              <div className='flex-[1_1_auto] space-y-4'>
+                <div className='space-y-10'>
+                  <h3 className='font-tangak text-3xl'>{question.question}</h3>
 
-                    <ul className='space-y-6'>
-                      {question.options.map((option) => (
-                        <li key={option.id}>
-                          <Controller
-                            name={question.id}
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <Radio
-                                {...field}
-                                label={option.label}
-                                icon={option.icon}
-                                value={option.id}
-                                name={question.id}
-                                checked={field.value === option.id}
-                              />
-                            )}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul className='space-y-6'>
+                    {question.options.map((option) => (
+                      <li key={option.id}>
+                        <Controller
+                          name={question.id}
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Radio
+                              {...field}
+                              label={option.label}
+                              icon={option.icon}
+                              value={option.id}
+                              name={question.id}
+                              checked={field.value === option.id}
+                            />
+                          )}
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </SwiperSlide>
-            ))}
-
-            <SwiperSlide>
-              <CharacterAppearance control={control} />
+              </div>
             </SwiperSlide>
-          </Swiper>
+          ))}
 
-          <div className='mt-10 flex justify-end'>
-            <div className='flex gap-2'>
-              {currentSlideIndex !== 0 && (
-                <ShimmerButton variant='secondary' onClick={handlePrevQuestion}>
-                  Previous
-                </ShimmerButton>
-              )}
+          <SwiperSlide>
+            <CharacterAppearance control={control} />
+          </SwiperSlide>
+        </Swiper>
 
-              {isLastSlide ? (
-                <ShimmerButton onClick={handleGenerate} disabled={!canGenerate}>
-                  Generate
-                </ShimmerButton>
+        <div className='mt-10 flex justify-end'>
+          <div className='flex gap-2'>
+            {currentSlideIndex !== 0 && (
+              <ShimmerButton variant='secondary' onClick={handlePrevQuestion}>
+                Previous
+              </ShimmerButton>
+            )}
+
+            {isLastSlide ? (
+              <ShimmerButton onClick={handleGenerate} disabled={!canGenerate}>
+                Generate
+              </ShimmerButton>
+            ) : (
+              <ShimmerButton
+                disabled={!isNextQuestionAllowed}
+                onClick={handleNextQuestion}
+              >
+                Next
+              </ShimmerButton>
+            )}
+          </div>
+        </div>
+
+        {isLastSlide && isConnected && (
+          <div className='flex justify-end'>
+            <div className='mt-6 flex items-center gap-1 text-xs'>
+              <BadgeInfo size={16} />
+              {hasMinted ? (
+                <>
+                  Note: you&apos;ve already minted{' '}
+                  <Link href='/minted'>your NFT</Link>
+                </>
               ) : (
-                <ShimmerButton
-                  disabled={!isNextQuestionAllowed}
-                  onClick={handleNextQuestion}
-                >
-                  Next
-                </ShimmerButton>
+                <>
+                  Note: you have{' '}
+                  {pluralize('generation attempt', attemptsLeft, true)}{' '}
+                  remaining
+                </>
               )}
             </div>
           </div>
-
-          {isLastSlide && isConnected && (
-            <div className='flex justify-end'>
-              <div className='mt-3 flex items-center gap-2 text-xs'>
-                <BadgeInfo />
-                {hasMinted ? (
-                  <>
-                    Note: you&apos;ve already minted{' '}
-                    <Link href='/minted'>your NFT</Link>
-                  </>
-                ) : (
-                  <>
-                    Note: you have{' '}
-                    {pluralize('generation attempt', attemptsLeft, true)}{' '}
-                    remaining
-                  </>
-                )}
-              </div>
-            </div>
-          )}
-        </form>
-      </div>
+        )}
+      </form>
     </div>
   );
 };

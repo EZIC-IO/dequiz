@@ -25,7 +25,6 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             layout='fill'
             objectFit='cover'
             objectPosition='center'
-            quality={100}
             className='blurred-background opacity-50'
           />
         </div>

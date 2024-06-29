@@ -12,7 +12,7 @@ import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { generateCharacter } from '@/utils/quiz';
 import { GenImgDto, RPGVocation } from '@/api/models/gen-image.dto';
 import { QuizForm, QuizResults } from '@/views/quiz';
-import Loader from '@/components/loader';
+import { Loader } from '@/components/ui/loader';
 import { SwiperClass } from 'swiper/react';
 import { FormValues } from '@/views/quiz/QuizForm/utils';
 import { useGenerateImage } from '@/api/hooks/useGenerateImage';
@@ -176,7 +176,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
         className='flex justify-between'
         background={currentSlideImages?.gradientImage}
       >
-        <div className='w-[55%] overflow-y-scroll py-[60px] pl-[51px] pr-[66px]'>
+        <div className='max-h-[769px] w-[43%] overflow-y-scroll py-14 pl-12 pr-16'>
           <QuizForm
             swiper={swiper}
             onSwiper={setSwiper}
@@ -188,12 +188,11 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
           />
         </div>
 
-        <div className='relative flex w-[45%] justify-end'>
+        <div className='relative flex w-[57%] justify-end'>
           {currentSlideImages.image && (
             <Image
-              width={773}
-              height={769}
               quality={100}
+              layout='fill'
               alt={currentSlideImages.image.alt}
               src={currentSlideImages.image.src}
             />

@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
-import Loader from '@/components/loader';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/ui/loader';
+import { FullScreenText } from '@/components/ui/fullscreen-text';
 import useGetMintedAction from '@/api/hooks/useGetMintedAction';
 import { CHARACTER_PROPERTIES } from '@/constants/character';
 import IconExplorer from '@/components/icons/IconExplorer';
@@ -22,44 +24,49 @@ const NftDetails = () => {
   }
 
   if (!isConnected) {
-    return <Loader title='Please connect your wallet!' />;
+    return <FullScreenText title='Please connect your wallet!' />;
   }
 
   if (error) {
     return (
-      <Loader title='Oops, something went wrong, please refresh your page.' />
+      <FullScreenText title='Oops, something went wrong, please refresh your page.' />
     );
   }
 
   if (!mintedAction || mintedAction.status !== GenerationActionStatus.MINTED) {
-    return <Loader title='You do not have any NFT minted.' />;
+    return <FullScreenText title='You do not have any NFT minted.' />;
   }
 
   const properties = CHARACTER_PROPERTIES[mintedAction.vocation];
 
   return (
-    <div className='h-full w-full pl-4'>
-      <Card className='flex' background='/gradient/results-gradient.webp'>
-        <div className='w-[60%]'>
-          <img
-            alt='Quiz results'
-            style={{ width: 773, height: 769 }}
+    <div className='h-full w-full'>
+      <div className='flex max-h-[769px] gap-10'>
+        <Card className='relative w-[44%]'>
+          <Image
+            layout='fill'
+            loading='eager'
+            quality={100}
+            alt={mintedAction.metadata.name}
             src={mintedAction.imageGatewayIPFS}
           />
-        </div>
+        </Card>
 
-        <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
+        <Card
+          className='w-[56%] px-20 pb-48 pt-20'
+          background='/gradient/results-gradient.webp'
+        >
           <div className='flex flex-col gap-10'>
             <h2 className='font-tangak text-6xl font-bold'>
               {mintedAction.metadata.name} -{' '}
-              <span className='text-green'>Minted</span>
+              <span className='text-bright-green'>Minted</span>
             </h2>
 
             <h3 className='font-tangak mt-8 text-5xl font-semibold'>
               {properties.title}
             </h3>
 
-            <div className='flex gap-2'>
+            <div className='mt-5 flex gap-2'>
               {properties.skills.map((skill, index) => (
                 <Badge
                   key={`${skill}-${index}`}
@@ -72,13 +79,19 @@ const NftDetails = () => {
               ))}
             </div>
 
-            <div>{properties.description}</div>
+            <div className='mt-5 text-sm leading-7'>
+              {properties.description}
+            </div>
 
             {(mintedAction?.txBlockExplorerUrl || mintedAction?.openSeaUrl) && (
-              <div className='mt-12 flex justify-center gap-6'>
+              <div className='mt-12 flex gap-6'>
                 {mintedAction?.txBlockExplorerUrl && (
                   <Link target='_blank' href={mintedAction.txBlockExplorerUrl}>
-                    <Button variant='secondary' className='flex gap-2'>
+                    <Button
+                      size='lg'
+                      variant='secondary'
+                      className='flex gap-2'
+                    >
                       <IconExplorer />
                       Transaction
                     </Button>
@@ -87,7 +100,11 @@ const NftDetails = () => {
 
                 {mintedAction?.openSeaUrl && (
                   <Link target='_blank' href={mintedAction.openSeaUrl}>
-                    <Button variant='secondary' className='flex gap-2'>
+                    <Button
+                      size='lg'
+                      variant='secondary'
+                      className='flex gap-2'
+                    >
                       <IconOpenSea />
                       OpenSea
                     </Button>
@@ -96,8 +113,8 @@ const NftDetails = () => {
               </div>
             )}
           </div>
-        </div>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };
