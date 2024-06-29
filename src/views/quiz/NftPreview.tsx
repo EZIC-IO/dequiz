@@ -173,7 +173,7 @@ const NftPreview = (props: Props) => {
             <>
               <Wand width={60} height={60} color='#fff' />
 
-              <div className='max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
+              <div className='font-tangak max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
                 We are preparing your NFT.
                 <br />
                 Please do not close this page.
@@ -189,7 +189,9 @@ const NftPreview = (props: Props) => {
                 />
 
                 <div>
-                  <div className='mb-10 text-xl'>Your NFT is ready!</div>
+                  <div className='font-tangak mb-10 text-xl'>
+                    Your NFT is ready!
+                  </div>
                   {renderActionButton()}
 
                   <div className='mt-4 flex gap-1'>

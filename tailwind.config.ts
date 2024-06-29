@@ -21,6 +21,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
+        tangak: ['var(--font-tangak)'],
       },
       colors: {
         border: 'hsl(var(--border))',

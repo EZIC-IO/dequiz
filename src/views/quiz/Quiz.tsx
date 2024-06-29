@@ -115,7 +115,9 @@ const Quiz = (props: Props) => {
             </div>
           </div>
 
-          <h1 className='mt-5 text-5xl font-extrabold'>{quiz.title}</h1>
+          <h1 className='font-tangak mt-5 text-5xl font-extrabold'>
+            {quiz.title}
+          </h1>
 
           <div className='mt-5'>{quiz.description}</div>
 

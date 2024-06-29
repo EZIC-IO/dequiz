@@ -28,7 +28,7 @@ const CharacterAppearance = (props: Props) => {
 
   return (
     <div>
-      <h3 className='text-2xl font-semibold'>
+      <h3 className='font-tangak text-2xl font-semibold'>
         Shape Your Hero&apos;s Appearance
       </h3>
 

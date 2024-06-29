@@ -83,7 +83,9 @@ const QuizResults = (props: Props) => {
 
         <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
           <div className='flex flex-col gap-5'>
-            <h3 className='text-2xl font-semibold'>{properties.title}</h3>
+            <h3 className='font-tangak text-2xl font-semibold'>
+              {properties.title}
+            </h3>
 
             <div className='flex gap-2'>
               {properties.skills.map((skill, index) => (

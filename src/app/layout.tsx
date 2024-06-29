@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
+import localFont from 'next/font/local';
 import { ThirdwebProvider } from 'thirdweb/react';
 import { ToastContainer } from 'react-toastify';
 
@@ -15,6 +16,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'rc-slider/assets/index.css';
 import 'swiper/css';
 import './globals.css';
+
+const tangakFont = localFont({
+  src: './fonts/tangak.otf',
+  variable: '--font-tangak',
+});
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -32,7 +38,13 @@ export default function RootLayout({
     <>
       <html lang='en' suppressHydrationWarning>
         <head />
-        <body className={cn('min-h-screen font-sans', fontSans.variable)}>
+        <body
+          className={cn(
+            'min-h-screen font-sans',
+            fontSans.variable,
+            tangakFont.variable
+          )}
+        >
           <ThemeProvider
             attribute='class'
             defaultTheme='system'

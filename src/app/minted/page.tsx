@@ -50,12 +50,14 @@ const NftDetails = () => {
 
         <div className='w-[40%] pl-[51px] pr-[66px] pt-[60px]'>
           <div className='flex flex-col gap-10'>
-            <h2 className='text-3xl font-bold'>
-              deQuiz | {mintedAction.metadata.name} -{' '}
+            <h2 className='font-tangak text-6xl font-bold'>
+              {mintedAction.metadata.name} -{' '}
               <span className='text-green'>Minted</span>
             </h2>
 
-            <h3 className='mt-12 text-2xl font-semibold'>{properties.title}</h3>
+            <h3 className='font-tangak mt-8 text-5xl font-semibold'>
+              {properties.title}
+            </h3>
 
             <div className='flex gap-2'>
               {properties.skills.map((skill, index) => (

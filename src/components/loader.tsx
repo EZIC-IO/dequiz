@@ -16,7 +16,7 @@ const Loader = (props: Props) => {
     >
       <Wand width={60} height={60} color='#fff' />
 
-      <div className='max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
+      <div className='font-tangak max-w-[805px] pt-10 text-center text-5xl font-extrabold leading-tight'>
         {title}
       </div>
     </Card>

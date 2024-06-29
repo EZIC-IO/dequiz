@@ -96,7 +96,7 @@ const QuizDetails = (props: Props) => {
               <SwiperSlide key={`${question.id}-${index}`}>
                 <div className='flex-[1_1_auto] space-y-4'>
                   <div className='space-y-8'>
-                    <h3 className='text-2xl font-semibold'>
+                    <h3 className='font-tangak text-2xl font-semibold'>
                       {question.question}
                     </h3>
 
