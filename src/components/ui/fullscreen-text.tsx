@@ -1,16 +1,19 @@
 import { Wand } from 'lucide-react';
+
 import { Card } from './card';
+import { cn } from '@/lib/utils';
 
 export type FullScreenTextProps = {
   title: string;
   icon?: React.ReactNode;
+  className?: string;
 };
 
 const FullScreenText = (props: FullScreenTextProps) => {
-  const { title, icon } = props;
+  const { title, icon, className } = props;
 
   return (
-    <div className='flex-grow'>
+    <div className={cn('flex-grow', className)}>
       <Card
         className='relative flex h-full w-full flex-col items-center justify-center p-10'
         background='/gradient/loader-gradient.webp'

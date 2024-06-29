@@ -35,6 +35,7 @@ const config = {
         danger: '#ff3333',
         'light-green': '#4ade8014',
         'bright-green': '#4ADE80',
+        'gray-50': '#FFFFFF0A',
         'gray-100': '#94A3B8',
         'gray-200': '#334155',
         'gray-300': '#191e20',

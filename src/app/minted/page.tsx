@@ -60,7 +60,7 @@ const NftDetails = () => {
       </Card>
 
       <Card
-        className='max-h-[769px] w-[56%] px-20 py-16'
+        className='max-h-[769px] w-[56%] overflow-y-auto px-20 py-16'
         background='/gradient/results-gradient.webp'
       >
         <div className='flex flex-col gap-10'>
@@ -73,7 +73,7 @@ const NftDetails = () => {
             {properties.title}
           </h3>
 
-          <div className='mt-5 flex gap-2'>
+          <div className='mt-5 flex flex-wrap gap-2'>
             {properties.skills.map((skill, index) => (
               <Badge
                 key={`${skill}-${index}`}

@@ -86,11 +86,11 @@ const QuizResults = (props: Props) => {
           />
         </div>
 
-        <div className='w-[43%] py-16 pl-12 pr-14'>
+        <div className='w-[43%] overflow-y-auto py-16 pl-12 pr-14'>
           <div className='flex flex-col'>
             <h3 className='font-tangak text-5xl'>{properties.title}</h3>
 
-            <div className='mt-5 flex gap-2'>
+            <div className='mt-5 flex flex-wrap gap-2'>
               {properties.skills.map((skill, index) => (
                 <Badge
                   key={`${skill}-${index}`}
@@ -111,7 +111,7 @@ const QuizResults = (props: Props) => {
               <Label htmlFor='character-name'>Name your Character</Label>
 
               <form
-                className='mt-1 flex gap-2'
+                className='mt-1 flex flex-wrap gap-2'
                 onSubmit={handleSubmit(handleProceed)}
               >
                 <Controller

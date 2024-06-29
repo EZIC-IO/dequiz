@@ -37,7 +37,7 @@ const CharacterAppearance = (props: Props) => {
           Craft a distinctive appearance that fits your fantasy persona.
         </div>
 
-        <ul className='flex gap-2'>
+        <ul className='flex flex-wrap gap-2'>
           {GENDER_OPTIONS.map((option) => (
             <li key={option.value}>
               <Controller
@@ -58,7 +58,7 @@ const CharacterAppearance = (props: Props) => {
 
         <div className='space-y-6'>
           <div className='font-lg'>Eye Color</div>
-          <ul className='flex gap-2'>
+          <ul className='flex flex-wrap gap-2'>
             {EYE_COLOR_OPTONS.map((color) => (
               <li key={`${color.value}-${color.label}`}>
                 <Controller
@@ -82,7 +82,7 @@ const CharacterAppearance = (props: Props) => {
 
         <div className='space-y-6'>
           <div className='font-lg'>Hair Color</div>
-          <ul className='flex gap-2'>
+          <ul className='flex flex-wrap gap-2'>
             {HAIR_COLOR_OPTIONS.map((color) => (
               <li key={`${color.value}-${color.label}`}>
                 <Controller
@@ -106,7 +106,7 @@ const CharacterAppearance = (props: Props) => {
 
         <div className='space-y-6'>
           <div className='font-lg'>Hair Length</div>
-          <ul className='flex gap-2'>
+          <ul className='flex flex-wrap gap-2'>
             {HAIR_LENGTH_OPTIONS.map((option) => (
               <li key={option.value}>
                 <Controller
