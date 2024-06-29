@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { TypeAnimation } from 'react-type-animation';
 
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -69,7 +70,11 @@ const NftDetails = () => {
           </h2>
 
           <h3 className='font-tangak mt-8 text-5xl font-semibold'>
-            {properties.title}
+            <TypeAnimation
+              cursor={false}
+              sequence={[properties.title, 1000]}
+              speed={50}
+            />
           </h3>
 
           <div className='mt-5 flex flex-wrap gap-2'>

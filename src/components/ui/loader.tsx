@@ -1,7 +1,7 @@
 import { FullScreenText, FullScreenTextProps } from './fullscreen-text';
 
 const Loader = (props: FullScreenTextProps) => {
-  return <FullScreenText {...props} />;
+  return <FullScreenText animated {...props} />;
 };
 
 export { Loader };

@@ -1,6 +1,7 @@
 import { BadgeInfo, Hammer, Orbit } from 'lucide-react';
 import Link from 'next/link';
 import pluralize from 'pluralize';
+import { TypeAnimation } from 'react-type-animation';
 
 import { QuizType } from '@/api/models/quiz';
 import { Card, CardContent } from '@/components/ui/card';
@@ -110,7 +111,11 @@ const Quiz = (props: Props) => {
         </div>
 
         <h1 className='font-tangak mt-8 max-w-[400px] text-5xl'>
-          {quiz.title}
+          <TypeAnimation
+            cursor={false}
+            sequence={[quiz.title, 1000]}
+            speed={50}
+          />
         </h1>
 
         <div className='mt-5 text-sm leading-6'>{quiz.description}</div>
