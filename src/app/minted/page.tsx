@@ -40,7 +40,7 @@ const NftDetails = () => {
   const properties = CHARACTER_PROPERTIES[mintedAction.vocation];
 
   return (
-    <div className='flex gap-10'>
+    <div className='flex gap-8'>
       <Card className='relative w-[44%]'>
         <div
           className='absolute h-full w-full'
@@ -60,7 +60,7 @@ const NftDetails = () => {
       </Card>
 
       <Card
-        className='max-h-[769px] w-[56%] px-20 pb-48 pt-20'
+        className='max-h-[769px] w-[56%] px-20 py-16'
         background='/gradient/results-gradient.webp'
       >
         <div className='flex flex-col gap-10'>
@@ -89,7 +89,7 @@ const NftDetails = () => {
           <div className='mt-5 text-sm leading-7'>{properties.description}</div>
 
           {(mintedAction?.txBlockExplorerUrl || mintedAction?.openSeaUrl) && (
-            <div className='mt-8 flex gap-6'>
+            <div className='mt-6 flex gap-6'>
               {mintedAction?.txBlockExplorerUrl && (
                 <Link target='_blank' href={mintedAction.txBlockExplorerUrl}>
                   <Button size='lg' variant='secondary' className='flex gap-2'>

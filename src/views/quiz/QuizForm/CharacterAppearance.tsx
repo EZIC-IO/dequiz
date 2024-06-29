@@ -71,7 +71,7 @@ const CharacterAppearance = (props: Props) => {
                       value={color.value}
                       checked={field.value === color.value}
                       labelStyles={{ backgroundColor: color.label }}
-                      className='h-[32px] w-[32px] rounded-full'
+                      className='h-[32px] w-[32px] rounded-full p-3'
                     />
                   )}
                 />
@@ -95,7 +95,7 @@ const CharacterAppearance = (props: Props) => {
                       value={color.value}
                       checked={field.value === color.value}
                       labelStyles={{ backgroundColor: color.label }}
-                      className='h-[32px] w-[32px] rounded-full'
+                      className='h-[32px] w-[32px] rounded-full p-3'
                     />
                   )}
                 />

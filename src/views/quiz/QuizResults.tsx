@@ -86,7 +86,7 @@ const QuizResults = (props: Props) => {
           />
         </div>
 
-        <div className='w-[43%] py-20 pl-12 pr-14'>
+        <div className='w-[43%] py-16 pl-12 pr-14'>
           <div className='flex flex-col'>
             <h3 className='font-tangak text-5xl'>{properties.title}</h3>
 
@@ -153,6 +153,7 @@ const QuizResults = (props: Props) => {
             <div className='mt-10'>
               <div className='flex justify-between gap-4'>
                 <Button
+                  size='lg'
                   disabled={!hasAttempts}
                   variant='secondary'
                   className='flex gap-1.5'

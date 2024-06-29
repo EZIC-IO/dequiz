@@ -44,7 +44,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 2,
               [RPGVocation.RANGER]: 2,
             },
-            icon: <Palette />,
+            icon: <Palette size={30} />,
           },
           {
             id: '2',
@@ -55,7 +55,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 2,
               [RPGVocation.RANGER]: 2,
             },
-            icon: <MountainSnow />,
+            icon: <MountainSnow size={30} />,
           },
           {
             id: '3',
@@ -66,7 +66,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 1,
               [RPGVocation.RANGER]: 1,
             },
-            icon: <Lightbulb />,
+            icon: <Lightbulb size={30} />,
           },
         ],
       },
@@ -85,7 +85,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 2,
               [RPGVocation.RANGER]: 3,
             },
-            icon: <TreePine />,
+            icon: <TreePine size={30} />,
           },
           {
             id: '5',
@@ -96,7 +96,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 1,
               [RPGVocation.RANGER]: 2,
             },
-            icon: <MountainSnow />,
+            icon: <MountainSnow size={30} />,
           },
           {
             id: '6',
@@ -107,7 +107,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 3,
               [RPGVocation.RANGER]: 1,
             },
-            icon: <Shell />,
+            icon: <Shell size={30} />,
           },
         ],
       },
@@ -126,7 +126,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 1,
               [RPGVocation.RANGER]: 2,
             },
-            icon: <Crown />,
+            icon: <Crown size={30} />,
           },
           {
             id: '8',
@@ -137,7 +137,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 1,
               [RPGVocation.RANGER]: 2,
             },
-            icon: <Glasses />,
+            icon: <Glasses size={30} />,
           },
           {
             id: '9',
@@ -148,7 +148,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 3,
               [RPGVocation.RANGER]: 1,
             },
-            icon: <Rocket />,
+            icon: <Rocket size={30} />,
           },
         ],
       },
@@ -167,7 +167,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 2,
               [RPGVocation.RANGER]: 3,
             },
-            icon: <TentTree />,
+            icon: <TentTree size={30} />,
           },
           {
             id: '11',
@@ -178,7 +178,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 1,
               [RPGVocation.RANGER]: 1,
             },
-            icon: <BookHeart />,
+            icon: <BookHeart size={30} />,
           },
           {
             id: '12',
@@ -189,7 +189,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 3,
               [RPGVocation.RANGER]: 1,
             },
-            icon: <WandSparkles />,
+            icon: <WandSparkles size={30} />,
           },
         ],
       },
@@ -197,7 +197,7 @@ export const quizes: QuizType[] = [
         id: '5',
         previewImage: '/quiz/goal.webp',
         gradientImage: '/gradient/gradient-5.webp',
-        question: 'What is your ultimate goal in life?',
+        question: 'What are your aspiration and objective goal in life?',
         options: [
           {
             id: '13',
@@ -208,7 +208,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 2,
               [RPGVocation.RANGER]: 3,
             },
-            icon: <Zap />,
+            icon: <Zap size={30} />,
           },
           {
             id: '14',
@@ -219,7 +219,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 1,
               [RPGVocation.RANGER]: 1,
             },
-            icon: <Search />,
+            icon: <Search size={30} />,
           },
           {
             id: '15',
@@ -230,7 +230,7 @@ export const quizes: QuizType[] = [
               [RPGVocation.ROGUE]: 2,
               [RPGVocation.RANGER]: 2,
             },
-            icon: <Sun />,
+            icon: <Sun size={30} />,
           },
         ],
       },

@@ -38,6 +38,11 @@ const config = {
         'gray-100': '#94A3B8',
         'gray-200': '#334155',
         'gray-300': '#191e20',
+        'gray-400': '#CBD5E1',
+        'gray-500': '#96A1AC4A',
+        'blue-100': '#09375259',
+        'blue-200': '#093752A6',
+        'blue-300': '#09375226',
         black: '#09090B',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
