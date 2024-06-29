@@ -53,6 +53,7 @@ const NftPreview = (props: Props) => {
     mutation: {
       onSuccess: (tx) => setMintTx(tx),
       onError: (e) => {
+        setIsMinting(false);
         console.error('Error minting', e);
       },
     },
@@ -94,6 +95,7 @@ const NftPreview = (props: Props) => {
         router.replace('/minted');
       }
     },
+    onError: () => setIsMinting(false),
   });
 
   const isCorrectChain = chain?.id === baseSepolia.id;

@@ -175,7 +175,7 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
       className='flex justify-between'
       background={currentSlideImages?.gradientImage}
     >
-      <div className='max-h-[769px] w-[43%] overflow-y-auto py-14 pl-12 pr-16'>
+      <div className='max-h-[765px] w-[43%] overflow-y-auto py-14 pl-12 pr-16'>
         <QuizForm
           swiper={swiper}
           onSwiper={setSwiper}
