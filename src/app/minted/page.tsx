@@ -44,18 +44,20 @@ const NftDetails = () => {
     <div className='flex gap-8'>
       <Card className='relative w-[44%]'>
         <div
-          className='absolute h-full w-full'
+          className='absolute z-10 h-full w-full'
           style={{ background: 'url(/quiz/frame.svg) no-repeat center center' }}
         ></div>
 
-        <div className='relative z-[-1] h-full w-full rounded-3xl'>
-          <BlurredImage
-            fill
-            loading='eager'
-            className='p-20 px-[53px] py-[124px]'
-            alt={mintedAction.metadata.name}
-            src={mintedAction.imageGatewayIPFS}
-          />
+        <div className='z-[-1] h-full w-full rounded-3xl bg-black p-20 px-[53px] py-[124px]'>
+          <div className='relative h-full w-full bg-black'>
+            <BlurredImage
+              fill
+              loading='eager'
+              className='rounded-[30px] bg-black'
+              alt={mintedAction.metadata.name}
+              src={mintedAction.imageGatewayIPFS}
+            />
+          </div>
         </div>
       </Card>
 
