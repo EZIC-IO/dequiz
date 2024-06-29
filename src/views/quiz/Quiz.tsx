@@ -83,43 +83,39 @@ const Quiz = (props: Props) => {
 
   return (
     <div className='flex h-full items-center'>
-      <Card className='flex justify-between' background={quiz.gradientImage}>
-        <div className='w-[50%]'>
+      <Card
+        className='flex max-h-[563px] justify-between'
+        background={quiz.gradientImage}
+      >
+        <div className='relative w-[50%]'>
           <Image
             src={quiz.previewImage}
             alt={quiz.title}
-            width={682}
-            height={563}
+            layout='fill'
             loading='eager'
             quality={100}
           />
         </div>
 
-        <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between pl-[92px] pr-[56px] pt-[63px]'>
+        <CardContent className='flex w-[50%] flex-[1_1_auto] flex-col justify-between py-12 pl-20 pr-14 pt-[63px]'>
           <div className='flex items-center justify-between'>
             <div className='flex gap-5'>
-              <Badge variant='outline' className='bg-[#4ade8014] text-primary'>
-                {getStatus()}
-              </Badge>
+              <Badge variant='success'>{getStatus()}</Badge>
 
-              <Badge variant='outline' className='flex gap-2 text-primary'>
-                <Orbit color='#4ADE80' />
+              <Badge className='flex gap-2'>
+                <Orbit width={16} color='#4ADE80' />
                 <span>Epoch {quiz.epochId}</span>
               </Badge>
 
-              {symbol && (
-                <Badge variant='outline' className='text-primary'>
-                  {symbol}
-                </Badge>
-              )}
+              {symbol && <Badge variant='secondary'>{symbol}</Badge>}
             </div>
           </div>
 
-          <h1 className='font-tangak mt-5 text-5xl font-extrabold'>
+          <h1 className='font-tangak mt-10 max-w-[400px] text-5xl'>
             {quiz.title}
           </h1>
 
-          <div className='mt-5'>{quiz.description}</div>
+          <div className='mt-5 text-sm leading-7'>{quiz.description}</div>
 
           <div
             className={`mt-10 flex items-center ${hasTotalSuplyMinted ? 'justify-end' : 'justify-between'}`}
@@ -128,8 +124,8 @@ const Quiz = (props: Props) => {
 
             {alreadyMintedGlobalAmount && totalSupply && (
               <div>
-                <Badge variant='outline' className='flex gap-2 text-lg'>
-                  <Hammer />
+                <Badge className='flex gap-2'>
+                  <Hammer width={16} />
 
                   <span>
                     Minted: {Number(alreadyMintedGlobalAmount)}/

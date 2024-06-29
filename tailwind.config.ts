@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { PluginAPI } from 'tailwindcss/types/config';
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 const config = {
@@ -30,7 +31,10 @@ const config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         green: '#3e9392',
+        heading: '#E2E8F0',
         danger: '#ff3333',
+        'light-green': '#4ade8014',
+        'light-gray': '#94A3B8',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -90,7 +94,16 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    function ({ addBase, theme }: PluginAPI) {
+      addBase({
+        h1: { color: theme('colors.heading') },
+        h2: { color: theme('colors.heading') },
+        h3: { color: theme('colors.heading') },
+      });
+    },
+  ],
 } satisfies Config;
 
 export default config;

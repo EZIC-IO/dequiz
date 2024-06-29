@@ -91,7 +91,6 @@ const QuizResults = (props: Props) => {
               {properties.skills.map((skill, index) => (
                 <Badge
                   key={`${skill}-${index}`}
-                  variant='outline'
                   className='flex gap-2 text-sm font-normal text-primary'
                 >
                   {skill.icon}
@@ -156,7 +155,7 @@ const QuizResults = (props: Props) => {
 
                 {alreadyMintedGlobalAmount && totalSupply && (
                   <div className='flex'>
-                    <Badge variant='outline' className='flex gap-2 text-lg'>
+                    <Badge className='flex gap-2 text-lg'>
                       <Hammer />
 
                       <span>

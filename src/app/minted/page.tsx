@@ -63,7 +63,6 @@ const NftDetails = () => {
               {properties.skills.map((skill, index) => (
                 <Badge
                   key={`${skill}-${index}`}
-                  variant='outline'
                   className='flex gap-2 text-sm font-normal text-primary'
                 >
                   {skill.icon}
