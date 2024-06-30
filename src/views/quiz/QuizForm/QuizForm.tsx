@@ -8,10 +8,10 @@ import { BadgeInfo } from 'lucide-react';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import Link from 'next/link';
 
-import CharacterAppearance from './CharacterAppearance';
+import { FormValues } from './utils';
 import Radio from '@/components/ui/radio';
 import { QuizType } from '@/api/models/quiz';
-import { FormValues } from './utils';
+import CharacterAppearance from './CharacterAppearance';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import useGetQuizContractData from '@/api/hooks/useGetQuizContractData';
 import { useGenerateImageAttempts } from '@/hooks/useGenerateImageAttempts';
@@ -126,7 +126,15 @@ const QuizDetails = (props: Props) => {
           ))}
 
           <SwiperSlide>
-            <CharacterAppearance control={control} />
+            <CharacterAppearance
+              control={control}
+              onGenderChange={() => {
+                // Update swiper to fix height when new fields are added
+                setTimeout(() => {
+                  swiper?.update();
+                }, 100);
+              }}
+            />
           </SwiperSlide>
         </Swiper>
 

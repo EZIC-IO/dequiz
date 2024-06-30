@@ -11,11 +11,16 @@ export const QUERY_CONFIG: QueryClientConfig = {
   },
   mutationCache: new MutationCache({
     onError: (error) => {
+      const statusCode = (error as AxiosError).response?.status;
       const errorMessage = (error as AxiosError<{ message: string }>).response
         ?.data?.message;
+      const message =
+        statusCode === 429
+          ? 'Generation attempts exceeded. Please try again in a couple of hours.'
+          : errorMessage;
 
-      if (errorMessage) {
-        toast.error(errorMessage ?? 'Something went wrong!');
+      if (message) {
+        toast.error(message ?? 'Something went wrong!');
       }
     },
   }),

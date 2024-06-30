@@ -1,4 +1,4 @@
-import Image, { ImageProps } from 'next/image';
+import { ImageProps } from 'next/image';
 
 import { Badge } from './badge';
 import { BlurredImage } from './blurred-image';
@@ -8,11 +8,11 @@ type Props = ImageProps & {
 };
 
 const BadgedImage = (props: Props) => {
-  const { title, alt, ...rest } = props;
+  const { title, ...rest } = props;
 
   return (
     <div className='relative'>
-      <BlurredImage alt={alt} {...rest} />
+      <BlurredImage {...rest} />
 
       {title && (
         <Badge

@@ -15,11 +15,12 @@ import {
 import { Gender } from '@/api/models/gen-image.dto';
 
 type Props = {
+  onGenderChange: () => void;
   control: Control<FormValues, CharacterAppearanceFormValues>;
 };
 
 const CharacterAppearance = (props: Props) => {
-  const { control } = props;
+  const { control, onGenderChange } = props;
 
   const selectedGender = useWatch({
     control,
@@ -48,6 +49,10 @@ const CharacterAppearance = (props: Props) => {
                   <Radio
                     {...field}
                     {...option}
+                    onChange={() => {
+                      field.onChange(option.value);
+                      onGenderChange();
+                    }}
                     checked={field.value === option.value}
                   />
                 )}
