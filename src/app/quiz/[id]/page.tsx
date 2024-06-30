@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useActiveAccount, useConnectModal } from 'thirdweb/react';
 import { useForm } from 'react-hook-form';
 import useFormPersist from 'react-hook-form-persist';
+import Image from 'next/image';
 
 import { Card } from '@/components/ui/card';
 import { useGetQuizDetails } from '@/api/hooks/useGetQuizDetails';
@@ -94,6 +95,10 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
     isCharacterAppearanceSlide,
   ]);
 
+  const previewImages = quizDetails?.questions.map(
+    (question) => question.previewImage
+  );
+
   const getWallet = async () => {
     try {
       const wallet = await connect({ client: thirdwebClient, wallets });
@@ -171,32 +176,46 @@ const QuizDetails = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <Card
-      className='flex justify-between'
-      background={currentSlideImages?.gradientImage}
-    >
-      <div className='max-h-[765px] w-[43%] overflow-y-auto py-14 pl-12 pr-16'>
-        <QuizForm
-          swiper={swiper}
-          onSwiper={setSwiper}
-          quiz={quizDetails}
-          form={form}
-          currentSlideIndex={currentSlideIndex}
-          onSlideChange={setCurrentSlideIndex}
-          onSubmit={handleGenerateCharacter}
+    <>
+      <Card
+        className='flex justify-between'
+        background={currentSlideImages?.gradientImage}
+      >
+        <div className='max-h-[765px] w-[43%] overflow-y-auto py-14 pl-12 pr-16'>
+          <QuizForm
+            swiper={swiper}
+            onSwiper={setSwiper}
+            quiz={quizDetails}
+            form={form}
+            currentSlideIndex={currentSlideIndex}
+            onSlideChange={setCurrentSlideIndex}
+            onSubmit={handleGenerateCharacter}
+          />
+        </div>
+
+        <div className='relative flex w-[57%] justify-end'>
+          {currentSlideImages.image && (
+            <BlurredImage
+              fill
+              alt={currentSlideImages.image.alt}
+              src={currentSlideImages.image.src}
+            />
+          )}
+        </div>
+      </Card>
+
+      {/* Preload images */}
+      <div className='relative w-0'>
+        {previewImages?.map((image, index) => (
+          <Image fill alt={index.toString()} src={image} key={image} />
+        ))}
+        <Image
+          fill
+          alt={characterAppearanceImages.image.alt}
+          src={characterAppearanceImages.image.src}
         />
       </div>
-
-      <div className='relative flex w-[57%] justify-end'>
-        {currentSlideImages.image && (
-          <BlurredImage
-            fill
-            alt={currentSlideImages.image.alt}
-            src={currentSlideImages.image.src}
-          />
-        )}
-      </div>
-    </Card>
+    </>
   );
 };
 
