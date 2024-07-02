@@ -41,7 +41,7 @@ const NftDetails = () => {
   const properties = CHARACTER_PROPERTIES[mintedAction.vocation];
 
   return (
-    <div className='flex gap-8'>
+    <div className='flex max-h-[769px] gap-8'>
       <Card className='relative w-[44%]'>
         <div
           className='absolute z-10 h-full w-full'
@@ -56,13 +56,14 @@ const NftDetails = () => {
               className='rounded-[30px] bg-black'
               alt={mintedAction.metadata.name}
               src={mintedAction.imageGatewayIPFS}
+              style={{ objectFit: 'contain', objectPosition: 'center' }}
             />
           </div>
         </div>
       </Card>
 
       <Card
-        className='max-h-[769px] w-[56%] overflow-y-auto px-20 py-16'
+        className='w-[56%] overflow-y-auto px-20 py-16'
         background='/gradient/results-gradient.webp'
       >
         <div className='flex flex-col gap-10'>
@@ -71,7 +72,7 @@ const NftDetails = () => {
             <span className='text-bright-green'>Minted</span>
           </h2>
 
-          <h3 className='font-tangak mt-8 text-5xl font-semibold'>
+          <h3 className='mt-8 font-tangak text-5xl font-semibold'>
             <TypeAnimation
               cursor={false}
               sequence={[properties.title, 1000]}
